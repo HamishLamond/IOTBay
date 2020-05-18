@@ -1,0 +1,77 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 01/05/2020, 10:59:32 PM
+    Author     : USER
+*/
+
+
+body{
+    background-color: #87bcde;
+    background-image: url("IoTBay_image.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom;
+    color: black;
+    text-align: center;
+    font-size: 130%;
+}
+
+form{
+    display: inline-block;
+}
+
+
+.form_input_box{
+    width: 115%
+}
+
+p {
+    font-weight: bold;
+}
+
+.table_label{
+    font-weight: bold;
+}
+
+.top_right_link_div{
+    background-color: lightblue;
+    padding: 10px 0px;
+    position: absolute;
+    right: 0px;
+}
+
+.top_right_link_div a{
+    color: black;
+    padding: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+}
+
+.top_right_link_div a:hover{
+    background-color:darkturquoise;
+}
+
+.middle_link_div{
+    text-align: center;
+    padding: 5px 0px;
+}
+
+.middle_link_button{
+  background-color: lightblue;
+  color: black;
+  padding: 10px 10px;
+  text-align: center;
+  margin: 6px 3px;
+  cursor: pointer;
+}
+
+.middle_link_button:hover{
+    background-color:darkturquoise;
+}
+
+
