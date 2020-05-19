@@ -1,0 +1,6 @@
+CREATE TABLE AccessLog
+(accessLogId VARCHAR(16) NOT NULL,
+customerId VARCHAR(16),
+logTime Timestamp DEFAULT CURRENT_TIMESTAMP,
+staffId VARCHAR(16),
+PRIMARY KEY (accessLogId));
