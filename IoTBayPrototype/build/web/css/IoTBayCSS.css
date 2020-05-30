@@ -41,7 +41,7 @@ p {
     background-color: lightblue;
     padding: 10px 0px;
     position: absolute;
-    right: 0px;
+    right: 10px;
 }
 
 .top_right_link_div a{
@@ -74,4 +74,43 @@ p {
     background-color:darkturquoise;
 }
 
+#shopping_cart_image{
+    background-color: lightblue;
+    width: 30px;
+}
 
+.order_table{
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-spacing: 0;
+    padding: 15px;
+}
+
+.order_table th, .order_table td {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    padding: 5px;
+}
+
+.order_table td:first-child, .order_table th:first-child {
+    border-left: 1px solid black;
+}
+
+.order_table tr {
+    border: 1px solid black;
+}
+
+.order_table tr:last-child td{
+    border-left: 0;
+    border-right: 0;
+}
+
+.order_table tr:last-child td:nth-child(3) {
+    border-right: 1px solid black;
+}
+
+.order_table tr:last-child td:last-child{
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}

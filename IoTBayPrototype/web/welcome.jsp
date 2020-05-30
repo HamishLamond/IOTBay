@@ -4,6 +4,8 @@
     Author     : USER
 --%>
 
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="uts.isd.group30.model.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -52,6 +54,9 @@
                 customer.setEmail(email);
                 customer.setPassword(password);
                 session.setAttribute("customer", customer);
-            } %>
+                }
+            HashMap<String, Integer> cart = new HashMap<String, Integer>();
+            session.setAttribute("cart", cart);
+             %>
     </body>
 </html>
