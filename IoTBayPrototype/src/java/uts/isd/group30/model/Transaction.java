@@ -10,13 +10,15 @@ import java.util.Date;
  * @author yash_
  */
 public class Transaction {
+    private int id;
     private double value;
-    private String customerId;
+    private int customerId;
     private int status;
     private Date created;
     private Date lastUpdated;
 
-    public Transaction(double value, String customerId, int status, Date created, Date lastUpdated) {
+    public Transaction(int id, double value, int customerId, int status, Date created, Date lastUpdated) {
+        this.id = id;
         this.value = value;
         this.customerId = customerId;
         this.status = status;
@@ -24,11 +26,15 @@ public class Transaction {
         this.lastUpdated = lastUpdated;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public double getValue() {
         return value;
     }
 
-    public String getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
@@ -44,11 +50,15 @@ public class Transaction {
         return lastUpdated;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setValue(double value) {
         this.value = value;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 

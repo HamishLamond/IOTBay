@@ -11,7 +11,7 @@ package uts.isd.group30.model;
  */
 public class Customer {
     
-    private String id;
+    private int id;
     private String name;
     private String address;
     private String email;
@@ -32,7 +32,7 @@ public class Customer {
         this.password = password;
     }
 
-    public Customer(String id, String name, String address, String email, int phoneNumber, Long creditCardNumber, int creditCardExpiry, int creditCardCVC, String password) {
+    public Customer(int id, String name, String address, String email, int phoneNumber, Long creditCardNumber, int creditCardExpiry, int creditCardCVC, String password) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -44,11 +44,11 @@ public class Customer {
         this.password = password;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

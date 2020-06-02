@@ -10,18 +10,24 @@ package uts.isd.group30.model;
  * @author yash_
  */
 public class Device {
+    private int id;
     private String name;
     private String description;
     private double cost;
     private int stock;
     private int stockWarnThreshold;
 
-    public Device(String name, String description, double cost, int stock, int stockWarnThreshold) {
+    public Device(int id, String name, String description, double cost, int stock, int stockWarnThreshold) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.cost = cost;
         this.stock = stock;
         this.stockWarnThreshold = stockWarnThreshold;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -42,6 +48,10 @@ public class Device {
 
     public int getStockWarnThreshold() {
         return stockWarnThreshold;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {

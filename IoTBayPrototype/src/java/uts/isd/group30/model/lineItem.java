@@ -10,17 +10,17 @@ package uts.isd.group30.model;
  * @author yash_
  */
 public class lineItem {
-    private String deviceId;
+    private int deviceId;
     private int quantity;
-    private String transactionID;
+    private int transactionID;
 
-    public lineItem(String deviceId, int quantity, String transactionID) {
+    public lineItem(int deviceId, int quantity, int transactionID) {
         this.deviceId = deviceId;
         this.quantity = quantity;
         this.transactionID = transactionID;
     }
 
-    public String getDeviceId() {
+    public int getDeviceId() {
         return deviceId;
     }
 
@@ -28,11 +28,11 @@ public class lineItem {
         return quantity;
     }
 
-    public String getTransactionID() {
+    public int getTransactionID() {
         return transactionID;
     }
 
-    public void setDeviceId(String deviceId) {
+    public void setDeviceId(int deviceId) {
         this.deviceId = deviceId;
     }
 
@@ -40,7 +40,7 @@ public class lineItem {
         this.quantity = quantity;
     }
 
-    public void setTransactionID(String transactionID) {
+    public void setTransactionID(int transactionID) {
         this.transactionID = transactionID;
     }
     
