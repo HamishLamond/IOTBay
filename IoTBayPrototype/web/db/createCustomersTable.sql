@@ -1,5 +1,5 @@
 CREATE TABLE Customer
-(customerId VARCHAR(16) NOT NULL,
+(customerId INT GENERATED ALWAYS AS IDENTITY NOT NULL,
 customerName VARCHAR(32) NOT NULL,
 customerAddress VARCHAR(64) NOT NULL,
 customerEmail VARCHAR(32) NOT NULL,
