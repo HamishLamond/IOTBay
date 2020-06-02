@@ -5,8 +5,8 @@
  */
 package uts.isd.group30.model;
 
-import uts.isd.group30.model.Customer;
 import java.sql.*;
+import java.util.ArrayList;
 
 /* 
 * DBManager is the primary DAO class to interact with the database. 
@@ -113,5 +113,69 @@ public class DBManager {
             }
         }
         return null;
+    }
+    
+    // Adds a transaction to the database
+    public void addTransaction(double value, int customerId) throws SQLException {
+        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID,  STATUS) VALUES (" + value + ", '" + customerId + "', 0)");
+    }
+    
+    // Gets a list of transactions associated with the provided customerID
+    public ArrayList<Integer> getCustomerTransactions(int customerID) throws SQLException{
+        ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerID);
+        ArrayList<Integer> transactions = new ArrayList<>();
+        
+        while (results.next()) {
+            transactions.add(results.getInt("transactionId"));
+        }
+        return transactions;
+    }
+    
+    // Gets a list of transactions associated with the provided customerID, ordered by last modified date
+    public ArrayList<Integer> getCustomerTransactionsByDate(int customerID) throws SQLException{
+        ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerID + "ORDER BY LASTMODIFIED");
+        ArrayList<Integer> transactions = new ArrayList<>();
+        
+        while (results.next()) {
+            transactions.add(results.getInt("transactionId"));
+        }
+        return transactions;
+    }
+    
+    // Retrieves the transaction associated with the provided transactionId
+    public Transaction getTransaction(int transactionId) throws SQLException {
+        ResultSet result = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONS WHERE TRANSACTIONID=" + transactionId);
+        
+        if (result != null){
+            Double transactionValue = result.getDouble("transactionValue");
+            int customerId = result.getInt("customerId");
+            Timestamp createdOn = result.getTimestamp("createdOn");
+            Timestamp lastModified = result.getTimestamp("lastModified");
+            int status = result.getInt("status");
+            return new Transaction(transactionId, transactionValue, customerId, status, createdOn, lastModified);
+        }
+        
+        return null;
+    }
+    
+    // Updates the value and last modified date of a transaction
+    public void updateTransactionValue(int transactionID, double transactionValue) throws SQLException { 
+        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET TRANSACTIONVALUE="+ transactionValue + ", LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
+    }
+    
+    // Updates thes tatus of the provided transaction to 'completed' (1)
+    public void completeTransaction(int transactionID) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET STATUS=1 WHERE TRANSACTIONID=" + transactionID);
+    }
+    
+    // Updates the status of the provided transaction to 'cancelled' (2)
+    public void cancelTransaction(int transactionID) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET STATUS=2 WHERE TRANSACTIONID=" + transactionID);
+    }
+    
+    // Removes a transaction from the database and any associated transactionlineitems
+    public void deleteTransaction(int transactionID) throws SQLException {
+        st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONS WHERE TRANSACTIONID=" + transactionID);
+        st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionID);
     }
 }
