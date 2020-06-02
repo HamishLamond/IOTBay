@@ -1,6 +1,8 @@
 CREATE TABLE AccessLog
-(accessLogId VARCHAR(16) NOT NULL,
-customerId VARCHAR(16),
+(accessLogId INT GENERATED ALWAYS AS IDENTITY NOT NULL,
+customerId INT,
 logTime Timestamp DEFAULT CURRENT_TIMESTAMP,
-staffId VARCHAR(16),
-PRIMARY KEY (accessLogId));
+staffId INT,
+PRIMARY KEY (accessLogId),
+FOREIGN KEY (customerId) REFERENCES CUSTOMER(customerId),
+FOREIGN KEY (staffId) REFERENCES STAFF(staffId));
