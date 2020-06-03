@@ -1,5 +1,5 @@
 <%-- 
-    Document   : viewOrder
+    Document   : currentOrder
     Created on : 25/05/2020, 1:07:20 PM
     Author     : Hamish Lamond
 --%>
@@ -26,28 +26,28 @@
         </div>
         <% if (customer.getName() != null){ %>
             <h2>${customer.name}'s current order.</h2>
+            <%
+                    if (cart.size() > 0){ %>
             <table class="order_table">
                 <tr>
                     <th>Device</th>
                     <th>Cost</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th></th>
                 </tr>
                 <%
-                    if (cart.size() > 0){
-                        for (int i = 0; i < cart.size(); i++){
-                            
+                        for (int i = 0; i < cart.size(); i++){ 
                     %>
                 <tr>
                     <td>TLI Device ID</td>
                     <td>TRI Device Cost</td>
                     <td>TLI Quantity</td>
                     <td>TLI total cost</td>
+                    <td>X</td>
                 </tr>
                 <%
-                        }
-                    }
-                    %>
+                        } %>
                 <tr>
                     <td></td>
                     <td></td>
@@ -55,31 +55,37 @@
                     <td>Total Cost</td>
                 </tr>
             </table>
-            <a class="middle_link_button" href="">Checkout</a>
+            <a class="middle_link_button">Cancel</a>
+            <a class="middle_link_button" href="main.jsp">Checkout</a>
+            <%
+                    } else {
+                    %>
+                    <p>No items found in cart.</p>
+                    <% } %>
         <% } else { %>
             <h2>Current order</h2>
+            <%
+                    if (cart.size() > 0){ %>
             <table class="order_table">
                 <tr>
                     <th>Device</th>
                     <th>Cost</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th></th>
                 </tr>
                 <%
-                    if (cart.size() > 0){
                         for (int i = 0; i < cart.size(); i++){
-                            
                     %>
                 <tr>
                     <td>TLI Device ID</td>
                     <td>TRI Device Cost</td>
                     <td>TLI Quantity</td>
                     <td>TLI total cost</td>
+                    <td>X</td>
                 </tr>
                 <%
-                        }
-                    }
-                    %>
+                        } %>
                 <tr>
                     <td></td>
                     <td></td>
@@ -87,7 +93,14 @@
                     <td>Total Cost</td>
                 </tr>
             </table>
-            <a class="middle_link_button" href="">Checkout</a>
+            <a class="middle_link_button">Cancel</a>
+            <a class="middle_link_button" href="main.jsp">Checkout</a>
+            <%
+                    } else {
+                    %>
+                    <p>No items found in cart.</p>
+                    <% } %>
         <% } %>
+        <a class="middle_link_button" href="main.jsp">Main Page</a>
     </body>
 </html>

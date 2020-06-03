@@ -1,19 +1,18 @@
 <%-- 
-    Document   : main
-    Created on : 01/05/2020, 8:39:39 PM
-    Author     : USER
+    Document   : viewOrderList
+    Created on : 03/06/2020, 10:47:14 AM
+    Author     : Hamish Lamond
 --%>
 
-<%@page import="java.lang.Integer"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="uts.isd.group30.model.Customer" %>
+<%@page import="uts.isd.group30.model.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/IoTBayCSS.css">
-        <title>JSP Page</title>
+        <title>Customer Order List</title>
     </head>
     <body>
         <%
@@ -24,19 +23,22 @@
         <hr>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
-            <a href="viewOrderList.jsp">Order List</a>
+            <% if (cart != null){ %>
             <a href="currentOrder.jsp">View Order [${cart.size()}]</a>
+            <% } %>
         </div>
         <% if (customer.getName() != null){ %>
-        <h2>Welcome to IoTBay, ${customer.name}!</h2>
-        <p>Currently logged in as ${customer.email}.</p>
-        <p>Our system will be ready for use 5/6/20!</p>
-        <p>Stay tuned!</p>
+            <h2>${customer.name}'s Order List</h2>
+            <table class="order_list_table">
+                <tr>
+                    <th>Transaction Number</th>
+                    <th>Date Last Modified</th>
+                    <th>Status</th>
+                </tr>
+            </table>
         <% } else { %>
-        <h2>Welcome back to IoTBay!</h2>
-        <p>Currently logged in as ${customer.email}.</p>
-        <p>Our system will be ready for use 5/6/20!</p>
-        <p>Stay tuned!</p>
+            <h2>Order List</h2>
+            <p>Please log in to load your transaction list</p>
         <% } %>
     </body>
 </html>

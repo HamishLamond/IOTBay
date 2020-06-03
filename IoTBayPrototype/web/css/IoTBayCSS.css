@@ -79,6 +79,17 @@ p {
     width: 30px;
 }
 
+.order_list_table{
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.order_list_table, .order_list_table th, .order_list_table td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
 .order_table{
     width: 60%;
     margin-left: 20%;
@@ -88,9 +99,13 @@ p {
 }
 
 .order_table th, .order_table td {
-    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     border-right: 1px solid black;
     padding: 5px;
+}
+
+.order_table th {
+    border-top: 1px solid black;
 }
 
 .order_table td:first-child, .order_table th:first-child {
@@ -103,6 +118,16 @@ p {
 
 .order_table tr:last-child td{
     border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.order_table tr td:nth-child(5){
+    border-bottom: 1px solid black;
+}
+
+.order_table tr:first-child th:last-child{
+    border-top: 0;
     border-right: 0;
 }
 

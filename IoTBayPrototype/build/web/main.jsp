@@ -24,7 +24,8 @@
         <hr>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
-            <a href="viewOrder.jsp">View Order [${cart.size()}]</a>
+            <a href="viewOrderList.jsp">Order List</a>
+            <a href="currentOrder.jsp">View Order [${cart.size()}]</a>
         </div>
         <% if (customer.getName() != null){ %>
         <h2>Welcome to IoTBay, ${customer.name}!</h2>
