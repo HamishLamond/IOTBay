@@ -16,7 +16,7 @@
         <h1>IoTBay</h1>
         <hr>
         <p>You have successfully logged out of your account.</p>
-        <a class ="middle_link_button" href="index.html">IoTBay Landing Page</a>
+        <a class ="middle_link_button" href="index.jsp">IoTBay Landing Page</a>
         <% session.invalidate(); %>
     </body>
 </html>
