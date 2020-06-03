@@ -17,8 +17,7 @@ public class Device {
     private int stock;
     private int stockWarnThreshold;
 
-    public Device(int id, String name, String description, double cost, int stock, int stockWarnThreshold) {
-        this.id = id;
+    public Device(String name, String description, double cost, int stock, int stockWarnThreshold) {
         this.name = name;
         this.description = description;
         this.cost = cost;
