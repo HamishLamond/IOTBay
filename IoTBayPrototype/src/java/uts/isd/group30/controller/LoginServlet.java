@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uts.isd.group30.model.DBManager;
+import uts.isd.group30.model.dao.DBManager;
 import uts.isd.group30.model.User;
 
 /**
