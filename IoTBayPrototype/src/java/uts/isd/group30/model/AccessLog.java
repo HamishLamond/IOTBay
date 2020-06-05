@@ -4,15 +4,22 @@ import java.util.Date;
 
 public class AccessLog {
     private int logId;
-    private int customerId;
-    private int staffId;
+    private Integer customerId;
+    private Integer staffId;
     private String eventType;
     private Date timeStamp;
     
     AccessLog() {}
     
-    public AccessLog(int logId, int customerId, int staffId, String eventType, Date timeStamp) {
+    public AccessLog(int logId, Integer customerId, Integer staffId, String eventType, Date timeStamp) {
         this.logId = logId;
+        this.customerId = customerId;
+        this.staffId = staffId;
+        this.eventType = eventType;
+        this.timeStamp = timeStamp;
+    }
+    
+    public AccessLog(Integer customerId, Integer staffId, String eventType, Date timeStamp) {
         this.customerId = customerId;
         this.staffId = staffId;
         this.eventType = eventType;

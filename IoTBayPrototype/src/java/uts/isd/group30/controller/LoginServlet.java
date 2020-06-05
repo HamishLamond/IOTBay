@@ -6,63 +6,23 @@
 package uts.isd.group30.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.group30.model.AccessLog;
+import uts.isd.group30.model.Customer;
+import uts.isd.group30.model.Staff;
 import uts.isd.group30.model.dao.DBManager;
-import uts.isd.group30.model.User;
 
 /**
  *
  * @author Zunther
  */
 public class LoginServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -77,52 +37,90 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-
         Validators validator = new Validators();
         
         String email = request.getParameter("email");
+        if (email == null || !validator.validateEmail(email))
+        {
+            //Invalid email! Kick 'em back.
+            session.setAttribute("InvalidEmail", true);
+        }
+        
         String password = request.getParameter("password");
-
-        User user = null;  
+        Boolean isCustomer = request.getParameter("isCustomer") != null;
+        Boolean isStaff = request.getParameter("isStaff") != null;
         
         DBManager manager = (DBManager) session.getAttribute("dbmanager");
-
-        //try {       
+        Customer customer = null;
+        Staff staff = null;
+        
+        //We attempt an account retrieval with both email and password.
+        //Informing user that password is wrong only lets them know that email is registered.
+        //Could be used to mount phishing attacks under the guise of legitimate IOTBAY correspondence...
+        if (isCustomer)
+        {
+            try {
+                customer = manager.getCustomerByLoginDetails(email, password);
+            }
+            catch(SQLException e)
+            {
+                //Something went wrong with the database!
+            }
+            if (customer == null)
+            {
+                //Wrong credentials!
+                session.setAttribute("InvalidLogin", true);
+            }
+        }
+        else if (isStaff)
+        {
+            try 
+            {
+                staff = manager.getStaffByLoginDetails(email, password);
+            }
+            catch (SQLException e)
+            {
+                //Something went wrong with the database!
+            }
+            if (staff == null)
+            {
+                //Wrong credentials!
+                session.setAttribute("InvalidLogin", true);
+            }
+        }
+        //Wrap access log addition with try-catch, leave session login 
+        //outside as access log addition failure should not be fatal. 
+        //!!!UX uber alles!!!
+        if (staff != null)
+        {
+            try
+            {
+                manager.addAccessLog(new AccessLog(null, staff.getId(), "staffLogin", new Date()));
+            }
+            catch(SQLException e)
+            {
+                //Insertion failed!
+            }
             
-
-
-
-        //} catch (SQLException ex) {           
-
-
-        //}
-
-
-        //if () {           
-          //  Session.
-                 //8-set incorrect email error to the session           
-
-                 //9- redirect user back to the login.jsp     
-
-        //} else if ( /*10-   validate password  */ ) {                  
-
-                 //11-set incorrect password error to the session           
-
-                 //12- redirect user back to the login.jsp          
-
-        //} else if (user != null) {                     
-
-                 //13-save the logged in user object to the session           
-
-                 //14- redirect user to the main.jsp     
-
-        //} else {                       
-
-                 //15-set user does not exist error to the session           
-
-                 //16- redirect user back to the login.jsp       
-
-        //}
+            session.setAttribute("User", staff);
+            session.setAttribute("IsStaff", true);
+            //Direct to staff landing page.
+        }
+        else if (customer != null)
+        {
+            try
+            {
+                manager.addAccessLog(new AccessLog(customer.getId(), null, "customerLogin", new Date()));  
+            }
+            catch(SQLException e)
+            {
+                //Insertion failed!
+            }
+            
+            session.setAttribute("User", customer);
+            session.setAttribute("IsStaff", false);
+            //Direct to customer landing page.
+        }
     }
 
     /**
@@ -132,7 +130,7 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Login servlet. Introduces you to the real world.";
     }// </editor-fold>
 
 }
