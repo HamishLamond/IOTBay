@@ -13,8 +13,9 @@
         <title>Logout</title>
     </head>
     <body>
-        <h1>IoTBay</h1>
-        <hr>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <p>You have successfully logged out of your account.</p>
         <a class ="middle_link_button" href="index.jsp">IoTBay Landing Page</a>
         <% session.invalidate(); %>

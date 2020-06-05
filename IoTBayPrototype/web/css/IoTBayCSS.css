@@ -18,6 +18,16 @@ body{
     color: black;
     text-align: center;
     font-size: 130%;
+    margin: 0;
+}
+
+.body_no_image{
+    background-color: #87bcde;
+    background-image: none;
+    color: black;
+    text-align: center;
+    font-size: 130%;
+    margin: 0;
 }
 
 form{
@@ -33,20 +43,28 @@ p {
     font-weight: bold;
 }
 
+.header {
+  background-color: #52b6da;
+  padding: 10px;
+  text-align: center;
+  right: 0px;
+  left: 0px;
+}
+
 .table_label{
     font-weight: bold;
 }
 
 .top_right_link_div{
     background-color: lightblue;
-    padding: 10px 0px;
-    position: absolute;
-    right: 10px;
+    overflow: hidden;
+    width: 100%;
 }
 
 .top_right_link_div a{
+    float: right;
+    padding: 10px 10px;
     color: black;
-    padding: 10px;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;

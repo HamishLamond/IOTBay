@@ -13,8 +13,9 @@
         <title>Login</title>
     </head>
     <body>
-        <h1>IoTBay</h1>
-        <hr>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <h2>Login</h2>
         <form action="welcome.jsp" method="post">
             <table>

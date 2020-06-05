@@ -12,8 +12,9 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/IoTBayCSS.css">
     </head>
     <body>
-        <h1>IoTBay</h1>
-        <hr>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <div class="middle_link_div">
             <a class="middle_link_button" href="login.jsp">Login</a>
             <a class="middle_link_button" href="register.jsp">Register</a>

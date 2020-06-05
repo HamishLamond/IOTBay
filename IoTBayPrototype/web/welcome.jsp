@@ -16,8 +16,9 @@
         <title>Welcome Page</title>
     </head>
     <body>
-        <h1>IoTBay</h1>
-        <hr>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <%
             String origin = request.getParameter("origin");
             if (origin.equals("register")){

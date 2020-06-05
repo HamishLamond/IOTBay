@@ -19,10 +19,13 @@
             Customer customer = (Customer)session.getAttribute("customer");
             HashMap<String, Integer> cart = (HashMap<String, Integer>)session.getAttribute("cart");
          %>
-        <h1>IoTBay</h1>
-        <hr>
+         <div class="header">
+            <h1>IoTBay</h1>
+         </div>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="viewOrderList.jsp">Order List</a>
         </div>
         <% if (customer.getName() != null){ %>
             <h2>${customer.name}'s current order.</h2>
