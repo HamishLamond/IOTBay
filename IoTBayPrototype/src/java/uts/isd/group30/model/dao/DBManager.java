@@ -21,32 +21,7 @@ public class DBManager {
     public DBManager(Connection conn) throws SQLException {       
        st = conn.createStatement();   
     }
-
-    //Find user by email and password in the database   
-    public Customer findCustomer() throws SQLException {       
-       //setup the select sql query string       
-       //execute this query using the statement field       
-       //add the results to a ResultSet       
-       //search the ResultSet for a user using the parameters               
-       return null;   
-    }
-
-    //Add a user-data into the database   
-    public void addCustomer() throws SQLException {                   //code for add-operation       
-      st.executeUpdate("sql query");   
-
-    }
-
-    //update a user details in the database   
-    public void updateCustomer() throws SQLException {       
-       //code for update-operation   
-
-    }       
-
-    //delete a user from the database   
-    public void deleteCustomer() throws SQLException{       
-       //code for delete-operation   
-    }
+    
     public void addPaymentDetails() throws SQLException {
 
     }
@@ -62,35 +37,63 @@ public class DBManager {
 
     //update a user details in the database   
     public void UpsertCustomer(Customer customer) throws SQLException {        
-       String query = "INSERT INTO IOTBAY.CUSTOMER (" + customer.getName() + "," + 
-                                                        customer.getAddress() + "," + 
-                                                        customer.getEmail() + "," + 
-                                                        customer.getPhoneNumber() + "," +
-                                                        customer.getPassword() + ")";
+       String query = "INSERT INTO IOTBAY.CUSTOMER ("
+               + "customerName,"
+               + "customerAddress,"
+               + "customerEmail,"
+               + "customerPhone,"
+               + "customerPassword) VALUES (" + 
+               
+               customer.getName() + "," + 
+                customer.getAddress() + "," + 
+                customer.getEmail() + "," + 
+                customer.getPhoneNumber() + "," +
+                customer.getPassword() + ")";
         st.executeUpdate(query);   
     }      
 
     public void UpsertStaff(Staff staff) throws SQLException {        
-       String query = "INSERT INTO IOTBAY.STAFF (" + staff.getName() + "," + 
-                                                        staff.getEmail() + "," + 
-                                                        staff.getPhone() + "," +
-                                                        (staff.getIsManager() ? "1" : "0") + "," +
-                                                        staff.getPassword() + "," + 
-                                                        staff.getManager() + ")";
+       String query = "INSERT INTO IOTBAY.STAFF ("
+               + "staffName, "
+               + "staffEmail,"
+               + "staffPhone,"
+               + "rank,"
+               + "staffPassword,"
+               + "staffManager) VALUES (" + 
+               
+               staff.getName() + ", " + 
+                staff.getEmail() + ", " + 
+                staff.getPhone() + ", " +
+                (staff.getIsManager() ? "1" : "0") + ", " +
+                staff.getPassword() + ", " + 
+                staff.getManager() + ")";
         st.executeUpdate(query);   
     }       
 
     //delete a user from the database   
-    public void deleteUser(String email) throws SQLException{       
+    public void deleteCustomerByEmail(String email) throws SQLException{       
        //code for delete-operation   
        st.executeUpdate("DELETE FROM IOTBAY.CUSTOMER WHERE EMAIL = '" + email +"'");
     }  
     
+    //delete a user from the database   
+    public void deleteStaffByEmail(String email) throws SQLException{       
+       //code for delete-operation   
+       st.executeUpdate("DELETE FROM IOTBAY.STAFF WHERE EMAIL = '" + email +"'");
+    }  
+    
     public void addAccessLog(AccessLog accessLog) throws SQLException
     {
-        String query = "INSERT INTO IOTBAY.ACCESSLOG (CUSTOMERID, EVENTTYPE, STAFFID) VALUES (" + accessLog.getCustomerId() + ", " +
-                                                                                                accessLog.getEventType() + ", " +
-                                                                                                accessLog.getStaffId() + ")";
+        String query = "INSERT INTO IOTBAY.ACCESSLOG ("
+                + "customerId, "
+                + "eventType, "
+                + "staffId,"
+                + "logTime) VALUES (" + 
+                
+                accessLog.getCustomerId() + ", " +
+                accessLog.getEventType() + ", " +
+                accessLog.getStaffId() + ", " +
+                accessLog.getTimeStamp() + ")";
         
         st.executeUpdate(query);
     }
