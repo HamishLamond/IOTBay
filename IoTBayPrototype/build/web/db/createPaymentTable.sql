@@ -1,7 +1,8 @@
 CREATE TABLE Payment
-(cardNumber BIGINT NOT NULL,
-cardExpiry INT,
-cardCVC INT,
-customerID INT,
-PRIMARY KEY (cardNumber),
-FOREIGN KEY (customerID) REFERENCES Customer(customerID));
+(creditCardNumber VARCHAR(16) NOT NULL,
+customerId INT NOT NULL,
+creditCardExpiry VARCHAR(5),
+creditCardCVC VARCHAR(3),
+PRIMARY KEY (creditCardNumber),
+FOREIGN KEY (customerId) REFERENCES CUSTOMER(customerId)
+);
