@@ -115,11 +115,11 @@ public class DBManager {
     
     // Adds a transaction to the database
     public void addTransaction(double value, int customerId) throws SQLException {
-        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID,  STATUS) VALUES (" + value + ", '" + customerId + "', 0)");
+        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID,  STATUS) VALUES (" + value + ", " + customerId + ", 0)");
     }
     
     // Gets a list of transactions associated with the provided customerID
-    public ArrayList<Integer> getCustomerTransactions(int customerID) throws SQLException{
+    public ArrayList<Integer> getCustomerTransactionIDs(int customerID) throws SQLException{
         ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerID);
         ArrayList<Integer> transactions = new ArrayList<>();
         
@@ -130,8 +130,8 @@ public class DBManager {
     }
     
     // Gets a list of transactions associated with the provided customerID, ordered by last modified date
-    public ArrayList<Integer> getCustomerTransactionsByDate(int customerID) throws SQLException{
-        ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerID + "ORDER BY LASTMODIFIED");
+    public ArrayList<Integer> getCustomerTransactionIDsByDate(int customerID) throws SQLException{
+        ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerID + " ORDER BY LASTMODIFIED");
         ArrayList<Integer> transactions = new ArrayList<>();
         
         while (results.next()) {

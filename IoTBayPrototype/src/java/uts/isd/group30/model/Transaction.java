@@ -28,6 +28,16 @@ public class Transaction {
         this.lastUpdated = lastUpdated;
     }
 
+    public Transaction(int id, double value, int customerId, int status, Date created, Date lastUpdated, BigInteger cardNumber) {
+        this.id = id;
+        this.value = value;
+        this.customerId = customerId;
+        this.status = status;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+        this.cardNumber = cardNumber;
+    }
+
     public int getId() {
         return id;
     }
