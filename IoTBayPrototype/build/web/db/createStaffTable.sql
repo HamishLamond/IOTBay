@@ -5,5 +5,5 @@ staffEmail VARCHAR(32) NOT NULL,
 staffPhone INT,
 rank INT,
 staffPassword VARCHAR(32) NOT NULL,
-staffManager VARCHAR(16),
+staffManager INT,
 PRIMARY KEY (staffId));

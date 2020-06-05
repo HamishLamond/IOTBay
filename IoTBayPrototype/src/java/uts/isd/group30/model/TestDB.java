@@ -67,7 +67,7 @@ public class TestDB {
         System.out.print("User password: ");
         String password = in.nextLine();
         try {
-            Customer customer = db.findCustomer();
+            Customer customer = db.getCustomerByLoginDetails(email, password);
             if (customer != null) {
                 System.out.println("success.");
             } else {
