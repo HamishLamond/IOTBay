@@ -115,7 +115,7 @@ public class DBManager {
     
     // Adds a transaction to the database
     public void addTransaction(double value, int customerId) throws SQLException {
-        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID,  STATUS) VALUES (" + value + ", " + customerId + ", 0)");
+        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID) VALUES (" + value + ", " + customerId);
     }
     
     // Gets a list of transactions associated with the provided customerID
