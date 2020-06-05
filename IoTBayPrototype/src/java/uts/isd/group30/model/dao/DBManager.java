@@ -47,17 +47,28 @@ public class DBManager {
     public void deleteCustomer() throws SQLException{       
        //code for delete-operation   
     }
-    public void addPaymentDetails() throws SQLException {
-
+    public void addPaymentDetails(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int customerId) throws SQLException {
+        st.executeUpdate("INSERT INTO IOTBAY.PAYMENT (creditCardNumber, creditCardExpiry, creditCardCVC, customerId) VALUES ('" + creditCardNumber + "', '" + creditCardExpiry + "', '" + creditCardCVC + "', " + customerId + ")");
     }
-    public void deletePaymentDetails() throws SQLException {
-
+    public void deletePaymentDetails(int id) throws SQLException {
+        st.executeUpdate("DELETE FROM IOTBAY.PAYMENT WHERE PAYMENTID=" + id);
     }
     public void updatePaymentDetails() throws SQLException {
-
+        
     }
-    public String fetchPaymentDetails() throws SQLException {
-        return "";
+    public Payment getPaymentDetails(int customerId, int paymentId) throws SQLException {
+        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE CUSTOMERID = '" + customerId + "'");
+        while(results.next()) {
+            int id = results.getInt("id");
+            if (id==paymentId) {
+                boolean isDefault = results.getBoolean("isDefault");
+                String creditCardNumber = results.getString("creditCardNumber");
+                String creditCardExpiry = results.getString("creditCardExpiry");
+                String creditCardCVC = results.getString("creditCardCVC");
+                return new Payment(id,isDefault,creditCardNumber,creditCardExpiry,creditCardCVC,customerId);
+            }
+        }
+        return null;
     }
 
     //update a user details in the database   
@@ -115,7 +126,7 @@ public class DBManager {
     
     // Adds a transaction to the database
     public void addTransaction(double value, int customerId) throws SQLException {
-        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID) VALUES (" + value + ", " + customerId);
+        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID,  STATUS) VALUES (" + value + ", " + customerId + ", 0)");
     }
     
     // Gets a list of transactions associated with the provided customerID
