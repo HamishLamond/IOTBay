@@ -84,30 +84,97 @@ public class DBManager {
     public void deleteUser(String email) throws SQLException{       
        //code for delete-operation   
        st.executeUpdate("DELETE FROM IOTBAY.CUSTOMER WHERE EMAIL = '" + email +"'");
+    }  
+    
+    public void addAccessLog(AccessLog accessLog) throws SQLException
+    {
+        String query = "INSERT INTO IOTBAY.ACCESSLOG (CUSTOMERID, EVENTTYPE, STAFFID) VALUES (" + accessLog.getCustomerId() + ", " +
+                                                                                                accessLog.getEventType() + ", " +
+                                                                                                accessLog.getStaffId() + ")";
+        
+        st.executeUpdate(query);
     }
-
-    public void getAccessCustomerLogsById(String id) throws SQLException {
-        st.executeQuery("SELECT * FROM IOTBAY.ACCESSLOG WHERE CUSTOMERID = '" + id + "'");
+    
+    public ArrayList<AccessLog> getStaffAccessLogsByUserId(int staffId) throws SQLException
+    {
+        ResultSet results = st.executeQuery("Select * FROM IOTBAY.ACCESSLOG WHERE CUSTOMERID = '" + staffId + "' ORDER BY LOGTIME DESC");
+        
+        ArrayList<AccessLog> accessLogs = new ArrayList<>();
+        
+        while (results.next()) {
+            accessLogs.add(new AccessLog(results.getInt("accessLogId"), 
+                    results.getInt("customerId"), 
+                    results.getInt("staffId"), 
+                    results.getString("eventType"),
+                    results.getDate("logTime")));
+        }
+        return accessLogs;
     }
+    
+    public ArrayList<AccessLog> getCustomerAccessLogsByUserId(int customerId) throws SQLException
+    {
+        ResultSet results = st.executeQuery("Select * FROM IOTBAY.ACCESSLOG WHERE CUSTOMERID = '" + customerId + "' ORDER BY LOGTIME DESC");
+        
+        ArrayList<AccessLog> accessLogs = new ArrayList<>();
+        
+        while (results.next()) {
+            accessLogs.add(new AccessLog(results.getInt("accessLogId"), 
+                    results.getInt("customerId"), 
+                    results.getInt("staffId"), 
+                    results.getString("eventType"),
+                    results.getDate("logTime")));
+        }
+        return accessLogs;
+    }
+    
     
     public Customer getCustomerByLoginDetails (String email, String password) throws SQLException {
         ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.CUSTOMER WHERE EMAIL = '" + email + "'");
         
         
         while(results.next()) {
-            String resultEmail = results.getString("customerEmail");
-            String resultPassword = results.getString("customerPassword");
-            if (resultEmail.equals(resultEmail) && resultPassword.equals(password))
+            String customerEmail = results.getString("customerEmail");
+            String customerPassword = results.getString("customerPassword");
+            if (customerEmail.equals(email) && customerPassword.equals(password))
             {
-                String id = results.getString(1);
+                int id = results.getInt("customerId");
                 String customerAddress = results.getString("customerAddress");
-                String customerPhone = results.getString("customerPhone");
-                String creditCardNumber = results.getString("creditCardNumber");
-                String creditCardExpiry = results.getString("creditCardExpiry");
-                String creditCardCVC = results.getString("creditCardCVC");
+                int customerPhone = results.getInt("customerPhone");
                 String customerName = results.getString("customerName");
-                String customerPassword = results.getString("customerPassword");
-                return new Customer(); 
+                return new Customer(id,
+                                    customerName,
+                                    customerAddress,
+                                    customerEmail,
+                                    customerPhone,
+                                    customerPassword); 
+            }
+        }
+        return null;
+    }
+    
+    public Staff getStaffByLoginDetails (String email, String password) throws SQLException {
+        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.STAFF WHERE EMAIL = '" + email + "'");
+        
+        
+        while(results.next()) {
+            String staffEmail = results.getString("staffEmail");
+            String staffPassword = results.getString("staffPassword");
+            
+            
+            if (staffEmail.equals(email) && staffPassword.equals(password))
+            {
+                int staffManager = results.getInt("staffManager");
+                int staffPhone = results.getInt("staffPhone");
+                String staffName = results.getString("staffName");
+                int staffId = results.getInt("staffId");
+                Boolean isManager = results.getInt("rank") == 1;
+                return new Staff(staffId,
+                                    staffName,
+                                    staffEmail,
+                                    staffPassword,
+                                    staffPhone,
+                                    isManager,
+                                    staffManager); 
             }
         }
         return null;
