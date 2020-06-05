@@ -16,9 +16,6 @@ public class Customer {
     private String address;
     private String email;
     private int phoneNumber;
-    private Long creditCardNumber;
-    private int creditCardExpiry;
-    private int creditCardCVC;
     private String password;
 
     public Customer() {
@@ -32,15 +29,12 @@ public class Customer {
         this.password = password;
     }
 
-    public Customer(int id, String name, String address, String email, int phoneNumber, Long creditCardNumber, int creditCardExpiry, int creditCardCVC, String password) {
+    public Customer(int id, String name, String address, String email, int phoneNumber, String password) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.creditCardNumber = creditCardNumber;
-        this.creditCardExpiry = creditCardExpiry;
-        this.creditCardCVC = creditCardCVC;
         this.password = password;
     }
 
@@ -82,30 +76,6 @@ public class Customer {
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Long getCreditCardNumber() {
-        return creditCardNumber;
-    }
-
-    public void setCreditCardNumber(Long creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
-    }
-
-    public int getCreditCardExpiry() {
-        return creditCardExpiry;
-    }
-
-    public void setCreditCardExpiry(int creditCardExpiry) {
-        this.creditCardExpiry = creditCardExpiry;
-    }
-
-    public int getCreditCardCVC() {
-        return creditCardCVC;
-    }
-
-    public void setCreditCardCVC(int creditCardCVC) {
-        this.creditCardCVC = creditCardCVC;
     }
 
     public String getPassword() {

@@ -8,15 +8,15 @@
  * Created: May 21, 2020
  */
 INSERT INTO IOTBAY.CUSTOMER
-    (customerName, customerAddress, customerEmail, customerPhone, creditCardNumber, creditCardExpiry, creditCardCVC, customerPassword)
+    (customerName, customerAddress, customerEmail, customerPhone, customerPassword)
     VALUES
-    ('John Smith', '1', 'johnsmith@gmail.com',0432565785,NULL,NULL,NULL,'password'),
-    ('Jane Doe', '', 'janedoe@hotmail.com',0456951236,NULL,NULL,NULL, 'password123'),
-    ('Hamish Lamond', '', 'hamish_lamond@hotmail.com',0425622415,1235654889651523 ,1222 ,654 , 'securepassword'),
-    ('Steve Smith', '', 'thenewdon@yahoo.com',0412564853,NULL,NULL,NULL, 'runs4days'),
-    ('Meegan Fletcher', '', 'meegan114@gmail.com',0412596548,NULL,NULL,NULL, 'greysanatomy'),
-    ('Mohammed Salah', '', 'mosalah@liverpool.com',0412356548,5231569654585636 ,0606,652 , '30goals'),
-    ('Homer Simpson', '', 'homer@springfield.com',0456951235,NULL,NULL,NULL, 'donuts123'),
-    ('John Spartan', '', 'john117@unsc.com',0459862531,2525126245895123 ,0823 ,845 , 'finishthefight'),
-    ('Sarah Kerrigan', '', 'kerrigan@swarm.com',0425632564,NULL,NULL,NULL, 'fortheswarm'),
-    ('Jim Raynor', '', 'jamesraynor@gmail.com',0476578294, 8274918291849173, 1221, 125, 'Password')
+    ('John Smith', '123 Street Street, Sydney NSW 2000', 'johnsmith@gmail.com',0432565785,'password'),
+    ('Jane Doe', '321 Street Street, Sydney NSW 2000', 'janedoe@hotmail.com',0456951236, 'password123'),
+    ('Nick Fury', '37 Shield Lane, Ultimo NSW 2007', 'one_eye@hotmail.com', 0431559937, 'nicholas123'),
+    ('Steve Smith', '66 Ocean Street, Sydeny NSW 2000', 'thenewdon@yahoo.com',0412564853, 'runs4days'),
+    ('Ronald McDonald', '226 Pennant Hills Rd, Thornleigh NSW 2120', 'RonaldMcdonald@gmail.com',0412596548, 'BigMac'),
+    ('Mohammed Salah', '54 Anfield Road, Liverpool WA 6763', 'mosalah@liverpool.com',0412356548, '30goals'),
+    ('Homer Simpson', '742 Evergreen Terrace, Springfield TAS 7452', 'homer@springfield.com',0456951235, 'donuts123'),
+    ('John Spartan', '83 Halsey Road, Reach SA 5604', 'john117@unsc.com',0459862531, 'finishthefight'),
+    ('Sarah Kerrigan', '4 Ghost Road, Char VIC 3243', 'kerrigan@swarm.com',0425632564, 'fortheswarm'),
+    ('Jim Raynor', '1 Hyperion Lane, Mar Sara QLD 4301', 'jamesraynor@gmail.com',0476578294, 'Password')

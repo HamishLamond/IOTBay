@@ -66,9 +66,6 @@ public class DBManager {
                                                         customer.getAddress() + "," + 
                                                         customer.getEmail() + "," + 
                                                         customer.getPhoneNumber() + "," +
-                                                        customer.getCreditCardNumber() + "," + 
-                                                        customer.getCreditCardExpiry() + "," + 
-                                                        customer.getCreditCardCVC() + "," + 
                                                         customer.getPassword() + ")";
         st.executeUpdate(query);   
     }      

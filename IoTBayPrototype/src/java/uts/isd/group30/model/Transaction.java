@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package uts.isd.group30.model;
+import java.math.BigInteger;
 import java.util.Date;
 /**
  *
@@ -16,6 +17,7 @@ public class Transaction {
     private int status;
     private Date created;
     private Date lastUpdated;
+    private BigInteger cardNumber;
 
     public Transaction(int id, double value, int customerId, int status, Date created, Date lastUpdated) {
         this.id = id;
@@ -73,5 +75,12 @@ public class Transaction {
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
-    
+
+    public BigInteger getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(BigInteger cardNumber) {
+        this.cardNumber = cardNumber;
+    }
 }
