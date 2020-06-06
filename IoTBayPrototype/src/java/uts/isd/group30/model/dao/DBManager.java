@@ -266,6 +266,19 @@ public class DBManager {
         st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionID);
     }
     
+    public Device getDeviceByName (String name1) throws SQLException{
+        ResultSet result = st.executeQuery("SELECT * FROM IOTBAY.DEVICE WHERE DEVICENAME='" + name1+"'"); 
+        while (result.next()){
+        String name = result.getString(2);
+        String desc = result.getString(3);
+        Double cost = result.getDouble(4);
+        int stock = result.getInt(5);
+        int threshold = result.getInt(6);
+        return new Device(name, desc, cost, stock, threshold);
+        }
+        return null;
+    }
+    
     public ArrayList<Device> findDevice(String search) throws SQLException{
         String query ="SELECT * FROM DEVICE WHERE LOWER(DEVICENAME)  LIKE LOWER('%"+search+"%')"; // LIKE Operator is case-sensitive so LOWER make everything to lowercase.
         ResultSet rs = st.executeQuery(query);
@@ -275,7 +288,8 @@ public class DBManager {
             String description = rs.getString(3);
             double cost = rs.getDouble(4);
             int stock = rs.getInt(5);
-            list.add(new Device(name,description,cost,stock,1));
+            int threshold = rs.getInt(6);
+            list.add(new Device(name,description,cost,stock,threshold));
         }
         return list;
     }
@@ -302,7 +316,8 @@ public class DBManager {
             String description = rs.getString(3);
             double cost = rs.getDouble(4);
             int stock = rs.getInt(5);
-            list.add(new Device(name,description,cost,stock,1));
+            int threshold = rs.getInt(6);
+            list.add(new Device(name,description,cost,stock,threshold));
         }
         return list;
     }
