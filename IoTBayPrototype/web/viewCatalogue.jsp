@@ -38,6 +38,7 @@
                     <th>Device Name</th>
                     <th>Description</th>
                     <th>Price</th>
+                    <th>In Stock</th>
                     <th></th>
                     <th><button type="button" onclick="location.href='CatalogueServlet?action=byname'">Sort by name</button>
                         <button type="button" onclick="location.href='CatalogueServlet?action=byprice'">Sort by price</button>
@@ -49,7 +50,9 @@
                     <td>${device.name}</td>
                     <td>${device.description}</td>
                     <td>${device.cost}</td>
+                    <td>${device.stock}</td>
                     <td><a href="main.jsp">Edit</a></td>
+                    <td><a href="AddDeviceServlet?name=${device.name}">Add</a></td>
                 </tr>
             </c:forEach>                       
         </table>

@@ -8,7 +8,7 @@ package uts.isd.group30.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ import uts.isd.group30.model.dao.DBManager;
  *
  * @author hoang
  */
-public class CatalogueServlet extends HttpServlet {
+public class AddDeviceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,14 +42,15 @@ public class CatalogueServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CatalogueServlet</title>");            
+            out.println("<title>Servlet AddDevice</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CatalogueServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddDevice at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -63,34 +64,18 @@ public class CatalogueServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String action = request.getParameter("action");
+        String name = request.getParameter("name");
         DBManager manager = (DBManager) session.getAttribute("manager");
-        if (action.equalsIgnoreCase("byname")){
-            try {
-                ArrayList<Device> devices = (ArrayList) manager.fetchDevice('n');
-                request.setAttribute("devices", devices);
-                request.getRequestDispatcher("viewCatalogue.jsp").forward(request, response);
-                //} else if (action.equalsIgnoreCase("byprice")){
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+        try {    
+            Device device = manager.getDeviceByName(name);
+            if (device!= null){
+            session.setAttribute("device", device);
+            request.getRequestDispatcher("addDevice.jsp").include(request, response);}
+            else{
+                request.getRequestDispatcher("main.jsp").include(request, response);
             }
-        } else if (action.equalsIgnoreCase("byprice")){
-            try {
-                ArrayList<Device> devices = (ArrayList) manager.fetchDevice('p');
-                request.setAttribute("devices", devices);
-                request.getRequestDispatcher("viewCatalogue.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (action.equalsIgnoreCase("list")){
-        try {
-            ArrayList<Device> devices = (ArrayList) manager.fetchDevice('l');
-            request.setAttribute("devices", devices);
-            request.getRequestDispatcher("viewCatalogue.jsp").include(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }} else{
-            request.getRequestDispatcher("main.jsp").forward(request, response);
+            Logger.getLogger(AddDeviceServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -106,15 +91,22 @@ public class CatalogueServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String name = request.getParameter("name");
-        DBManager manager = (DBManager) session.getAttribute("manager");
-        try {
-            ArrayList<Device> devices = (ArrayList) manager.findDevice(name);       
-            session.setAttribute("devices",devices);
-            request.getRequestDispatcher("viewCatalogue.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+        Device device = (Device) session.getAttribute("device");
+        int stock = device.getStock();
+        String name = device.getName();
+        int value = Integer.parseInt(request.getParameter("value"));
+        if (value <= stock){
+        HashMap <String, Integer> cart = (HashMap <String, Integer>) session.getAttribute("cart");
+        cart.put(name,value);
+        session.setAttribute("cart", cart);
+        session.setAttribute("stockErr","");
+        response.sendRedirect("CatalogueServlet?action=list");
+        } else {
+            session.setAttribute("stockErr","Devices adding to cart exceeded devices in stock");
+            request.getRequestDispatcher("addDevice.jsp").forward(request, response);
         }
+        
+        
     }
 
     /**
