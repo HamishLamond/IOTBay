@@ -1,9 +1,5 @@
-<%-- 
-    Document   : viewOrder
-    Created on : 25/05/2020, 1:07:20 PM
-    Author     : Hamish Lamond
---%>
-
+<%@page import="uts.isd.group30.model.Payment"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="uts.isd.group30.model.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,8 +12,8 @@
     </head>
     <body>
         <%
-            Customer customer = (Customer)session.getAttribute("customer");
-            
+            Customer customer = (Customer) session.getAttribute("customer");
+            ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
          %>
         <h1>IoTBay</h1>
         <hr>
@@ -27,26 +23,31 @@
         <h2>Payment History</h2>
             <table class="payment_history">
                 <tr>
-                    <th>Payment Id</th>
-                    <th>Is default</th>
                     <th>Credit Card Number</th>
                     <th>Credit Card Expiry</th>
                     <th>Credit Card CVC</th>
                 </tr>
                 <%
-                    if (cart.size() > 0){
-                        for (int i = 0; i < cart.size(); i++){
+                    try{
+                        System.out.print(paymentList);
+                        if (paymentList.size() > 0){
+                        for (int i = 0; i < paymentList.size(); i++){
                     %>
                 <tr>
-                    <td>TLI Device ID</td>
-                    <td>TRI Device Cost</td>
-                    <td>TLI Quantity</td>
-                    <td>TLI total cost</td>
+                    <td><%=paymentList.get(i).getCreditCardNumber()%></td>
+                    <td><%=paymentList.get(i).getCreditCardExpiry()%></td>
+                    <td><%=paymentList.get(i).getCreditCardCVC()%></td>
+                    <td><a href="PaymentServlet?action=delete&number=<%=paymentList.get(i).getCreditCardNumber()%>">Delete</a></td>
                 </tr>
                 <%
                         }
+                        }
+                    }
+                    catch (Exception ex) {
+                        ;
                     }
                     %>
+                    
                 <tr>
                     <td></td>
                     <td></td>
