@@ -18,11 +18,13 @@
         <hr>
         <%
             Customer customer = (Customer)session.getAttribute("customer");
-
             String CCNErr = (String) session.getAttribute("CCNErr");
             String CCEErr = (String) session.getAttribute("CCEErr");
             String CCCVCErr = (String) session.getAttribute("CCCVCErr");
             String Success = (String) session.getAttribute("Success");
+            if (CCNErr == null){
+                
+            }
         %>
         <h2>Add Payment</h2>
         <form action="AddPaymentServlet" method="post">
@@ -49,12 +51,13 @@
                 <tr>
                     <td></td>
                     <td><center>
-                    <input type="hidden" name="origin"  value="<%=1%>">
+                    <input type="hidden" name="origin"  value="1">
                     <input class="button" type="submit" value="Add" required>
                 </center>
                     </td>
                 </tr>
             </table>
         </form>
+        <a href="PaymentServlet?action=viewList&origin=1">View Payment Details</a>
     </body>
 </html>
