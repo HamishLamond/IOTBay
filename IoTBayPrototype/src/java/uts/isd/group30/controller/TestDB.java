@@ -57,6 +57,8 @@ public class TestDB {
                 case 'S':
                     showAll();
                     break;
+                case 'U':
+                    testUpdatePayment();
                 default:
                     System.out.println("Unknown Command");
                     break;
@@ -117,6 +119,14 @@ public class TestDB {
                 System.out.printf("%-20s %-30s %-20s %-10s \n", device.getName(), device.getDescription(), device.getStock(), device.getCost());
             });
         } catch (SQLException ex) {
+            Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void testUpdatePayment() {
+        try {
+            db.updatePaymentDetails("5555555555555555", "6666666666666666", "12/45", "696");
+        }
+        catch (Exception ex){
             Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

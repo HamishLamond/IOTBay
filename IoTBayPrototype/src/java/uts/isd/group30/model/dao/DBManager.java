@@ -28,8 +28,8 @@ public class DBManager {
     public void deletePaymentDetails(String id) throws SQLException {
         st.executeUpdate("DELETE FROM IOTBAY.PAYMENT WHERE creditCardNumber='" + id + "'");
     }
-    public void updatePaymentDetails() throws SQLException {
-        
+    public void updatePaymentDetails(String id, String newId, String newExpiry, String newCVC) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.PAYMENT SET creditCardNumber='" + newId + "', creditCardExpiry='" + newExpiry + "', creditCardCVC='" + newCVC + "' WHERE creditCardNumber='" + id + "'");
     }
     public Payment getPaymentDetails(String CCN, int customerId) throws SQLException {
         try {

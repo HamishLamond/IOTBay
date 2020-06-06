@@ -38,6 +38,7 @@
                     <td><%=paymentList.get(i).getCreditCardExpiry()%></td>
                     <td><%=paymentList.get(i).getCreditCardCVC()%></td>
                     <td><a href="PaymentServlet?action=delete&number=<%=paymentList.get(i).getCreditCardNumber()%>">Delete</a></td>
+                    <td><a href="PaymentServlet?action=update&CCN=<%=paymentList.get(i).getCreditCardNumber()%>&CCE=<%=paymentList.get(i).getCreditCardExpiry()%>&CCCVC=<%=paymentList.get(i).getCreditCardCVC()%>&CId=<%=1%>">Update</a></td>
                 </tr>
                 <%
                         }
@@ -47,13 +48,6 @@
                         ;
                     }
                     %>
-                    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Total Cost</td>
-                </tr>
             </table>
     </body>
 </html>

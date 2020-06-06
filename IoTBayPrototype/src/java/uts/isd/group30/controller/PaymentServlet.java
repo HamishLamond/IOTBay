@@ -76,12 +76,8 @@ public class PaymentServlet extends HttpServlet {
                         try {
                             int origin = Integer.parseInt(request.getParameter("origin"));
                             ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(origin);
-                            System.out.print("retrieved list");
-                            System.out.print(paymentList);
                             session.setAttribute("paymentList", paymentList);
-                            System.out.print("Set attribute");
                             request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
-                            System.out.print("get request");
                         } 
                         catch (Exception ex) {
                             System.out.print(ex);
@@ -90,6 +86,19 @@ public class PaymentServlet extends HttpServlet {
                     else if(action.equalsIgnoreCase("delete")){
                         String number = request.getParameter("number");
                         manager.deletePaymentDetails(number);
+                    }
+                    else if(action.equalsIgnoreCase("update")){
+                        String creditCardNumber = request.getParameter("CCN");
+                        String creditCardExpiry = request.getParameter("CCE");
+                        String creditCardCVC = request.getParameter("CCCVC");
+                        int customerId = Integer.parseInt(request.getParameter("CId"));
+                        Payment oldPayment = new Payment(creditCardNumber, creditCardExpiry, creditCardCVC, customerId);
+                        session.setAttribute("oldPayment", oldPayment);
+                        session.setAttribute("CCNMsg", null);
+                        session.setAttribute("CCEMsg", null);
+                        session.setAttribute("CCCVCMsg", null);
+                        session.setAttribute("SuccessUpdate", null);
+                        request.getRequestDispatcher("updatePayment.jsp").forward(request, response);
                     }
                 //
             }
