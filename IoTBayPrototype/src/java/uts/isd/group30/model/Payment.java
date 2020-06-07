@@ -14,11 +14,21 @@ public class Payment {
     private String creditCardExpiry;
     private String creditCardCVC;
     private int customerId;
-    public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int customerId) {
+    private int isDefault;
+    public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefault, int customerId) {
         this.creditCardCVC = creditCardCVC;
         this.creditCardExpiry = creditCardExpiry;
         this.creditCardNumber = creditCardNumber;
         this.customerId = customerId;
+        this.isDefault = isDefault;
+    }
+
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public int getIsDefault() {
+        return isDefault;
     }
 
     public void setCustomerId(int customerId) {

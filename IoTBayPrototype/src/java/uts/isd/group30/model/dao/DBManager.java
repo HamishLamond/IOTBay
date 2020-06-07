@@ -22,19 +22,19 @@ public class DBManager {
        st = conn.createStatement();   
     }
         
-    public void addPaymentDetails(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int customerId) throws SQLException {
-        st.executeUpdate("INSERT INTO IOTBAY.PAYMENT (creditCardNumber, creditCardExpiry, creditCardCVC, customerId) VALUES ('" + creditCardNumber + "', '" + creditCardExpiry + "', '" + creditCardCVC + "', " + customerId + ")");
+    public void addPaymentDetails(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefaultValue, int customerId) throws SQLException {
+        st.executeUpdate("INSERT INTO IOTBAY.PAYMENT (creditCardNumber, creditCardExpiry, creditCardCVC, isDefault, customerId) VALUES ('" + creditCardNumber + "', '" + creditCardExpiry + "', '" + creditCardCVC + "'," + isDefaultValue + "," + customerId + ")");
     }
     public void deletePaymentDetails(String id) throws SQLException {
         st.executeUpdate("DELETE FROM IOTBAY.PAYMENT WHERE creditCardNumber='" + id + "'");
     }
-    public void updatePaymentDetails() throws SQLException {
-        
+    public void updatePaymentDetails(String id, String newId, String newExpiry, String newCVC, int isDefaultValue) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.PAYMENT SET creditCardNumber='" + newId + "', creditCardExpiry='" + newExpiry + "', creditCardCVC='" + newCVC + "', isDefault=" + isDefaultValue + " WHERE creditCardNumber='" + id + "'");
     }
     public Payment getPaymentDetails(String CCN, int customerId) throws SQLException {
         try {
             ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE creditCardNumber = '" + CCN + "'");
-            return new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("customerId"));
+            return new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("isDefault"), results.getInt("customerId"));
         }
         catch (Exception ex){
             return null;
@@ -45,9 +45,23 @@ public class DBManager {
             ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE CUSTOMERID=" + customerId);
             ArrayList<Payment> paymentList = new ArrayList<Payment>();
             while (results.next()) {
-                paymentList.add(new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("customerId")));
+                paymentList.add(new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("isDefault"), results.getInt("customerId")));
             }
             return paymentList;
+        }
+        catch (Exception ex){
+            return null;
+        }
+    }
+    public Payment getDefaultPayment(int customerId) throws SQLException {
+        try{
+            ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE isDefault=1 and customerId=" + customerId);
+            while (results.next()){
+                if (results.getInt("isDefault")==1){
+                    return new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("isDefault"), results.getInt("customerId"));
+                }
+            }
+            return null;
         }
         catch (Exception ex){
             return null;
