@@ -113,7 +113,7 @@ public class DBManager {
                 accessLog.getEventType() + ", " +
                 accessLog.getStaffId() + ", " +
                 accessLog.getTimeStamp() + ")";
-        
+        String x = "x";
         st.executeUpdate(query);
     }
     
@@ -151,7 +151,7 @@ public class DBManager {
     
     
     public Customer getCustomerByLoginDetails (String email, String password) throws SQLException {
-        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.CUSTOMER WHERE EMAIL = '" + email + "'");
+        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
         
         
         while(results.next()) {
@@ -175,7 +175,7 @@ public class DBManager {
     }
     
     public Staff getStaffByLoginDetails (String email, String password) throws SQLException {
-        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.STAFF WHERE EMAIL = '" + email + "'");
+        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.STAFF WHERE CUSTOMEREMAIL = '" + email + "'");
         
         
         while(results.next()) {

@@ -14,10 +14,10 @@
     </head>
     <body>
         <div class="header">
-            <h1>IoTBay</h1>
+            <h1>Account Creation</h1>
         </div>
         <h2></h2>
-        <form action="welcome.jsp" method="post">
+        <form action="RegistrationServlet" method="post">
             <table>
                 <tr>
                     <td><label for="name">Full name</label></td>

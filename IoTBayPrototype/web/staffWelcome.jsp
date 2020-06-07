@@ -29,11 +29,7 @@
                 String address = request.getParameter("address");
         %>
         <h2>You have successfully registered for IoTBay!</h2>
-        <p> Your name is: <%=name %></p>
-        <p> Your email is: <%=email %></p>
-        <p> Your password is: <%=password %></p>
-        <p> Your phone number is: 0<%=phoneNumber %></p>
-        <p> Your address is: <%=address %></p>
+        
         <a class="middle_link_button" href="main.jsp">Click to Enter IoTBay</a>
         
         
