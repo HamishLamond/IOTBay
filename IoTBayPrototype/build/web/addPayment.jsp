@@ -4,6 +4,7 @@
     Author     : USER
 --%>
 
+<%@page import="uts.isd.group30.model.Payment"%>
 <%@page import="uts.isd.group30.model.Customer" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,14 +16,18 @@
     </head>
     <body>
         <h1>IoTBay</h1>
-        <hr>
+        <div class="top_right_link_div">
+            <a href="logout.jsp">Logout</a>
+            <a href="main.jsp">Home</a>
+            <a href="PaymentServlet?action=viewList&origin=1">View Payment list</a>
+        </div>
         <%
             Customer customer = (Customer)session.getAttribute("customer");
-
             String CCNErr = (String) session.getAttribute("CCNErr");
             String CCEErr = (String) session.getAttribute("CCEErr");
             String CCCVCErr = (String) session.getAttribute("CCCVCErr");
             String Success = (String) session.getAttribute("Success");
+            String isUpdate = (String) session.getAttribute("isUpdate");
         %>
         <h2>Add Payment</h2>
         <form action="AddPaymentServlet" method="post">
@@ -47,9 +52,16 @@
                     <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCErr != null ? CCCVCErr : "111") %>" required></td>
                 </tr>
                 <tr>
+                    <td><label for="isDefault">Make default</label></td>
+                    <td><input type="checkbox" name="Chkbox"></td>
+                </tr>
+                <tr>
                     <td></td>
-                    <td><center>
-                    <input type="hidden" name="origin"  value="<%=1%>">
+                    <td>
+                <center>
+                    <input type="hidden" name="isUpdate" value="false">
+                    <input type="hidden" name="oldPayment" value="null">
+                    <input type="hidden" name="origin" value="1">
                     <input class="button" type="submit" value="Add" required>
                 </center>
                     </td>

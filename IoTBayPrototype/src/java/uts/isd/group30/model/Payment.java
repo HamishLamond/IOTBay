@@ -10,27 +10,35 @@ package uts.isd.group30.model;
  * @author yash_
  */
 public class Payment {
-    private int id;
-    private boolean isDefault;
     private String creditCardNumber;
     private String creditCardExpiry;
     private String creditCardCVC;
     private int customerId;
-    public Payment(int id, boolean isDefault, String creditCardNumber, String creditCardExpiry, String creditCardCVC, int customerId) {
-        this.isDefault = isDefault;
+    private int isDefault;
+    public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefault, int customerId) {
         this.creditCardCVC = creditCardCVC;
         this.creditCardExpiry = creditCardExpiry;
         this.creditCardNumber = creditCardNumber;
         this.customerId = customerId;
+        this.isDefault = isDefault;
     }
 
-    public int getId() {
-        return id;
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
     }
 
-    public boolean isIsDefault() {
+    public int getIsDefault() {
         return isDefault;
     }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
     
     public String getCreditCardNumber() {
         return creditCardNumber;
@@ -42,10 +50,6 @@ public class Payment {
 
     public String getCreditCardCVC() {
         return creditCardCVC;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setCreditCardNumber(String creditCardNumber) {
