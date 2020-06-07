@@ -7,18 +7,10 @@ package uts.isd.group30.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import uts.isd.group30.model.Customer;
-import uts.isd.group30.model.Transaction;
-import uts.isd.group30.model.dao.DBManager;
 
 /**
  *
@@ -43,7 +35,7 @@ public class OrderListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderListServlet</title>");
+            out.println("<title>Servlet OrderListServlet</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet OrderListServlet at " + request.getContextPath() + "</h1>");
@@ -64,20 +56,7 @@ public class OrderListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        DBManager manager = (DBManager) session.getAttribute("manager");
-        Customer customer = (Customer) session.getAttribute("customer");
-        if (customer != null) {
-            try {
-                ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
-                request.setAttribute("transactions", transactions);
-                request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -91,20 +70,7 @@ public class OrderListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        DBManager manager = (DBManager) session.getAttribute("manager");
-        Customer customer = (Customer) session.getAttribute("customer");
-        if (customer != null) {
-            try {
-                ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
-                request.setAttribute("transactions", transactions);
-                request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

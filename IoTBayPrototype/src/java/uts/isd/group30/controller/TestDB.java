@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uts.isd.controller;
+package uts.isd.group30.controller;
 
 import java.sql.*;
 
@@ -51,6 +51,9 @@ public class TestDB {
                 case 'A':
                     testFindDevice();
                     break;
+                case 'B':
+                    testGetDevice();
+                    break;
                 case 'S':
                     showAll();
                     break;
@@ -87,6 +90,21 @@ public class TestDB {
             devices.stream().forEach((device) -> {
                 System.out.printf("%-20s %-30s %-20s %-10s \n", device.getName(), device.getDescription(), device.getStock(), device.getCost());
             });
+        } catch (SQLException ex) {
+            Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void testGetDevice(){
+        System.out.print("Find device by name: ");
+        String find = in.nextLine();
+        try {
+            Device device = db.getDeviceByName(find);
+            if (device != null){
+                System.out.printf("%-20s %-30s %-20s %-10s \n", device.getName(), device.getDescription(), device.getStock(), device.getCost());
+            }else{
+                System.out.println("fail");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
         }
