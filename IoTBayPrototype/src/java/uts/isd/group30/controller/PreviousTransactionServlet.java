@@ -8,6 +8,7 @@ package uts.isd.group30.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,14 +17,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uts.isd.group30.model.Device;
+import uts.isd.group30.model.TransactionLineItem;
 import uts.isd.group30.model.dao.DBManager;
 
 /**
  *
- * @author hoang
+ * @author Hamish Lamond
  */
-public class AddDeviceServlet extends HttpServlet {
+public class PreviousTransactionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +43,10 @@ public class AddDeviceServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddDevice</title>");            
+            out.println("<title>Servlet PreviousTransactionServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddDevice at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PreviousTransactionServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,18 +65,22 @@ public class AddDeviceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String name = request.getParameter("name");
         DBManager manager = (DBManager) session.getAttribute("manager");
-        try {    
-            Device device = manager.getDeviceByName(name);
-            if (device!= null){
-            session.setAttribute("device", device);
-            request.getRequestDispatcher("addDevice.jsp").include(request, response);}
-            else{
-                request.getRequestDispatcher("main.jsp").include(request, response);
+        String idString = request.getParameter("id");
+        int transactionId = Integer.parseInt(idString);
+        try {
+            ArrayList<TransactionLineItem> items = (ArrayList) manager.getTransactionLineItems(transactionId);
+            HashMap<String, TransactionLineItem> devices = new HashMap<>();
+            for (TransactionLineItem item: items){
+                String deviceName = manager.getDeviceName(item.getDeviceId());
+                devices.put(deviceName, item);
             }
+            request.setAttribute("devices", devices);
+            Double value = manager.getTransactionValue(transactionId);
+            request.setAttribute("value", value);
+            request.getRequestDispatcher("viewPreviousTransaction.jsp").forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AddDeviceServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -90,23 +95,7 @@ public class AddDeviceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Device device = (Device) session.getAttribute("device");
-        int stock = device.getStock();
-        String name = device.getName();
-        int value = Integer.parseInt(request.getParameter("value"));
-        if (value <= stock){
-        HashMap <String, Integer> cart = (HashMap <String, Integer>) session.getAttribute("cart");
-        cart.put(name,value);
-        session.setAttribute("cart", cart);
-        session.setAttribute("stockErr","");
-        response.sendRedirect("CatalogueServlet?action=list");
-        } else {
-            session.setAttribute("stockErr","Devices adding to cart exceeded devices in stock");
-            request.getRequestDispatcher("addDevice.jsp").forward(request, response);
-        }
-        
-        
+        processRequest(request, response);
     }
 
     /**

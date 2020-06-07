@@ -22,7 +22,7 @@
         </div>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
-            <a href="viewOrderList.jsp">Order List</a>
+            <a href="OrderListServlet?action=list">Order List</a>
             <a href="currentOrder.jsp">View Order [${cart.size()}]</a>
         </div>
         <form method="post" action="CatalogueServlet">
@@ -38,7 +38,6 @@
                     <th>Device Name</th>
                     <th>Description</th>
                     <th>Price</th>
-                    <th>In Stock</th>
                     <th></th>
                     <th><button type="button" onclick="location.href='CatalogueServlet?action=byname'">Sort by name</button>
                         <button type="button" onclick="location.href='CatalogueServlet?action=byprice'">Sort by price</button>
@@ -50,9 +49,7 @@
                     <td>${device.name}</td>
                     <td>${device.description}</td>
                     <td>${device.cost}</td>
-                    <td>${device.stock}</td>
                     <td><a href="main.jsp">Edit</a></td>
-                    <td><a href="AddDeviceServlet?name=${device.name}">Add</a></td>
                 </tr>
             </c:forEach>                       
         </table>

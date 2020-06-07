@@ -86,7 +86,7 @@ public class CatalogueServlet extends HttpServlet {
         try {
             ArrayList<Device> devices = (ArrayList) manager.fetchDevice('l');
             request.setAttribute("devices", devices);
-            request.getRequestDispatcher("viewCatalogue.jsp").include(request, response);
+            request.getRequestDispatcher("viewCatalogue.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }} else{
