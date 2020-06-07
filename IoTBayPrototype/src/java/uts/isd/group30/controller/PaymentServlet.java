@@ -86,13 +86,24 @@ public class PaymentServlet extends HttpServlet {
                     else if(action.equalsIgnoreCase("delete")){
                         String number = request.getParameter("number");
                         manager.deletePaymentDetails(number);
+                        int origin = Integer.parseInt(request.getParameter("origin"));
+                        ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(origin);
+                        session.setAttribute("paymentList", paymentList);
+                        request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
                     }
                     else if(action.equalsIgnoreCase("update")){
                         String creditCardNumber = request.getParameter("CCN");
                         String creditCardExpiry = request.getParameter("CCE");
                         String creditCardCVC = request.getParameter("CCCVC");
+                        int isDefault = Integer.parseInt(request.getParameter("Default"));
+                        if (isDefault==1){
+                            session.setAttribute("chckMsg", 1);
+                        }
+                        else{
+                            session.setAttribute("ckckMsg", 0);
+                        }
                         int customerId = Integer.parseInt(request.getParameter("CId"));
-                        Payment oldPayment = new Payment(creditCardNumber, creditCardExpiry, creditCardCVC, customerId);
+                        Payment oldPayment = new Payment(creditCardNumber, creditCardExpiry, creditCardCVC, isDefault, customerId);
                         session.setAttribute("oldPayment", oldPayment);
                         session.setAttribute("CCNMsg", null);
                         session.setAttribute("CCEMsg", null);

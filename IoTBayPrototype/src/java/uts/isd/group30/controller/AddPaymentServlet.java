@@ -23,6 +23,17 @@ import uts.isd.group30.model.Payment;
              String isUpdate = request.getParameter("isUpdate");
              String CCE = request.getParameter("CCE");
              String CCCVC = request.getParameter("CCCVC");
+             String Checkbox = request.getParameter("Chkbox");
+             int isDefault = 0;
+             if (Checkbox!=null){
+                 isDefault = 1;
+             }
+             //if(isDefaultBool){
+             //    isDefault = "TRUE";
+             //}
+             //else{
+             //    isDefault= "FALSE";
+             //}
              int origin = Integer.parseInt(request.getParameter("origin"));
              //4- capture the posted password
              //5- retrieve the manager instance from session
@@ -47,9 +58,20 @@ import uts.isd.group30.model.Payment;
                  }
                  else{
                      try{
-                         System.out.print(origin);
-                         db.updatePaymentDetails(oldNumber,CCN, CCE, CCCVC);
-                         session.setAttribute("Success", "Successfully updated payment details");
+                         if(isDefault==1){
+                             Payment defaultPaymentId = db.getDefaultPayment(origin);
+                             try {
+                                 db.updatePaymentDetails(defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardExpiry(), defaultPaymentId.getCreditCardCVC(), 0);
+                             }
+                             catch (Exception e){
+                                 System.out.print("Unable to remove default payment:" + e);
+                             }
+                         }
+                         db.updatePaymentDetails(oldNumber,CCN, CCE, CCCVC, isDefault);
+                         session.setAttribute("SuccessUpdate", "Successfully updated payment details");
+                         session.setAttribute("CCNMsg", CCN);
+                         session.setAttribute("CCEMsg", CCE);
+                         session.setAttribute("CCCVCMsg", CCCVC);
                          request.getRequestDispatcher("updatePayment.jsp").include(request, response);
                      }
                      catch(Exception e){
@@ -74,8 +96,16 @@ import uts.isd.group30.model.Payment;
                  }
                  else{
                      try{
-                         System.out.print(origin);
-                         db.addPaymentDetails(CCN, CCE, CCCVC, origin);
+                         if(isDefault==1){
+                             Payment defaultPaymentId = db.getDefaultPayment(origin);
+                             try {
+                                 db.updatePaymentDetails(defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardExpiry(), defaultPaymentId.getCreditCardCVC(), 0);
+                             }
+                             catch (Exception e){
+                                 System.out.print("Unable to remove default payment:" + e);
+                             }
+                         }
+                         db.addPaymentDetails(CCN, CCE, CCCVC, isDefault, origin);
                          session.setAttribute("Success", "Successfully added payment details");
                          request.getRequestDispatcher("addPayment.jsp").include(request, response);
                      }

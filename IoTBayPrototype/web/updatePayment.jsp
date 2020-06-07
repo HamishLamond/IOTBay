@@ -12,10 +12,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/IoTBayCSS.css">
-        <title>Add Payment Details</title>
+        <title>Update Payment Details</title>
     </head>
     <body>
         <h1>IoTBay</h1>
+        <div class="top_right_link_div">
+            <a href="logout.jsp">Logout</a>
+            <a href="main.jsp">Home</a>
+            <a href="PaymentServlet?action=viewList&origin=1">View Payment list</a>
+        </div>
         <hr>
         <%
             Customer customer = (Customer)session.getAttribute("customer");
@@ -24,6 +29,8 @@
             String CCCVCMsg = (String) session.getAttribute("CCCVCErr");
             String SuccessUpdate = (String) session.getAttribute("SuccessUpdate");
             String isUpdate = (String) session.getAttribute("isUpdate");
+            //Integer chckMsg = (Integer) session.getAttribute("chckEnable");
+            //System.out.print("chckMsg: " + chckMsg);
             Payment oldPayment = (Payment) session.getAttribute("oldPayment");
             %>
             <h2>Update Payment</h2>
@@ -50,10 +57,14 @@
                     <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCMsg != null ? CCCVCMsg : oldPayment.getCreditCardCVC()) %>" required></td>
                 </tr>
                 <tr>
+                    <td><label for="isDefault">Make default</label></td>
+                    <td><input type="checkbox" name="Chkbox"></td>
+                </tr>
+                <tr>
                     <td></td>
                     <td><center>
-                    <input type="hidden" name="isUpdate" value="true"/>
-                    <input type="hidden" name="oldNumber" value="<%=oldPayment.getCreditCardNumber()%>"/>
+                    <input type="hidden" name="isUpdate" value="true">
+                    <input type="hidden" name="oldNumber" value="<%=oldPayment.getCreditCardNumber()%>">
                     <input type="hidden" name="origin"  value="1">
                     <input class="button" type="submit" value="Update" required>
                 </center>

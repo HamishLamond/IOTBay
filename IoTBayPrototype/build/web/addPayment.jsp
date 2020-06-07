@@ -16,7 +16,11 @@
     </head>
     <body>
         <h1>IoTBay</h1>
-        <hr>
+        <div class="top_right_link_div">
+            <a href="logout.jsp">Logout</a>
+            <a href="main.jsp">Home</a>
+            <a href="PaymentServlet?action=viewList&origin=1">View Payment list</a>
+        </div>
         <%
             Customer customer = (Customer)session.getAttribute("customer");
             String CCNErr = (String) session.getAttribute("CCNErr");
@@ -24,18 +28,8 @@
             String CCCVCErr = (String) session.getAttribute("CCCVCErr");
             String Success = (String) session.getAttribute("Success");
             String isUpdate = (String) session.getAttribute("isUpdate");
-            if(isUpdate!=null){
-                %>
-                <h2>Update Payment Details</h2>
-                <%
-            }
-            else{
-            %>
-            <h2>Add Payment</h2>
-            <%
-            }
         %>
-        
+        <h2>Add Payment</h2>
         <form action="AddPaymentServlet" method="post">
             <%
                 if(Success!=null){
@@ -58,17 +52,21 @@
                     <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCErr != null ? CCCVCErr : "111") %>" required></td>
                 </tr>
                 <tr>
+                    <td><label for="isDefault">Make default</label></td>
+                    <td><input type="checkbox" name="Chkbox"></td>
+                </tr>
+                <tr>
                     <td></td>
-                    <td><center>
-                    <input type="hidden" name="isUpdate" value="false"/>
-                    <input type="hidden" name="oldPayment" value="null"/>
-                    <input type="hidden" name="origin"  value="1">
-                    <input class="button" type="submit" value=Add" required>
+                    <td>
+                <center>
+                    <input type="hidden" name="isUpdate" value="false">
+                    <input type="hidden" name="oldPayment" value="null">
+                    <input type="hidden" name="origin" value="1">
+                    <input class="button" type="submit" value="Add" required>
                 </center>
                     </td>
                 </tr>
             </table>
         </form>
-        <a href="PaymentServlet?action=viewList&origin=1">View Payment Details</a>
     </body>
 </html>
