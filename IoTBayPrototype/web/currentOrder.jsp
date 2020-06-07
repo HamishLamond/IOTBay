@@ -16,8 +16,9 @@
     </head>
     <body>
         <%
-            Customer customer = new Customer(2, "John Doe", "123 Street Street, Sydney NSW 2000", "johnsmith@gmail.com", 432565785, "password");
-            session.setAttribute("customer", customer);
+            //Customer customer = new Customer(2, "John Doe", "123 Street Street, Sydney NSW 2000", "johnsmith@gmail.com", 432565785, "password");
+            //session.setAttribute("customer", customer);
+            Customer customer = (Customer)session.getAttribute("customer");
             HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         %>
         <div class="header">
