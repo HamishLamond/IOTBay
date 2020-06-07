@@ -7,6 +7,7 @@ package uts.isd.group30.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -113,7 +114,7 @@ public class LoginServlet extends HttpServlet {
         {
             try
             {
-                manager.addAccessLog(new AccessLog(null, staff.getId(), "staffLogin", new Date()));
+                manager.addAccessLog(new AccessLog(null, staff.getId(), "staffLogin", LocalDateTime.now()));
             }
             catch(SQLException e)
             {
@@ -130,7 +131,7 @@ public class LoginServlet extends HttpServlet {
         {
             try
             {
-                manager.addAccessLog(new AccessLog(customer.getId(), null, "customerLogin", new Date()));  
+                manager.addAccessLog(new AccessLog(customer.getId(), null, "customerLogin", LocalDateTime.now()));  
             }
             catch(SQLException e)
             {

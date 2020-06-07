@@ -6,6 +6,8 @@
 package uts.isd.group30.model.dao;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import uts.isd.group30.model.*;
 
@@ -103,6 +105,8 @@ public class DBManager {
     
     public void addAccessLog(AccessLog accessLog) throws SQLException
     {
+        String t = accessLog.getTimeStamp().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS Z");
         String query = "INSERT INTO IOTBAY.ACCESSLOG ("
                 + "customerId, "
                 + "eventType, "
@@ -110,11 +114,11 @@ public class DBManager {
                 + "logTime) VALUES (" + 
                 
                 accessLog.getCustomerId() + ", " +
-                accessLog.getEventType() + ", " +
+                "'" + accessLog.getEventType() + "'" + ", " +
                 accessLog.getStaffId() + ", " +
-                accessLog.getTimeStamp() + ")";
+                "'" + Timestamp.valueOf(accessLog.getTimeStamp()) + "'" + ")";
         String x = "x";
-        st.executeUpdate(query);
+        st.execute(query);
     }
     
     public ArrayList<AccessLog> getStaffAccessLogsByUserId(int staffId) throws SQLException
@@ -128,7 +132,7 @@ public class DBManager {
                     results.getInt("customerId"), 
                     results.getInt("staffId"), 
                     results.getString("eventType"),
-                    results.getDate("logTime")));
+                    LocalDateTime.parse(results.getString("logTime"))));
         }
         return accessLogs;
     }
@@ -144,7 +148,7 @@ public class DBManager {
                     results.getInt("customerId"), 
                     results.getInt("staffId"), 
                     results.getString("eventType"),
-                    results.getDate("logTime")));
+                    LocalDateTime.parse(results.getString("logTime"))));
         }
         return accessLogs;
     }
