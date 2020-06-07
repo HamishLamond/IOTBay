@@ -7,11 +7,17 @@ package uts.isd.group30.controller;
 
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.group30.model.AccessLog;
+import uts.isd.group30.model.Customer;
+import uts.isd.group30.model.dao.DBConnector;
 import uts.isd.group30.model.dao.DBManager;
 
 /**
@@ -19,62 +25,105 @@ import uts.isd.group30.model.dao.DBManager;
  * @author Zunther
  */
 public class RegistrationServlet extends HttpServlet {
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    HttpSession session;
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Boolean invalidValues = false;
-        HttpSession session = request.getSession();
+        session = request.getSession();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("registerCustomer.jsp");
 
         Validators validator = new Validators();
         
         String email = request.getParameter("email");        
-        
+        flushInputErrors();
+        //Validate email
         if (!validator.validateEmail(email))
         {
-             session.setAttribute("invalidEmail", true);
+             session.setAttribute("regEmailErr", "You have entered an invalid email!");
+             invalidValues = true;
         }
-        try 
-        {
-            int phone = parseInt(request.getParameter("phone"));
-        }
-        catch(Exception e)
-        {
-            //Failed to parse phone!
-            session.setAttribute("invalidPhone", true);
-        }
-        String name = request.getParameter("name");
-        Boolean isCustomer = request.getParameter("isCustomer") != null;
-        Boolean isStaff = request.getParameter("isStaff") != null;
-        String password = request.getParameter("password");
-        DBManager manager = (DBManager) session.getAttribute("dbmanager");
         
-        if (isCustomer)
+        //Validate phone
+        String phone = request.getParameter("phoneNumber");
+        if (!validator.validatePhoneNumber(phone))
         {
-            //Validate customer specific info
+            session.setAttribute("regPhoneErr", "You have entered an invalid phone number!");
+            invalidValues = true;
         }
-        else if (isStaff)
+        
+        //Validate name
+        String name = request.getParameter("name");
+        if (!validator.validateName(name))
         {
-            //Validate staff specific info
+            session.setAttribute("regNameErr", "You have entered an invalid name!");
+            invalidValues = true;
         }
+        
+        //Validate address
+        String password = request.getParameter("password");
+        if (!validator.validatePassword(password))
+        {
+            session.setAttribute("regPassErr", "Your password needs to an alphanumeric of at least four characters!");
+            invalidValues = true;
+        }
+        
+        if (invalidValues)
+        {
+            dispatcher.include(request, response);
+            return;
+        }
+        else
+        {
+            String address = request.getParameter("address");
+            String userType = request.getParameter("UserType");
+
+            DBManager manager = (DBManager) session.getAttribute("dbmanager");
+            if (manager == null)
+            {
+                try
+                {
+                    manager = new DBManager((new DBConnector()).openConnection());
+                    session.setAttribute("dbmanager", manager);
+                }
+                catch(Exception e)
+                {
+                    //Unspecified error occurred
+                    return;
+                }
+            }
+            Customer customer = new Customer(name, address, email, parseInt(phone), password);
+            try
+            {
+                //Check to make sure email is free
+                if(manager.CheckCustomerExistsByEmail(email))
+                {
+                    session.setAttribute("acctExistsErr", "There is already an account using this email!");
+                    dispatcher.include(request, response);
+                    return;
+                }
+                else
+                {
+                    manager.UpsertCustomer(customer);
+                    customer = manager.getCustomerByLoginDetails(email, password);
+                    manager.addAccessLog(new AccessLog(customer.getId(), null, "customerCreated", LocalDateTime.now()));
+                    session.setAttribute("customer", customer);
+                    request.getRequestDispatcher("customerWelcome.jsp");
+                }
+            }
+            catch (SQLException e)
+            {
+                
+            }
+        }
+        
 }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void flushInputErrors() {
+        session.setAttribute("regEmailErr", null);
+        session.setAttribute("regPhoneErr", null);
+        session.setAttribute("regNameErr", null);
+    }
 
 }

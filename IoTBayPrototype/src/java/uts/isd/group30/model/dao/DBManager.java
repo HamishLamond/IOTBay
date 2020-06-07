@@ -55,6 +55,18 @@ public class DBManager {
             return null;
         }
     }
+    
+    public boolean CheckCustomerExistsByEmail(String email) throws SQLException
+    {
+        ResultSet results = st.executeQuery("SELECT COUNT(*) FROM IOTBAY.CUSTOMER AS TOTAL WHERE CUSTOMEREMAIL = '" + email + "'");
+        
+        if (results.getInt(1) > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
 
     //update a user details in the database   
     public void UpsertCustomer(Customer customer) throws SQLException {        
@@ -65,11 +77,12 @@ public class DBManager {
                + "customerPhone,"
                + "customerPassword) VALUES (" + 
                
-               customer.getName() + "," + 
-                customer.getAddress() + "," + 
-                customer.getEmail() + "," + 
+               "'" + customer.getName() + "'" + "," + 
+                "'" + customer.getAddress() + "'" + "," + 
+                "'" + customer.getEmail() + "'" + "," + 
                 customer.getPhoneNumber() + "," +
-                customer.getPassword() + ")";
+                "'" + customer.getPassword() + "'" + ")";
+       String x = "";
         st.executeUpdate(query);   
     }      
 
@@ -82,11 +95,11 @@ public class DBManager {
                + "staffPassword,"
                + "staffManager) VALUES (" + 
                
-               staff.getName() + ", " + 
-                staff.getEmail() + ", " + 
+               "'" + staff.getName() + "'" + ", " + 
+                "'" + staff.getEmail() + "'" + ", " + 
                 staff.getPhone() + ", " +
-                (staff.getIsManager() ? "1" : "0") + ", " +
-                staff.getPassword() + ", " + 
+                (staff.getIsManager() ? 1 : 0) + ", " +
+                "'" + staff.getPassword() + "'" + ", " + 
                 staff.getManager() + ")";
         st.executeUpdate(query);   
     }       
@@ -117,7 +130,6 @@ public class DBManager {
                 "'" + accessLog.getEventType() + "'" + ", " +
                 accessLog.getStaffId() + ", " +
                 "'" + Timestamp.valueOf(accessLog.getTimeStamp()) + "'" + ")";
-        String x = "x";
         st.execute(query);
     }
     
