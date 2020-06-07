@@ -3,6 +3,7 @@ CREATE TABLE TransactionLineItem
 transactionId INT NOT NULL,
 deviceId INT NOT NULL,
 quantity INT NOT NULL,
+cost Double NOT NULL,
 PRIMARY KEY (transactionLineItemId),
 FOREIGN KEY (transactionId) REFERENCES TRANSACTIONS(transactionId),
 FOREIGN KEY (deviceId) REFERENCES DEVICE(deviceId));

@@ -237,6 +237,27 @@ public class DBManager {
         return null;
     }
     
+    public ArrayList<Transaction> getCustomerTransactions(int customerId) throws SQLException {
+        ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerId);
+        ArrayList<Transaction> list = new ArrayList();
+        while (rs.next()){
+            int transactionId = rs.getInt(1);
+            Double transactionValue = rs.getDouble(2);
+            Timestamp createdOn = rs.getTimestamp(4);
+            Timestamp lastModified = rs.getTimestamp(5);
+            int status = rs.getInt(6);
+            list.add(new Transaction(transactionId, transactionValue, customerId, status, createdOn, lastModified));
+        }
+        return list;
+        
+    }
+    
+    public Double getTransactionValue(int transactionId) throws SQLException{
+        ResultSet rs = st.executeQuery("SELECT TRANSACTIONVALUE FROM IOTBAY.TRANSACTIONS WHERE TRANSACTIONID=" + transactionId); 
+        rs.next();
+        return rs.getDouble(1);
+    }
+    
     // Updates the value and last modified date of a transaction
     public void updateTransactionValue(int transactionID, double transactionValue) throws SQLException { 
         st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET TRANSACTIONVALUE="+ transactionValue + ", LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
@@ -256,6 +277,26 @@ public class DBManager {
     public void deleteTransaction(int transactionID) throws SQLException {
         st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONS WHERE TRANSACTIONID=" + transactionID);
         st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionID);
+    }
+    
+    public ArrayList<TransactionLineItem> getTransactionLineItems(int transactionId) throws SQLException {
+        ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionId);
+        ArrayList<TransactionLineItem> items = new ArrayList();
+        while (rs.next()){
+            int id = rs.getInt(1);
+            int deviceId = rs.getInt(3);
+            int quantity = rs.getInt(4);
+            double cost = rs.getDouble(5);
+            items.add(new TransactionLineItem(id, transactionId, deviceId, quantity, cost));
+        }
+        return items;       
+    }
+    
+    public String getDeviceName(int deviceId) throws SQLException{
+        String query = "SELECT DEVICENAME FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId;
+        ResultSet rs = st.executeQuery(query);
+        rs.next();
+        return rs.getString(1);
     }
     
     public ArrayList<Device> findDevice(String search) throws SQLException{
