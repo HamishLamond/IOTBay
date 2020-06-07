@@ -3,7 +3,6 @@ CREATE TABLE Payment
 customerId INT NOT NULL,
 creditCardExpiry VARCHAR(5),
 creditCardCVC VARCHAR(3),
-isDefault int,
 PRIMARY KEY (creditCardNumber),
 FOREIGN KEY (customerId) REFERENCES CUSTOMER(customerId)
 );
