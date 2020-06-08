@@ -5,7 +5,7 @@ customerId INT NOT NULL,
 createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 status INT,
-cardNumber BIGINT,
+creditCardNumber VARCHAR(16),
 PRIMARY KEY (transactionId),
 FOREIGN KEY (customerId) REFERENCES CUSTOMER(customerId),
-FOREIGN KEY (cardNumber) REFERENCES PAYMENT(cardNumber));
+FOREIGN KEY (creditCardNumber) REFERENCES PAYMENT(creditCardNumber));

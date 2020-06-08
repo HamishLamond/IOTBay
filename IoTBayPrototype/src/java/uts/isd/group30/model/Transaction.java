@@ -5,6 +5,7 @@
  */
 package uts.isd.group30.model;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 /**
  *
@@ -15,11 +16,11 @@ public class Transaction {
     private double value;
     private int customerId;
     private int status;
-    private Date created;
-    private Date lastUpdated;
+    private Timestamp created;
+    private Timestamp lastUpdated;
     private BigInteger cardNumber;
 
-    public Transaction(int id, double value, int customerId, int status, Date created, Date lastUpdated) {
+    public Transaction(int id, double value, int customerId, int status, Timestamp created, Timestamp lastUpdated) {
         this.id = id;
         this.value = value;
         this.customerId = customerId;
@@ -28,7 +29,7 @@ public class Transaction {
         this.lastUpdated = lastUpdated;
     }
 
-    public Transaction(int id, double value, int customerId, int status, Date created, Date lastUpdated, BigInteger cardNumber) {
+    public Transaction(int id, double value, int customerId, int status, Timestamp created, Timestamp lastUpdated, BigInteger cardNumber) {
         this.id = id;
         this.value = value;
         this.customerId = customerId;
@@ -78,11 +79,11 @@ public class Transaction {
         this.status = status;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 

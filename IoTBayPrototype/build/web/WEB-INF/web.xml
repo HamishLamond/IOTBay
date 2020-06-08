@@ -24,6 +24,18 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddDeviceServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.AddDeviceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PreviousTransactionServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.PreviousTransactionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderListServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.OrderListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrationServlet</servlet-name>
         <url-pattern>/RegistrationServlet</url-pattern>
@@ -48,25 +60,45 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
     <servlet>
         <servlet-name>AddPaymentServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.AddPaymentServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PaymentDetails</servlet-name>
-        <servlet-class>uts.isd.group30.controller.PaymentDetailsServlet</servlet-class>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchPaymentServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.searchPaymentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddPaymentServlet</servlet-name>
         <url-pattern>/AddPaymentServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PaymentDetails</servlet-name>
-        <url-pattern>/PaymentDetails</url-pattern>
+        <servlet-name>searchPaymentServlet</servlet-name>
+        <url-pattern>/searchPaymentServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/PaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddDeviceServlet</servlet-name>
+        <url-pattern>/AddDeviceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PreviousTransactionServlet</servlet-name>
+        <url-pattern>/PreviousTransactionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderListServlet</servlet-name>
+        <url-pattern>/OrderListServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
 </web-app>

@@ -8,7 +8,7 @@ package uts.isd.group30.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -16,15 +16,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uts.isd.group30.model.Customer;
-import uts.isd.group30.model.Transaction;
+import uts.isd.group30.model.Device;
 import uts.isd.group30.model.dao.DBManager;
 
 /**
  *
- * @author Hamish Lamond
+ * @author hoang
  */
-public class OrderListServlet extends HttpServlet {
+public class AddDeviceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +42,10 @@ public class OrderListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderListServlet</title>");
+            out.println("<title>Servlet AddDevice</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrderListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddDevice at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,18 +64,18 @@ public class OrderListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        String name = request.getParameter("name");
         DBManager manager = (DBManager) session.getAttribute("manager");
-        Customer customer = (Customer) session.getAttribute("customer");
-        if (customer != null) {
-            try {
-                ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
-                request.setAttribute("transactions", transactions);
-                request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+        try {    
+            Device device = manager.getDeviceByName(name);
+            if (device!= null){
+            session.setAttribute("device", device);
+            request.getRequestDispatcher("addDevice.jsp").include(request, response);}
+            else{
+                request.getRequestDispatcher("main.jsp").include(request, response);
             }
-        } else {
-            request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddDeviceServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -92,19 +91,22 @@ public class OrderListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        DBManager manager = (DBManager) session.getAttribute("manager");
-        Customer customer = (Customer) session.getAttribute("customer");
-        if (customer != null) {
-            try {
-                ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
-                request.setAttribute("transactions", transactions);
-                request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        Device device = (Device) session.getAttribute("device");
+        int stock = device.getStock();
+        String name = device.getName();
+        int value = Integer.parseInt(request.getParameter("value"));
+        if (value <= stock){
+        HashMap <String, Integer> cart = (HashMap <String, Integer>) session.getAttribute("cart");
+        cart.put(name,value);
+        session.setAttribute("cart", cart);
+        session.setAttribute("stockErr","");
+        response.sendRedirect("CatalogueServlet?action=list");
         } else {
-            request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
+            session.setAttribute("stockErr","Devices adding to cart exceeded devices in stock");
+            request.getRequestDispatcher("addDevice.jsp").forward(request, response);
         }
+        
+        
     }
 
     /**
