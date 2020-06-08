@@ -3,6 +3,7 @@ package uts.isd.group30.controller;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpSession;
 
 public class Validators implements Serializable {
 
@@ -13,6 +14,7 @@ public class Validators implements Serializable {
     private String creditCardExpiryPattern = "([0-9]{2})(/)([0-9]{2})";
     private String creditCardCVCPattern = "([0-9]{3})";
     private String phonePattern = "([0-9]{10})";
+    private String numberPattern = "[0-9]+";
 
     public Validators() {
     }
@@ -63,5 +65,19 @@ public class Validators implements Serializable {
 
     public boolean validateCreditCardCVC(String creditCardCVC) {
         return validate(creditCardCVCPattern, creditCardCVC);
+    }
+
+    public boolean validateNumber(String number) {
+        return validate(numberPattern, number);
+    }
+
+    public void clear(HttpSession session) {
+        session.setAttribute("stockErr", "");
+        session.setAttribute("quantityErr", "");
+        session.setAttribute("formatErr", "");
+        session.setAttribute("existErr", "");
+        session.setAttribute("deleteErr", "");
+        session.setAttribute("format2Err", "");
+
     }
 }

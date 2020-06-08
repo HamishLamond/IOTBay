@@ -64,6 +64,18 @@
         <servlet-name>CreateTransactionServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.CreateTransactionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteDeviceServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.DeleteDeviceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeviceServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.EditDeviceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffAddDeviceServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.StaffAddDeviceServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDetailsServlet</servlet-name>
         <url-pattern>/UserDetailsServlet</url-pattern>
@@ -151,6 +163,18 @@
     <servlet-mapping>
         <servlet-name>CreateTransactionServlet</servlet-name>
         <url-pattern>/CreateTransactionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteDeviceServlet</servlet-name>
+        <url-pattern>/DeleteDeviceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeviceServlet</servlet-name>
+        <url-pattern>/EditDeviceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffAddDeviceServlet</servlet-name>
+        <url-pattern>/StaffAddDeviceServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

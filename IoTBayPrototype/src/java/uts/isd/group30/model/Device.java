@@ -25,6 +25,15 @@ public class Device {
         this.stock = stock;
         this.stockWarnThreshold = stockWarnThreshold;
     }
+    
+    public Device(int id, String name, String description, double cost, int stock, int stockWarnThreshold) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
+        this.stock = stock;
+        this.stockWarnThreshold = stockWarnThreshold;
+    }
 
     public int getId() {
         return id;

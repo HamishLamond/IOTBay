@@ -8,7 +8,6 @@ package uts.isd.group30.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,7 +22,7 @@ import uts.isd.group30.model.dao.DBManager;
  *
  * @author hoang
  */
-public class AddDeviceServlet extends HttpServlet {
+public class EditDeviceServlet extends HttpServlet {
     Validators validator = new Validators();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +41,10 @@ public class AddDeviceServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddDevice</title>");
+            out.println("<title>Servlet EditDeviceServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddDevice at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditDeviceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,7 +70,7 @@ public class AddDeviceServlet extends HttpServlet {
             Device device = manager.getDeviceByName(name);
             if (device != null) {
                 session.setAttribute("device", device);
-                request.getRequestDispatcher("addDevice.jsp").include(request, response);
+                request.getRequestDispatcher("editDevice.jsp").include(request, response);
             } else {
                 request.getRequestDispatcher("main.jsp").include(request, response);
             }
@@ -92,29 +91,28 @@ public class AddDeviceServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Device device = (Device) session.getAttribute("device");
-        int stock = device.getStock();
-        String name = device.getName();
-        String value = request.getParameter("value");
+
+        String name = request.getParameter("name");
+        String desc = request.getParameter("desc");
+        
         validator.clear(session);
-
-        if (!validator.validateNumber(value)) {
-            session.setAttribute("quantityErr", "Quantity must be a number!");
-            request.getRequestDispatcher("addDevice.jsp").include(request, response);
-        } else {
-            int value2 = Integer.parseInt(value);
-            if (value2 > stock) {
-                session.setAttribute("stockErr", "Devices adding to cart exceeded devices in stock");
-                request.getRequestDispatcher("addDevice.jsp").include(request, response);
-            } else {
-                HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                cart.put(name, value2);
-                session.setAttribute("cart", cart);
-                response.sendRedirect("CatalogueServlet?action=list");
-            }
+        DBManager manager = (DBManager) session.getAttribute("manager");
+        int id;
+        try {
+            id = manager.getDeviceIDByName(name);
+            double cost = Double.parseDouble(request.getParameter("cost"));
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            int threshold = Integer.parseInt(request.getParameter("threshold"));
+            Device device = new Device(id, name, desc, cost, stock, threshold);
+            session.setAttribute("device", device);
+            manager.updateDevice(id, name, desc, cost, stock, threshold);
+            response.sendRedirect("CatalogueServlet?action=list");
+        } catch (SQLException ex) {
+            Logger.getLogger(EditDeviceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException ex) {
+            session.setAttribute("format2Err", "Incorrect format");
+            request.getRequestDispatcher("editDevice.jsp").include(request, response);
         }
-
-
     }
 
     /**

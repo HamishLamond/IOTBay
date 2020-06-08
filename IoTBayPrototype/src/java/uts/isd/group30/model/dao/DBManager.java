@@ -376,6 +376,15 @@ public class DBManager {
         return items;
     }
 
+    public boolean isDeviceInTransaction(int id) throws SQLException{
+        ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONLINEITEM WHERE DEVICEID ="+ id);
+        return rs.next();
+    }
+    
+    public void addDevice (String name, String desc, double cost, int stock, int threshold) throws SQLException{
+        st.executeUpdate("INSERT INTO IOTBAY.DEVICE (DEVICENAME, DESCRIPTION, DEVICECOST, STOCK, STOCKWARNINGNUMBER) VALUES ('"+name+"', '"+ desc+"', "+cost+", "+stock+", "+threshold+")");
+    }
+    
     public void updateDeviceStock(int deviceId, int boughtAmount) throws SQLException {
         ResultSet rs = st.executeQuery("SELECT STOCK FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId);
         int currentStock;
@@ -389,8 +398,8 @@ public class DBManager {
         String query = "SELECT DEVICENAME FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId;
         ResultSet rs = st.executeQuery(query);
         while (rs.next()) {
-            return rs.getString(1);
-        }
+        return rs.getString(1);
+    }
         return null;
     }
 
@@ -398,21 +407,30 @@ public class DBManager {
         ResultSet result = st.executeQuery("SELECT * FROM IOTBAY.DEVICE WHERE DEVICENAME='" + name + "'");
         while (result.next()) {
             return result.getInt("deviceId");
-        }
+    }
         return 0;
     }
 
     public Device getDeviceByName(String name1) throws SQLException {
         ResultSet result = st.executeQuery("SELECT * FROM IOTBAY.DEVICE WHERE DEVICENAME='" + name1 + "'");
         while (result.next()) {
+            int id = result.getInt(1);
             String name = result.getString(2);
             String desc = result.getString(3);
             Double cost = result.getDouble(4);
             int stock = result.getInt(5);
             int threshold = result.getInt(6);
-            return new Device(name, desc, cost, stock, threshold);
+            return new Device(id, name, desc, cost, stock, threshold);
         }
         return null;
+    }
+
+    public void updateDevice(int id, String name, String desc, double cost, int stock, int threshold) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.DEVICE SET DEVICENAME='" + name + "',DESCRIPTION='" + desc + "',DEVICECOST=" + cost + ",STOCK=" + stock + ",STOCKWARNINGNUMBER=" + threshold + " WHERE DEVICEID=" + id);
+    }
+
+    public void deleteDevice(int id) throws SQLException {
+        st.executeUpdate("DELETE FROM IOTBAY.DEVICE WHERE DEVICEID=" + id);
     }
 
     public ArrayList<Device> findDevice(String search) throws SQLException {
@@ -420,12 +438,13 @@ public class DBManager {
         ResultSet rs = st.executeQuery(query);
         ArrayList<Device> list = new ArrayList();
         while (rs.next()) {
+            int id = rs.getInt(1);
             String name = rs.getString(2);
             String description = rs.getString(3);
             double cost = rs.getDouble(4);
             int stock = rs.getInt(5);
             int threshold = rs.getInt(6);
-            list.add(new Device(name, description, cost, stock, threshold));
+            list.add(new Device(id, name, description, cost, stock, threshold));
         }
         return list;
     }
@@ -449,13 +468,15 @@ public class DBManager {
         ResultSet rs = st.executeQuery(fetch);
         ArrayList<Device> list = new ArrayList();
         while (rs.next()) {
+            int id = rs.getInt(1);
             String name = rs.getString(2);
             String description = rs.getString(3);
             double cost = rs.getDouble(4);
             int stock = rs.getInt(5);
             int threshold = rs.getInt(6);
-            list.add(new Device(name, description, cost, stock, threshold));
+            list.add(new Device(id, name, description, cost, stock, threshold));
         }
         return list;
     }
+
 }

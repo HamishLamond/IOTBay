@@ -8,7 +8,6 @@ package uts.isd.group30.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,8 +22,8 @@ import uts.isd.group30.model.dao.DBManager;
  *
  * @author hoang
  */
-public class AddDeviceServlet extends HttpServlet {
-    Validators validator = new Validators();
+public class DeleteDeviceServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,10 +41,10 @@ public class AddDeviceServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddDevice</title>");
+            out.println("<title>Servlet DeleteDeviceServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddDevice at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteDeviceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,21 +62,23 @@ public class AddDeviceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String name = request.getParameter("name");
+       HttpSession session = request.getSession();
+        Validators validator = new Validators();
+        Device device = (Device) session.getAttribute("device");
+        int id = device.getId();
         DBManager manager = (DBManager) session.getAttribute("manager");
         validator.clear(session);
         try {
-            Device device = manager.getDeviceByName(name);
-            if (device != null) {
-                session.setAttribute("device", device);
-                request.getRequestDispatcher("addDevice.jsp").include(request, response);
-            } else {
-                request.getRequestDispatcher("main.jsp").include(request, response);
+            if (manager.isDeviceInTransaction(id)) {
+                session.setAttribute("deleteErr", "Cannot delete because Device is in Transaction");
+                request.getRequestDispatcher("editDevice.jsp").include(request, response);
+            } else if(!manager.isDeviceInTransaction(id)) {
+                manager.deleteDevice(id);
+                response.sendRedirect("CatalogueServlet?action=list");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddDeviceServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            Logger.getLogger(DeleteDeviceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
     /**
@@ -91,30 +92,7 @@ public class AddDeviceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Device device = (Device) session.getAttribute("device");
-        int stock = device.getStock();
-        String name = device.getName();
-        String value = request.getParameter("value");
-        validator.clear(session);
-
-        if (!validator.validateNumber(value)) {
-            session.setAttribute("quantityErr", "Quantity must be a number!");
-            request.getRequestDispatcher("addDevice.jsp").include(request, response);
-        } else {
-            int value2 = Integer.parseInt(value);
-            if (value2 > stock) {
-                session.setAttribute("stockErr", "Devices adding to cart exceeded devices in stock");
-                request.getRequestDispatcher("addDevice.jsp").include(request, response);
-            } else {
-                HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                cart.put(name, value2);
-                session.setAttribute("cart", cart);
-                response.sendRedirect("CatalogueServlet?action=list");
-            }
-        }
-
-
+        processRequest(request, response);
     }
 
     /**

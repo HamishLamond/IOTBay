@@ -4,6 +4,7 @@
     Author     : hoang
 --%>
 
+<%@page import="uts.isd.group30.model.Customer"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="uts.isd.group30.model.Device"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,28 +15,33 @@
         <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>JSP Page</title>
     </head>
-    <body>
+    <body class="body_no_image">
         <div class="header">
             <h1>IoTBay</h1>
-        </div>
-        <div class="top_right_link_div">
-            <c:if test="${customer != null}">
-                <a href="logout.jsp">Logout</a>
-                <a href="myDetails.jsp">My Details</a>
-                <a href="OrderListServlet?action=list">Order List</a>
-                <a href="PaymentServlet?action=viewList">View Payment list</a>
-            </c:if>
-            <c:if test="${customer == null}">
-                <a href="loginRegister.jsp">Login/Register</a>
-            </c:if>
-            <a href="CatalogueServlet?action=list">Catalogue</a>
-            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
-            <a href="index.jsp">Home</a>
         </div>
         <%
             Device device = (Device) request.getSession().getAttribute("device");
             String stockErr = (String) session.getAttribute("stockErr");
+            String quantityErr = (String) session.getAttribute("quantityErr");
+            Customer customer = (Customer) request.getSession().getAttribute("customer");
         %>
+        <div class="top_right_link_div">
+            <% if (customer != null){ %>
+
+                <a href="logout.jsp">Logout</a>
+                <a href="myDetails.jsp">My Details</a>
+                <a href="OrderListServlet?action=list">Order List</a>
+                <a href="PaymentServlet?action=viewList">View Payment list</a>
+            <%} else {%>
+            <c:if test="${customer == null}">
+                <a href="loginRegister.jsp">Login/Register</a>
+            </c:if>
+            <%}%>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
+            <a href="index.jsp">Home</a>
+        </div>
+            <h2>Add to Cart</h2>
         <table class="order_list_table">
             <thead>
                 <tr>
@@ -60,7 +66,7 @@
                     <td>Quantity: </td>
                     <td><input type="number" name="value"></td>
                     <td><input class="button" type="submit" value="Add"></td>
-                    <td><%=(stockErr != null ? stockErr : "")%></td>
+                <i><%=(quantityErr != null ? quantityErr : "")%><%=(stockErr != null ? stockErr : "")%></i>
                 </tr>
 
             </table>
