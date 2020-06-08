@@ -71,7 +71,7 @@
                     <td><center>
                     <input type="hidden" name="isUpdate" value="true">
                     <input type="hidden" name="oldNumber" value="<%=oldPayment.getCreditCardNumber()%>">
-                    <input type="hidden" name="origin"  value="1">
+                    <input type="hidden" name="origin"  value="<%=customer.getId()%>">
                     <input type="hidden" name="tempPayment" value="yes">
                     <input class="button" type="submit" value="Update" required>
                 </center>
