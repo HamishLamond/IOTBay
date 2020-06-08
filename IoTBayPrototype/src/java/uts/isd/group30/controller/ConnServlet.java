@@ -8,6 +8,7 @@ package uts.isd.group30.controller;
 import java.io.IOException;
    import java.sql.Connection;
    import java.sql.SQLException;
+import java.util.HashMap;
    import java.util.logging.Level;
    import java.util.logging.Logger;
    import javax.servlet.ServletException;
@@ -44,7 +45,9 @@ import java.io.IOException;
                Logger.getLogger(ConnServlet.class.getName()).log(Level.SEVERE, null, ex);
            }
            //export the DB manager to the view-session (JSPs)
-           session.setAttribute("manager", manager);           
+           session.setAttribute("manager", manager); 
+           HashMap<String, Integer> cart = new HashMap<>();
+           session.setAttribute("cart", cart);
        }   
         
        @Override //Destroy the servlet and release the resources of the application (terminate also the db connection)
