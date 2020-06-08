@@ -20,14 +20,16 @@
         </div>
         <%
             Customer customer = (Customer) session.getAttribute("customer");
+            //gets customer bean from the session
             String CCNErr = (String) session.getAttribute("CCNErr");
             String CCEErr = (String) session.getAttribute("CCEErr");
             String CCCVCErr = (String) session.getAttribute("CCCVCErr");
             String Success = (String) session.getAttribute("Success");
             String isUpdate = (String) session.getAttribute("isUpdate");
+            //Gets information from the servlet about any input errors
         %>
         <div class="top_right_link_div">
-            <% if (customer != null) { %>
+            <% if (customer != null) { //checks if customer is anonymous%>
             <a href="logout.jsp">Logout</a>
             <a href="myDetails.jsp">My Details</a>
             <a href="OrderListServlet?action=list">Order List</a>
@@ -46,7 +48,7 @@
             %>
             <h4><%=Success%></h4>
             <%
-                }
+                } //Checks if add payment had been succeesfull and if it has displays a success/error message
             %>
             <table>
                 <tr>

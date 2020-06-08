@@ -89,18 +89,18 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.setAttribute("deviceNumbers", deviceNumbers);
             request.setAttribute("totalCost", totalCost);
             session.setAttribute("cartCost", totalCost);
-            if (customer != null) {
+            if (customer != null) {//checks to see if customer is anonymous
                 try {
                     Payment paymentMethod = manager.getDefaultPayment(customer.getId());
-                    session.setAttribute("paymentMethod", paymentMethod);
+                    session.setAttribute("paymentMethod", paymentMethod);//Saves default payment method in session
                 } catch (Exception e) {
                     System.out.print("customer null:" + e);
                     //Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, e);
                 }
-            } else if ((tempPaymentMethod != null)) {
-                session.setAttribute("paymentMethod", tempPaymentMethod);
+            } else if ((tempPaymentMethod != null)) {//Checks to see if anonymous user has already set up a payment method
+                session.setAttribute("paymentMethod", tempPaymentMethod);//Sends anonymous payment method bean for order confirmation
             } else {
-                System.out.print("Customer name is null");
+                System.out.print("Customer name is null");//If no default payment is set, send a null value to order confirmation 
                 session.setAttribute("paymentMethod", null);
             }
             request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);

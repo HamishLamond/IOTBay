@@ -67,43 +67,37 @@ public class PaymentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
         try {
-            //DBConnector connector = new DBConnector();
-            //Connection conn = connector.openConnection();
-            //DBManager manager = new DBManager(conn);
             DBManager manager = (DBManager) session.getAttribute("manager");
             //
             if (action.equalsIgnoreCase("viewList")) {
                 try {
                     try {
-                        Customer customer = (Customer) session.getAttribute("customer");
-                        ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(customer.getId());
-                        session.setAttribute("paymentList", paymentList);
+                        Customer customer = (Customer) session.getAttribute("customer");//Gets customer Id to return payments of customer
+                        ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(customer.getId()); //Calls database to get payment methods of customer
+                        session.setAttribute("paymentList", paymentList); //Saves payment methods in session
                         request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
                     } catch (Exception ex) {
-                        session.setAttribute("paymentList", null);
+                        session.setAttribute("paymentList", null);//If customer is anonymous send a null response
                         request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
                     }
                 } catch (Exception ex) {
                     //System.out.print(ex);
                 }
-            } else if (action.equalsIgnoreCase("delete")) {
-                int number = Integer.parseInt(request.getParameter("number"));
-                ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
-                System.out.print(paymentList.get(number).getCreditCardNumber());
-                manager.deletePaymentDetails(paymentList.get(number).getCreditCardNumber());
-                paymentList.remove(paymentList.get(number));
-                session.setAttribute("paymentList", paymentList);
+            } else if (action.equalsIgnoreCase("delete")) {//Checks what action user wants
+                int number = Integer.parseInt(request.getParameter("number")); //Gets index value of the payment method to delete
+                ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList"); //Gets the payment array 
+                manager.deletePaymentDetails(paymentList.get(number).getCreditCardNumber()); //Calls database to delete the payment
+                paymentList.remove(paymentList.get(number)); //Removes payment from session array
+                session.setAttribute("paymentList", paymentList); //Return array
                 request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("update")) {
-                int index = Integer.parseInt(request.getParameter("index"));
-                ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
-                //int customerId = Integer.parseInt(request.getParameter("CId"));
-                //Payment oldPayment = new Payment(creditCardNumber, creditCardExpiry, creditCardCVC, isDefault, customerId);
-                session.setAttribute("oldPayment", paymentList.get(index));
+                int index = Integer.parseInt(request.getParameter("index"));//Gets index number of payment method to update
+                ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");//Gets array from session
+                session.setAttribute("oldPayment", paymentList.get(index));//saves payment in session as old payment to pass onto updatejsp
                 session.setAttribute("CCNMsg", null);
                 session.setAttribute("CCEMsg", null);
                 session.setAttribute("CCCVCMsg", null);
-                session.setAttribute("SuccessUpdate", null);
+                session.setAttribute("SuccessUpdate", null);//Sets all messages to null
                 request.getRequestDispatcher("updatePayment.jsp").forward(request, response);
             }
             //

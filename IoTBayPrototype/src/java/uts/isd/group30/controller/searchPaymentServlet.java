@@ -77,25 +77,27 @@ public class searchPaymentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String searchRequest = request.getParameter("searchBox");
         String searchOption = request.getParameter("searchOption");
-        ArrayList<Payment> paymentSearch = new ArrayList<Payment>();
-        ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
-        if (searchOption.equals("creditCardNumberSearch")) {
+        ArrayList<Payment> paymentSearch = new ArrayList<Payment>();//Defines new array
+        ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");//Gets array of all payment methods which is saved in session
+        if (searchOption.equals("creditCardNumberSearch")) {//Checks which option is selected for search
             for (int i = 0; i < paymentList.size(); i++) {
                 if (paymentList.get(i).getCreditCardNumber().equals(searchRequest)) {
-                    paymentSearch.add(paymentList.get(i));
+                    paymentSearch.add(paymentList.get(i));//Searches through payment method array for searchbox value and adds it to another array of payments
                 }
             }
-            session.setAttribute("paymentSearch", paymentSearch);
+            session.setAttribute("paymentSearch", paymentSearch);//Returns array of found payments
             request.getRequestDispatcher("viewPaymentSearch.jsp").include(request, response);
-        } else if (searchOption.equals("dateSearch")) {
+        } else if (searchOption.equals("dateSearch")) {//Checks which option is selected for search
             String[] searchRequestSplit = searchRequest.split("-");
-            for (int i = 0; i < paymentList.size(); i++) {
-                Timestamp created = paymentList.get(i).getCreated();
+            for (int i = 0; i < paymentList.size(); i++) { //iterates through all customer payments
+                Timestamp created = paymentList.get(i).getCreated();//Gets timetamps for payments
                 Timestamp updated = paymentList.get(i).getLastUpdated();
                 if ((created.getMonth() == Integer.parseInt(searchRequestSplit[1])) | (created.getDate() == Integer.parseInt(searchRequestSplit[0])) | (created.getYear() == Integer.parseInt(searchRequestSplit[2]))) {
-                    paymentSearch.add(paymentList.get(i));
+                    //converts timestamps into ints for comparison
+                    paymentSearch.add(paymentList.get(i));//adds any found values to array
                 } else if ((updated.getMonth() == Integer.parseInt(searchRequestSplit[1])) | (updated.getDate() == Integer.parseInt(searchRequestSplit[0])) | (updated.getYear() == Integer.parseInt(searchRequestSplit[2]))) {
-                    paymentSearch.add(paymentList.get(i));
+                    //converts timestamps into int for comparison for updated date
+                    paymentSearch.add(paymentList.get(i));//adds any found values to array
                 }
             }
             session.setAttribute("paymentSearch", paymentSearch);

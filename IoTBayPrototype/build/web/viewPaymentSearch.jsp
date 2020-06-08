@@ -13,6 +13,7 @@
         <%
             Customer customer = (Customer) session.getAttribute("customer");
             ArrayList<Payment> paymentSearch = (ArrayList<Payment>) session.getAttribute("paymentSearch");
+            //Retrieves a list of payments which match the criteria
             String DefaultString = "False";
         %>
         <div class="header">
@@ -42,7 +43,7 @@
                     <th><input type="submit" name="submitSearch"></th>
                 </tr>
             </table>
-        </form>
+        </form><!--This form sends the searchbox data to the servlet-->
         <table class="order_list_table">
             <tr>
                 <th>Credit Card Number</th>

@@ -16,7 +16,6 @@ public class AddPaymentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1- retrieve the current session
         HttpSession session = request.getSession();
-        //2- create an instance of the Validator class
         Validators validator = new Validators();
         //3- capture the posted email
         String CCN = request.getParameter("CCN");
@@ -25,23 +24,13 @@ public class AddPaymentServlet extends HttpServlet {
         String tempPayment = request.getParameter("tempPayment");
         String CCCVC = request.getParameter("CCCVC");
         String Checkbox = request.getParameter("Chkbox");
+        //Gets information from the view page
         int isDefault = 0;
         if (Checkbox != null) {
-            isDefault = 1;
+            isDefault = 1;//Converts checkbox value into Int value for the isDefault field
         }
-        //if(isDefaultBool){
-        //    isDefault = "TRUE";
-        //}
-        //else{
-        //    isDefault= "FALSE";
-        //}
-        int origin = Integer.parseInt(request.getParameter("origin"));
-        //4- capture the posted password
-        //5- retrieve the manager instance from session
+        int origin = Integer.parseInt(request.getParameter("origin"));//Gets customerId
         try {
-            //DBConnector connector = new DBConnector();
-            //Connection conn = connector.openConnection();
-            //DBManager db = new DBManager(conn); This was done for testing purposes while the connection servlet was being setup
             DBManager db = (DBManager) session.getAttribute("manager");
             if (isUpdate.equals("true")) {
                 String oldNumber = request.getParameter("oldNumber");
@@ -56,27 +45,28 @@ public class AddPaymentServlet extends HttpServlet {
                     request.getRequestDispatcher("updatePayment.jsp").include(request, response);
                 } else {
                     try {
-                        if (isDefault == 1) {
+                        if (isDefault == 1) {//Checks to see is customer wants this as new default
                             Payment defaultPaymentId = db.getDefaultPayment(origin);
                             try {
                                 db.updatePaymentDetails(defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardExpiry(), defaultPaymentId.getCreditCardCVC(), 0);
+                                //Checks which payment was default before and removes it from default
                             } catch (Exception e) {
                                 System.out.print("Unable to remove default payment:" + e);
                             }
                         }
-                        db.updatePaymentDetails(oldNumber, CCN, CCE, CCCVC, isDefault);
+                        db.updatePaymentDetails(oldNumber, CCN, CCE, CCCVC, isDefault);//Updates payment
                         session.setAttribute("SuccessUpdate", "Successfully updated payment details");
                         session.setAttribute("CCNMsg", CCN);
                         session.setAttribute("CCEMsg", CCE);
                         session.setAttribute("CCCVCMsg", CCCVC);
-                        request.getRequestDispatcher("updatePayment.jsp").include(request, response);
+                        request.getRequestDispatcher("updatePayment.jsp").include(request, response);//Dispatches it back with success message
                     } catch (Exception e) {
                         System.out.print(e);
                         session.setAttribute("Success", "Unable to add payment details");
-                        request.getRequestDispatcher("updatePayment.jsp").include(request, response);
+                        request.getRequestDispatcher("updatePayment.jsp").include(request, response);//Dispatches with error message
                     }
                 }
-            } else if (tempPayment.equals("yes")) {
+            } else if (tempPayment.equals("yes")) {//Checks to see if it is an anonymous customer
                 if (!validator.validateCreditCardNumber(CCN)) {
                     session.setAttribute("CCNErr", "Error:Credit card format incorrect");
                     request.getRequestDispatcher("addTempPayment.jsp").include(request, response);
@@ -85,11 +75,11 @@ public class AddPaymentServlet extends HttpServlet {
                     request.getRequestDispatcher("addTempPayment.jsp").include(request, response);
                 } else if (!validator.validateCreditCardCVC(CCCVC)) {
                     session.setAttribute("CCCVCErr", "Error:Credit Card CVC format incorrect");
-                    request.getRequestDispatcher("addTempPayment.jsp").include(request, response);
+                    request.getRequestDispatcher("addTempPayment.jsp").include(request, response);//Validates all the input
                 } else {
-                    Payment tempPaymentMethod = new Payment(CCN, CCE, CCCVC, 0, 0);
-                    session.setAttribute("tempPaymentMethod", tempPaymentMethod);
-                    request.getRequestDispatcher("index.jsp").include(request, response);
+                    Payment tempPaymentMethod = new Payment(CCN, CCE, CCCVC, 0, 0);//Creates new beans with the anonymous customer payment
+                    session.setAttribute("tempPaymentMethod", tempPaymentMethod);//Saves the beans in the session for reuse
+                    request.getRequestDispatcher("index.jsp").include(request, response);//Dispatches back home
                 }
             } else {
                 if (!validator.validateCreditCardNumber(CCN)) {
@@ -100,18 +90,20 @@ public class AddPaymentServlet extends HttpServlet {
                     request.getRequestDispatcher("addPayment.jsp").include(request, response);
                 } else if (!validator.validateCreditCardCVC(CCCVC)) {
                     session.setAttribute("CCCVCErr", "Error:Credit Card CVC format incorrect");
-                    request.getRequestDispatcher("addPayment.jsp").include(request, response);
+                    request.getRequestDispatcher("addPayment.jsp").include(request, response);//validates input
                 } else {
                     try {
-                        if (isDefault == 1) {
+                        if (isDefault == 1) {//checks to see if user wants this to be new default
                             Payment defaultPaymentId = db.getDefaultPayment(origin);
                             try {
                                 db.updatePaymentDetails(defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardExpiry(), defaultPaymentId.getCreditCardCVC(), 0);
+                                //Sets old default to 0
                             } catch (Exception e) {
                                 System.out.print("Unable to remove default payment:" + e);
                             }
                         }
                         db.addPaymentDetails(CCN, CCE, CCCVC, isDefault, origin);
+                        //adds payment method
                         session.setAttribute("Success", "Successfully added payment details");
                         request.getRequestDispatcher("addPayment.jsp").include(request, response);
                     } catch (Exception e) {
