@@ -82,7 +82,9 @@ public class CreateTransactionServlet extends HttpServlet {
                 manager.addTransactionLineItem(transactionId, deviceId, entry.getValue(), cost);
                 manager.updateDeviceStock(deviceId, entry.getValue());
             }
-            manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
+            if(paymentMethod.getCustomerId()!=0){
+                manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
+            }
             cart.clear();
             session.setAttribute("cart", cart);
             request.getRequestDispatcher("main.jsp").forward(request, response);

@@ -22,6 +22,7 @@ import uts.isd.group30.model.Payment;
              String CCN = request.getParameter("CCN");
              String isUpdate = request.getParameter("isUpdate");
              String CCE = request.getParameter("CCE");
+             String tempPayment = request.getParameter("tempPayment");
              String CCCVC = request.getParameter("CCCVC");
              String Checkbox = request.getParameter("Chkbox");
              int isDefault = 0;
@@ -80,6 +81,25 @@ import uts.isd.group30.model.Payment;
                          request.getRequestDispatcher("updatePayment.jsp").include(request, response);
                      }
                  }
+                }
+                else if(tempPayment.equals("yes")){
+                     if (!validator.validateCreditCardNumber(CCN)) {
+                        session.setAttribute("CCNErr", "Error:Credit card format incorrect");
+                        request.getRequestDispatcher("addTempPayment.jsp").include(request, response);
+                    }
+                    else if (!validator.validateCreditCardExpiry(CCE)){
+                        session.setAttribute("CCEErr", "Error:Credit Card Expiry format incorrect");
+                        request.getRequestDispatcher("addTempPayment.jsp").include(request, response);
+                    }
+                    else if (!validator.validateCreditCardCVC(CCCVC)){
+                        session.setAttribute("CCCVCErr", "Error:Credit Card CVC format incorrect");
+                        request.getRequestDispatcher("addTempPayment.jsp").include(request, response);
+                    }
+                    else{
+                        Payment tempPaymentMethod = new Payment(CCN,CCE, CCCVC, 0, 0);
+                        session.setAttribute("tempPaymentMethod", tempPaymentMethod);
+                        request.getRequestDispatcher("index.jsp").include(request, response);
+                    }
                 }
                 else{
                  if (!validator.validateCreditCardNumber(CCN)) {

@@ -122,10 +122,41 @@
                         <td>Total Cost</td>
                     </tr>
                 </table>
-                <div class="middle_link_div">
-                    <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
-                    <a class="middle_link_button" href="addTempPayment">Set payment method</a>
-                </div>
+                <h2>Payment method</h2>
+            <table class="order_list_table">
+                <tr>
+                    <th>Credit Card Number</th>
+                    <th>Credit Card Expiry</th>
+                    <th>Credit Card CVC</th>
+                </tr>
+                <% if (paymentMethod != null){ %>
+                <tr>
+                    <th>${paymentMethod.getCreditCardNumber()}</th>
+                    <th>${paymentMethod.getCreditCardExpiry()}</th>
+                    <th>${paymentMethod.getCreditCardCVC()}</th>
+                </tr>
+            </table>
+            <div class="middle_link_div">
+                <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
+                <a class="middle_link_button" href="addTempPayment.jsp">Reset Payment methods</a>
+                <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
+            </div>
+                <%
+                    }
+                else
+                {
+                %>
+                <tr>
+                    <th colspan="3">Please set default payment before continuing</th>
+                </tr>
+            </table>
+            <div class="middle_link_div">
+                <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
+                <a class="middle_link_button" href="addTempPayment.jsp">Set payment method</a>
+            </div>
+                <%
+                    }
+                    %>
             </c:if>
         </c:if>
     </body>

@@ -71,6 +71,7 @@
                 <center>
                     <input type="hidden" name="isUpdate" value="false">
                     <input type="hidden" name="oldPayment" value="null">
+                    <input type="hidden" name="tempPayment" value="no">
                     <input type="hidden" name="origin" value=${customer.getId()}>
                     <input class="button" type="submit" value="Add" required>
                 </center>
