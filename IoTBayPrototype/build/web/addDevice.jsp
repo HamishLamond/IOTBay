@@ -15,6 +15,23 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
+        <div class="top_right_link_div">
+            <c:if test="${customer != null}">
+            <a href="logout.jsp">Logout</a>
+            <a href="myDetails.jsp">My Details</a>
+            <a href="OrderListServlet?action=list">Order List</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
+            </c:if>
+            <c:if test="${customer == null}">
+            <a href="loginRegister.jsp">Login/Register</a>
+            </c:if>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
+            <a href="index.jsp">Home</a>
+        </div>
         <%
             Device device = (Device) request.getSession().getAttribute("device");
             String stockErr = (String) session.getAttribute("stockErr");

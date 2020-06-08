@@ -15,7 +15,9 @@
             ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
             String DefaultString = "False";
          %>
-        <h1>IoTBay</h1>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
             <a href="myDetails.jsp">My Details</a>

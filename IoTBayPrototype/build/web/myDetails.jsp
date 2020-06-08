@@ -11,8 +11,9 @@
     </head>
     <body>
         <div class="header">
-            <h1>My Details...</h1>
+            <h1>IoTBay</h1>
         </div>
+        <h2>My Details...</h2>
         <%
             Customer customer;
             Staff staff;
@@ -22,24 +23,21 @@
             String address = "";
             Integer phoneNumber = null;
             Boolean isStaff = session.getAttribute("userType") == "staff";
-            
-            if (!isStaff)
-            {
-                customer = (Customer)session.getAttribute("customer");
+
+            if (!isStaff) {
+                customer = (Customer) session.getAttribute("customer");
                 name = customer.getName();
                 email = customer.getEmail();
                 password = customer.getPassword();
                 phoneNumber = customer.getPhoneNumber();
                 address = customer.getAddress();
-            }
-            else if (isStaff)
-            {
+            } else if (isStaff) {
                 staff = (Staff) session.getAttribute("staff");
                 name = staff.getName();
                 email = staff.getEmail();
                 password = staff.getPassword();
                 phoneNumber = staff.getPhone();
-            }  
+            }
         %>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
@@ -48,20 +46,17 @@
             <a href="PaymentServlet?action=viewList">View Payment list</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
-            <% 
-                if (isStaff) 
-                { 
-                    %>
-                    <a href="staffWelcome.jsp">Home</a>
-                    <% } 
-                else
-                {
-                    %>
-                    <a href="index.jsp">Home</a>
-                    <%
+            <%
+                if (isStaff) {
+            %>
+            <a href="staffWelcome.jsp">Home</a>
+            <% } else {
+            %>
+            <a href="index.jsp">Home</a>
+            <%
                 }
-                %>
-            
+            %>
+
         </div>
         <hr>
         <h2>These are your current details:</h2>
@@ -71,7 +66,7 @@
                     Email Address:
                 </td>
                 <td>
-                    <%=email %>
+                    <%=email%>
                 </td>
             </tr>
             <tr>
@@ -79,7 +74,7 @@
                     Password:
                 </td>
                 <td>
-                    <%=password %>
+                    <%=password%>
                 </td>
             </tr>
             <tr>
@@ -87,7 +82,7 @@
                     Name:
                 </td>
                 <td>
-                    <%=name %>
+                    <%=name%>
                 </td>
             </tr>
             <tr>
@@ -95,26 +90,25 @@
                     Contact Number
                 </td>
                 <td>
-                    <%=phoneNumber %>
+                    <%=phoneNumber%>
                 </td>
             </tr>
-            <% 
-                if (!isStaff) 
-                { 
-                    %>
-                    <tr>
+            <%
+                if (!isStaff) {
+            %>
+            <tr>
                 <td>
                     Delivery Address:
                 </td>
                 <td>
-                    <%=address %>
+                    <%=address%>
                 </td>
             </tr>
 
-                    <% } 
-                %>
-            
-            
+            <% }
+            %>
+
+
         </table>
         <a class="middle_link_button" href="updateDetails.jsp">Edit my Details</a>
         <a class="middle_link_button" href="deleteAccount.jsp">Delete my Account</a>

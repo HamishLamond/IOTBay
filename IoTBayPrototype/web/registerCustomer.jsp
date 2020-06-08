@@ -8,9 +8,9 @@
     </head>
     <body>
         <div class="header">
-            <h1>Account Creation (Customer)</h1>
+            <h1>IoTBay</h1>
         </div>
-        <h2></h2>
+        <h2>Account Creation (Customer)</h2>
         <form action="CustomerRegistrationServlet" method="post">
             <table>
                 <tr>
@@ -39,7 +39,7 @@
                     <input type="hidden" name="origin"  value="register">
                     <input class="button" type ="submit" value="Register" required>
                 </center>
-                    </td>
+                </td>
                 </tr>
             </table>
         </form>
