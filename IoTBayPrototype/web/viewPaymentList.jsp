@@ -40,8 +40,8 @@
                     <th>Search</th>
                     <th> 
                         <select name="searchOption">
-                            <option value="creditCardNumberSearch">CreditCardNumber</option>
-                            <option value="dateSearch">Date</option>
+                            <option value="creditCardNumberSearch">Credit Card Number</option>
+                            <option value="dateSearch">Date(dd-mm-yyyy)</option>
                         </select>
                     </th>
                     <th><input type="text" name="searchBox" required></th>
