@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>RegistrationServlet</servlet-name>
-        <servlet-class>uts.isd.group30.controller.RegistrationServlet</servlet-class>
+        <servlet-name>StaffRegistrationServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.StaffRegistrationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerRegistrationServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.CustomerRegistrationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserDetailsServlet</servlet-name>
@@ -29,6 +33,14 @@
         <servlet-class>uts.isd.group30.controller.AddDeviceServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UpdateDetailsServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.UpdateDetailsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAccountServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.DeleteAccountServlet</servlet-class>
+    </servlet>
+	<servlet>
         <servlet-name>PreviousTransactionServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.PreviousTransactionServlet</servlet-class>
     </servlet>
@@ -40,10 +52,18 @@
         <servlet-name>CurrentOrderServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.CurrentOrderServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>RegistrationServlet</servlet-name>
-        <url-pattern>/RegistrationServlet</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>RemoveLineItemServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.RemoveLineItemServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmOrderServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.ConfirmOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTransactionServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.CreateTransactionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDetailsServlet</servlet-name>
         <url-pattern>/UserDetailsServlet</url-pattern>
@@ -59,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>CatalogueServlet</servlet-name>
         <url-pattern>/CatalogueServlet</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>CustomerRegistrationServlet</servlet-name>
+        <url-pattern>/CustomerRegistrationServlet</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>StaffRegistrationServlet</servlet-name>
+        <url-pattern>/StaffRegistrationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -93,6 +121,14 @@
         <url-pattern>/AddDeviceServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UpdateDetailsServlet</servlet-name>
+        <url-pattern>/UpdateDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAccountServlet</servlet-name>
+        <url-pattern>/DeleteAccountServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
         <servlet-name>PreviousTransactionServlet</servlet-name>
         <url-pattern>/PreviousTransactionServlet</url-pattern>
     </servlet-mapping>
@@ -103,6 +139,18 @@
     <servlet-mapping>
         <servlet-name>CurrentOrderServlet</servlet-name>
         <url-pattern>/CurrentOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveLineItemServlet</servlet-name>
+        <url-pattern>/RemoveLineItemServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmOrderServlet</servlet-name>
+        <url-pattern>/ConfirmOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTransactionServlet</servlet-name>
+        <url-pattern>/CreateTransactionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

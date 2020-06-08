@@ -7,14 +7,7 @@ package uts.isd.group30.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +20,7 @@ import uts.isd.group30.model.dao.DBManager;
  *
  * @author Hamish Lamond
  */
-public class CurrentOrderServlet extends HttpServlet {
+public class RemoveLineItemServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +39,10 @@ public class CurrentOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CurrentOrderServlet</title>");            
+            out.println("<title>Servlet RemoveLineItemServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CurrentOrderServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RemoveLineItemServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,26 +63,11 @@ public class CurrentOrderServlet extends HttpServlet {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-        Double totalCost = 0.0;
-        try {
-            ArrayList<Device> deviceArray = new ArrayList();
-            ArrayList<Integer> deviceNumbers = new ArrayList();
-            for (Map.Entry<String, Integer> entry : cart.entrySet()){
-                String deviceName = entry.getKey();
-                int numberOfDevices = entry.getValue();
-                Device device = manager.getDeviceByName(deviceName);
-                deviceArray.add(device);
-                deviceNumbers.add(numberOfDevices);
-                totalCost += device.getCost() * numberOfDevices;
-            }
-            request.setAttribute("cart", cart);
-            request.setAttribute("deviceArray", deviceArray);
-            request.setAttribute("deviceNumbers", deviceNumbers);
-            request.setAttribute("totalCost", totalCost);
-            request.getRequestDispatcher("currentOrder.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String remove = request.getParameter("remove");
+        remove = remove.substring(1, remove.length()-1);
+        cart.remove(remove);
+        session.setAttribute("cart", cart);
+        request.getRequestDispatcher("CurrentOrderServlet").forward(request, response);
     }
 
     /**

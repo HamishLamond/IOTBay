@@ -6,6 +6,8 @@
 package uts.isd.group30.model.dao;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import uts.isd.group30.model.*;
 
@@ -53,6 +55,47 @@ public class DBManager {
             return null;
         }
     }
+    
+    
+    public boolean CheckCustomerExistsByEmail(String email) throws SQLException
+    {
+        ResultSet results = st.executeQuery("SELECT COUNT(*) FROM IOTBAY.CUSTOMER AS TOTAL WHERE CUSTOMEREMAIL = '" + email + "'");
+        
+        if (results.getInt(1) > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean CheckStaffExistsByEmail(String email) throws SQLException
+    {
+        ResultSet results = st.executeQuery("SELECT COUNT(*) FROM IOTBAY.STAFF AS TOTAL WHERE STAFFEMAIL = '" + email + "'");
+        
+        if (results.getInt(1) > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public void UpsertStaff(Staff staff) throws SQLException {        
+   String query = "INSERT INTO IOTBAY.STAFF ("
+           + "staffName, "
+           + "staffEmail,"
+           + "staffPhone,"
+           + "rank,"
+           + "staffPassword,"
+           + "staffManager) VALUES (" + 
+
+           "'" + staff.getName() + "'" + ", " + 
+            "'" + staff.getEmail() + "'" + ", " + 
+            staff.getPhone() + ", " +
+            (staff.getIsManager() ? 1 : 0) + ", " +
+            "'" + staff.getPassword() + "'" + ", " + 
+            staff.getManager() + ")";
+    }
+            
     public Payment getDefaultPayment(int customerId) throws SQLException {
         try{
             ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE isDefault=1 and customerId=" + customerId);
@@ -66,6 +109,7 @@ public class DBManager {
         catch (Exception ex){
             return null;
         }
+        
     }
 
     //update a user details in the database   
@@ -77,31 +121,35 @@ public class DBManager {
                + "customerPhone,"
                + "customerPassword) VALUES (" + 
                
-               customer.getName() + "," + 
-                customer.getAddress() + "," + 
-                customer.getEmail() + "," + 
+               "'" + customer.getName() + "'" + "," + 
+                "'" + customer.getAddress() + "'" + "," + 
+                "'" + customer.getEmail() + "'" + "," + 
                 customer.getPhoneNumber() + "," +
-                customer.getPassword() + ")";
+                "'" + customer.getPassword() + "'" + ")";
+       String x = "";
         st.executeUpdate(query);   
-    }      
+    }   
 
-    public void UpsertStaff(Staff staff) throws SQLException {        
-       String query = "INSERT INTO IOTBAY.STAFF ("
-               + "staffName, "
-               + "staffEmail,"
-               + "staffPhone,"
-               + "rank,"
-               + "staffPassword,"
-               + "staffManager) VALUES (" + 
-               
-               staff.getName() + ", " + 
-                staff.getEmail() + ", " + 
-                staff.getPhone() + ", " +
-                (staff.getIsManager() ? "1" : "0") + ", " +
-                staff.getPassword() + ", " + 
-                staff.getManager() + ")";
+    public void UpdateStaff(Staff staff) throws SQLException {        
+       String query = "UPDATE IOTBAY.STAFF SET "
+               + "staffName = " + "'" + staff.getName() + "', " 
+               + "staffPhone = " + staff.getPhone() + ", " 
+               + "rank = " + (staff.getIsManager() ? 1 : 0) + ", "
+               + "staffPassword = " + "'" + staff.getPassword() + "' "
+               + "staffManager = " + staff.getManager() + "  " 
+               + "WHERE STAFFEMAIL = '" + staff.getEmail() + "'";
         st.executeUpdate(query);   
-    }       
+    }   
+
+    public void UpdateCustomer(Customer customer) throws SQLException {        
+       String query = "UPDATE IOTBAY.CUSTOMER SET "
+               + "customerName = " + "'" + customer.getName() + "', " 
+               + "customerPhone = " + customer.getPhoneNumber() + ", " 
+               + "customerAddress = '" + customer.getAddress() + "', "
+               + "customerPassword = " + "'" + customer.getPassword() + "' "
+               + "WHERE CUSTOMEREMAIL = '" + customer.getEmail() + "'";
+        st.executeUpdate(query);   
+    }     
 
     //delete a user from the database   
     public void deleteCustomerByEmail(String email) throws SQLException{       
@@ -117,6 +165,8 @@ public class DBManager {
     
     public void addAccessLog(AccessLog accessLog) throws SQLException
     {
+        String t = accessLog.getTimeStamp().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS Z");
         String query = "INSERT INTO IOTBAY.ACCESSLOG ("
                 + "customerId, "
                 + "eventType, "
@@ -124,11 +174,10 @@ public class DBManager {
                 + "logTime) VALUES (" + 
                 
                 accessLog.getCustomerId() + ", " +
-                accessLog.getEventType() + ", " +
+                "'" + accessLog.getEventType() + "'" + ", " +
                 accessLog.getStaffId() + ", " +
-                accessLog.getTimeStamp() + ")";
-        
-        st.executeUpdate(query);
+                "'" + Timestamp.valueOf(accessLog.getTimeStamp()) + "'" + ")";
+        st.execute(query);
     }
     
     public ArrayList<AccessLog> getStaffAccessLogsByUserId(int staffId) throws SQLException
@@ -142,7 +191,7 @@ public class DBManager {
                     results.getInt("customerId"), 
                     results.getInt("staffId"), 
                     results.getString("eventType"),
-                    results.getDate("logTime")));
+                    LocalDateTime.parse(results.getString("logTime"))));
         }
         return accessLogs;
     }
@@ -158,14 +207,14 @@ public class DBManager {
                     results.getInt("customerId"), 
                     results.getInt("staffId"), 
                     results.getString("eventType"),
-                    results.getDate("logTime")));
+                    LocalDateTime.parse(results.getString("logTime"))));
         }
         return accessLogs;
     }
     
     
     public Customer getCustomerByLoginDetails (String email, String password) throws SQLException {
-        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.CUSTOMER WHERE EMAIL = '" + email + "'");
+        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
         
         
         while(results.next()) {
@@ -189,7 +238,7 @@ public class DBManager {
     }
     
     public Staff getStaffByLoginDetails (String email, String password) throws SQLException {
-        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.STAFF WHERE EMAIL = '" + email + "'");
+        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.STAFF WHERE CUSTOMEREMAIL = '" + email + "'");
         
         
         while(results.next()) {
@@ -216,9 +265,12 @@ public class DBManager {
         return null;
     }
     
-    // Adds a transaction to the database
-    public void addTransaction(double value, int customerId) throws SQLException {
+    // Adds a transaction to the database and returns its ID
+    public int addTransaction(double value, int customerId) throws SQLException {
         st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID,  STATUS) VALUES (" + value + ", " + customerId + ", 0)");
+        ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerId + " ORDER BY TRANSACTIONID DESC");
+        results.next();
+        return results.getInt("transactionId");
     }
     
     // Gets a list of transactions associated with the provided customerID
@@ -301,6 +353,11 @@ public class DBManager {
         st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionID);
     }
     
+    public void addTransactionLineItem(int transactionId, int deviceId, int quantity, Double cost) throws SQLException{
+        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONLINEITEM (TRANSACTIONID, DEVICEID, QUANTITY, COST) VALUES (" + transactionId + ", " + deviceId + 
+                ", " + quantity + ", " + cost + ")");
+    }
+    
     public ArrayList<TransactionLineItem> getTransactionLineItems(int transactionId) throws SQLException {
         ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionId);
         ArrayList<TransactionLineItem> items = new ArrayList();
@@ -317,8 +374,18 @@ public class DBManager {
     public String getDeviceName(int deviceId) throws SQLException{
         String query = "SELECT DEVICENAME FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId;
         ResultSet rs = st.executeQuery(query);
-        rs.next();
-        return rs.getString(1);
+        while (rs.next()){
+            return rs.getString(1);
+        }
+        return null;
+    }
+    
+    public int getDeviceIDByName (String name) throws SQLException{
+        ResultSet result = st.executeQuery("SELECT * FROM IOTBAY.DEVICE WHERE DEVICENAME='" + name + "'");
+        while (result.next()){
+            return result.getInt("deviceId");
+        }
+        return 0;
     }
     
     public Device getDeviceByName (String name1) throws SQLException{

@@ -8,11 +8,8 @@ package uts.isd.group30.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -20,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.group30.model.Customer;
 import uts.isd.group30.model.Device;
 import uts.isd.group30.model.dao.DBManager;
 
@@ -27,7 +25,7 @@ import uts.isd.group30.model.dao.DBManager;
  *
  * @author Hamish Lamond
  */
-public class CurrentOrderServlet extends HttpServlet {
+public class CreateTransactionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +44,10 @@ public class CurrentOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CurrentOrderServlet</title>");            
+            out.println("<title>Servlet CreateTransactionServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CurrentOrderServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateTransactionServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,27 +67,24 @@ public class CurrentOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
+        Customer customer = (Customer) session.getAttribute("customer");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-        Double totalCost = 0.0;
+        Double totalCost = (Double) session.getAttribute("cartCost");
         try {
-            ArrayList<Device> deviceArray = new ArrayList();
-            ArrayList<Integer> deviceNumbers = new ArrayList();
+            Integer transactionId = manager.addTransaction(totalCost, customer.getId());
             for (Map.Entry<String, Integer> entry : cart.entrySet()){
                 String deviceName = entry.getKey();
-                int numberOfDevices = entry.getValue();
                 Device device = manager.getDeviceByName(deviceName);
-                deviceArray.add(device);
-                deviceNumbers.add(numberOfDevices);
-                totalCost += device.getCost() * numberOfDevices;
+                Double cost = device.getCost() * entry.getValue();
+                manager.addTransactionLineItem(transactionId, manager.getDeviceIDByName(deviceName), entry.getValue(), cost);
             }
-            request.setAttribute("cart", cart);
-            request.setAttribute("deviceArray", deviceArray);
-            request.setAttribute("deviceNumbers", deviceNumbers);
-            request.setAttribute("totalCost", totalCost);
-            request.getRequestDispatcher("currentOrder.jsp").forward(request, response);
+            cart.clear();
+            session.setAttribute("cart", cart);
+            request.getRequestDispatcher("main.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     /**

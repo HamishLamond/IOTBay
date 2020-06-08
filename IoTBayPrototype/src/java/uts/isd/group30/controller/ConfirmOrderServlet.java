@@ -10,9 +10,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -27,7 +25,7 @@ import uts.isd.group30.model.dao.DBManager;
  *
  * @author Hamish Lamond
  */
-public class CurrentOrderServlet extends HttpServlet {
+public class ConfirmOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +44,10 @@ public class CurrentOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CurrentOrderServlet</title>");            
+            out.println("<title>Servlet ConfirmOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CurrentOrderServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConfirmOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -86,7 +84,8 @@ public class CurrentOrderServlet extends HttpServlet {
             request.setAttribute("deviceArray", deviceArray);
             request.setAttribute("deviceNumbers", deviceNumbers);
             request.setAttribute("totalCost", totalCost);
-            request.getRequestDispatcher("currentOrder.jsp").forward(request, response);
+            session.setAttribute("cartCost", totalCost);
+            request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
