@@ -9,11 +9,10 @@
         <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>Details Page</title>
     </head>
-    <body>
+    <body class="body_no_image">
         <div class="header">
             <h1>IoTBay</h1>
         </div>
-        <h2>My Details...</h2>
         <%
             Customer customer;
             Staff staff;
@@ -58,7 +57,6 @@
             %>
 
         </div>
-        <hr>
         <h2>These are your current details:</h2>
         <table>
             <tr>
