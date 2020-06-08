@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>JSP Page</title>
     </head>
-    <body><div class="header">
+    <body class="body_no_image">
+        <div class="header">
             <% Payment paymentMethod = (Payment) session.getAttribute("paymentMethod");%>
             <h1>IoTBay</h1>
         </div>

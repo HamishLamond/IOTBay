@@ -15,10 +15,7 @@
         <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>Current Order</title>
     </head>
-    <body>
-        <%
-            //Customer customer = (Customer)session.getAttribute("customer");
-%>
+    <body class="body_no_image">
         <div class="header">
             <h1>IoTBay</h1>
         </div>
