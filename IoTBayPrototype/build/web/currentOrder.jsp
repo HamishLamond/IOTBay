@@ -18,7 +18,7 @@
     <body>
         <%
             //Customer customer = (Customer)session.getAttribute("customer");
-        %>
+%>
         <div class="header">
             <h1>IoTBay</h1>
         </div>
@@ -46,7 +46,7 @@
                             <td>${deviceArray[iterator].getCost()}</td>
                             <td>${deviceNumbers[iterator]}</td>
                             <td>${deviceArray[iterator].getCost() * deviceNumbers[iterator]}</td>
-                            <td>X</td>
+                            <td><button type="button" onclick="location.href = 'RemoveLineItemServlet?remove=\'${deviceArray[iterator].getName()}\''">Remove</button></td>
                         </tr>
                     </c:forEach>
                     <tr>
@@ -56,8 +56,10 @@
                         <td>${totalCost}</td>
                     </tr>
                 </table>
-                <a class="middle_link_button">Cancel</a>
-                <a class="middle_link_button" href="main.jsp">Checkout</a>
+                <div class="middle_link_div">
+                <a class="middle_link_button" href="main.jsp">Home</a>
+                <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
+                </div>
             </c:if>
             <c:if test="${cart.size() == 0}">
                 <p>No items found in cart.</p>
@@ -74,13 +76,13 @@
                         <th>Total</th>
                         <th></th>
                     </tr>
-                    <c:forEach items="cartDevices" var="device">
+                    <c:forEach var="iterator" begin="0" end="${deviceArray.size() - 1}">
                         <tr>
-                            <td>${device.key.getName()}</td>
-                            <td>${device.key.getCost()}</td>
-                            <td>${device.value}</td>
-                            <td>${device.key.getCost() * device.value}</td>
-                            <td>X</td>
+                            <td>${deviceArray[iterator].getName()}</td>
+                            <td>${deviceArray[iterator].getCost()}</td>
+                            <td>${deviceNumbers[iterator]}</td>
+                            <td>${deviceArray[iterator].getCost() * deviceNumbers[iterator]}</td>
+                            <td><button type="button" onclick="location.href = 'RemoveLineItemServlet?remove=\'${deviceArray[iterator].getName()}\''">Remove</button></td>
                         </tr>
                     </c:forEach>
                     <tr>
@@ -90,13 +92,15 @@
                         <td>Total Cost</td>
                     </tr>
                 </table>
-                <a class="middle_link_button">Cancel</a>
-                <a class="middle_link_button" href="main.jsp">Checkout</a>
+                <div class="middle_link_div">
+                <a class="middle_link_button" href="main.jsp">Home</a>
+                <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
+                </div>
             </c:if>
             <c:if test="${cart.size() == 0}">
                 <p>No items found in cart.</p>
+                <a class="middle_link_button" href="main.jsp">Main Page</a>
             </c:if>
         </c:if>
-        <a class="middle_link_button" href="main.jsp">Main Page</a>
     </body>
 </html>

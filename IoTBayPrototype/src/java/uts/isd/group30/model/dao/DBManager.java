@@ -216,9 +216,12 @@ public class DBManager {
         return null;
     }
     
-    // Adds a transaction to the database
-    public void addTransaction(double value, int customerId) throws SQLException {
+    // Adds a transaction to the database and returns its ID
+    public int addTransaction(double value, int customerId) throws SQLException {
         st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, CUSTOMERID,  STATUS) VALUES (" + value + ", " + customerId + ", 0)");
+        ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerId + " ORDER BY TRANSACTIONID DESC");
+        results.next();
+        return results.getInt("transactionId");
     }
     
     // Gets a list of transactions associated with the provided customerID
@@ -301,6 +304,11 @@ public class DBManager {
         st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionID);
     }
     
+    public void addTransactionLineItem(int transactionId, int deviceId, int quantity, Double cost) throws SQLException{
+        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONLINEITEM (TRANSACTIONID, DEVICEID, QUANTITY, COST) VALUES (" + transactionId + ", " + deviceId + 
+                ", " + quantity + ", " + cost + ")");
+    }
+    
     public ArrayList<TransactionLineItem> getTransactionLineItems(int transactionId) throws SQLException {
         ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionId);
         ArrayList<TransactionLineItem> items = new ArrayList();
@@ -317,8 +325,18 @@ public class DBManager {
     public String getDeviceName(int deviceId) throws SQLException{
         String query = "SELECT DEVICENAME FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId;
         ResultSet rs = st.executeQuery(query);
-        rs.next();
-        return rs.getString(1);
+        while (rs.next()){
+            return rs.getString(1);
+        }
+        return null;
+    }
+    
+    public int getDeviceIDByName (String name) throws SQLException{
+        ResultSet result = st.executeQuery("SELECT * FROM IOTBAY.DEVICE WHERE DEVICENAME='" + name + "'");
+        while (result.next()){
+            return result.getInt("deviceId");
+        }
+        return 0;
     }
     
     public Device getDeviceByName (String name1) throws SQLException{
