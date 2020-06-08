@@ -95,20 +95,20 @@ public class StaffRegistrationServlet extends HttpServlet {
             try
             {
                 //Check to make sure email is free
-                if(manager.CheckStaffExistsByEmail(email))
-                {
-                    session.setAttribute("acctExistsErr", "There is already an account using this email!");
-                    dispatcher.include(request, response);
-                    return;
-                }
-                else
+                //if(manager.CheckStaffExistsByEmail(email))
+                //{
+                    //session.setAttribute("acctExistsErr", "There is already an account using this email!");
+                    //dispatcher.include(request, response);
+                    //return;
+                //}
+                //else
                 {
                     manager.UpsertStaff(staff);
                     staff = manager.getStaffByLoginDetails(email, password);
                     manager.addAccessLog(new AccessLog(staff.getId(), null, "customerCreated", LocalDateTime.now()));
                     session.setAttribute("staff", staff);
                     session.setAttribute("userType", "staff");
-                    request.getRequestDispatcher("staffWelcome.jsp");
+                    request.getRequestDispatcher("staffWelcome.jsp").forward(request, response);
                 }
             }
             catch (SQLException e)

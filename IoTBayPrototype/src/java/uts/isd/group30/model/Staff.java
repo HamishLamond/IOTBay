@@ -62,7 +62,7 @@ public class Staff {
         return isManager;
     }
 
-    public int getManager() {
+    public Integer getManager() {
         return manager;
     }
 

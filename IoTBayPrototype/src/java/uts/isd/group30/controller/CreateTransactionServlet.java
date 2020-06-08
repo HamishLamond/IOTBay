@@ -78,7 +78,9 @@ public class CreateTransactionServlet extends HttpServlet {
                 String deviceName = entry.getKey();
                 Device device = manager.getDeviceByName(deviceName);
                 Double cost = device.getCost() * entry.getValue();
-                manager.addTransactionLineItem(transactionId, manager.getDeviceIDByName(deviceName), entry.getValue(), cost);
+                int deviceId = manager.getDeviceIDByName(deviceName);
+                manager.addTransactionLineItem(transactionId, deviceId, entry.getValue(), cost);
+                manager.updateDeviceStock(deviceId, entry.getValue());
             }
             manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
             cart.clear();
