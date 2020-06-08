@@ -44,7 +44,7 @@
             <%
                 if (SuccessUpdate != null) {
             %>
-            <h2><%=SuccessUpdate%></h2>
+            <h4><%=SuccessUpdate%></h4>
             <%
                 }
             %>
