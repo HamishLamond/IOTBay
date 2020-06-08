@@ -7,24 +7,20 @@ package uts.isd.group30.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uts.isd.group30.model.Customer;
-import uts.isd.group30.model.Transaction;
-import uts.isd.group30.model.dao.DBManager;
+import uts.isd.group30.model.Payment;
 
 /**
  *
- * @author Hamish Lamond
+ * @author yash_
  */
-public class OrderListServlet extends HttpServlet {
+public class searchPaymentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +39,10 @@ public class OrderListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderListServlet</title>");
+            out.println("<title>Servlet searchPaymentServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrderListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet searchPaymentServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,20 +60,7 @@ public class OrderListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        DBManager manager = (DBManager) session.getAttribute("manager");
-        Customer customer = (Customer) session.getAttribute("customer");
-        if (customer != null) {
-            try {
-                ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
-                request.setAttribute("transactions", transactions);
-                request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -92,18 +75,33 @@ public class OrderListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        DBManager manager = (DBManager) session.getAttribute("manager");
-        Customer customer = (Customer) session.getAttribute("customer");
-        if (customer != null) {
-            try {
-                ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
-                request.setAttribute("transactions", transactions);
-                request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+        String searchRequest = request.getParameter("searchBox");
+        String searchOption = request.getParameter("searchOption");
+        ArrayList<Payment> paymentSearch = new ArrayList<Payment>();
+        ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
+        if(searchOption.equals("creditCardNumberSearch")){
+            for(int i=0; i<paymentList.size(); i++){
+                if(paymentList.get(i).getCreditCardNumber().equals(searchRequest)){
+                     paymentSearch.add(paymentList.get(i));
+                }
             }
-        } else {
-            request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
+            session.setAttribute("paymentSearch", paymentSearch);
+            request.getRequestDispatcher("viewPaymentSearch.jsp").include(request, response);
+        }
+        else if(searchOption.equals("dateSearch")){
+            String[] searchRequestSplit = searchRequest.split("-");
+            for(int i=0; i<paymentList.size(); i++){
+                Timestamp created = paymentList.get(i).getCreated();
+                Timestamp updated = paymentList.get(i).getLastUpdated();
+                if((created.getMonth()==Integer.parseInt(searchRequestSplit[1])) | (created.getDate()==Integer.parseInt(searchRequestSplit[0])) | (created.getYear()==Integer.parseInt(searchRequestSplit[2]))){
+                    paymentSearch.add(paymentList.get(i));
+                }
+                else if((updated.getMonth()==Integer.parseInt(searchRequestSplit[1])) | (updated.getDate()==Integer.parseInt(searchRequestSplit[0])) | (updated.getYear()==Integer.parseInt(searchRequestSplit[2]))){
+                    paymentSearch.add(paymentList.get(i));
+                }
+            }
+            session.setAttribute("paymentSearch", paymentSearch);
+            request.getRequestDispatcher("viewPaymentSearch.jsp").include(request, response);
         }
     }
 

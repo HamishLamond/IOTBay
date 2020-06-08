@@ -48,7 +48,7 @@
         
         <%
                 Customer customer = new Customer();
-                customer.setId(1); //this is done for testing purposes currently. Should be replaced by the user login fucntion soon.
+                customer.setId(2); //this is done for testing purposes currently. Should be replaced by the user login fucntion soon.
                 customer.setEmail(email);
                 customer.setPassword(password);
                 session.setAttribute("customer", customer);

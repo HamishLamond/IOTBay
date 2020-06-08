@@ -24,19 +24,19 @@ public class DBManager {
        st = conn.createStatement();   
     }
         
-    public void addPaymentDetails(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int customerId) throws SQLException {
-        st.executeUpdate("INSERT INTO IOTBAY.PAYMENT (creditCardNumber, creditCardExpiry, creditCardCVC, customerId) VALUES ('" + creditCardNumber + "', '" + creditCardExpiry + "', '" + creditCardCVC + "', " + customerId + ")");
+    public void addPaymentDetails(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefaultValue, int customerId) throws SQLException {
+        st.executeUpdate("INSERT INTO IOTBAY.PAYMENT (creditCardNumber, creditCardExpiry, creditCardCVC, isDefault, customerId) VALUES ('" + creditCardNumber + "', '" + creditCardExpiry + "', '" + creditCardCVC + "'," + isDefaultValue + "," + customerId + ")");
     }
     public void deletePaymentDetails(String id) throws SQLException {
         st.executeUpdate("DELETE FROM IOTBAY.PAYMENT WHERE creditCardNumber='" + id + "'");
     }
-    public void updatePaymentDetails() throws SQLException {
-        
+    public void updatePaymentDetails(String id, String newId, String newExpiry, String newCVC, int isDefaultValue) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.PAYMENT SET creditCardNumber='" + newId + "', creditCardExpiry='" + newExpiry + "', creditCardCVC='" + newCVC + "', isDefault=" + isDefaultValue + ", lastUpdated=CURRENT_TIMESTAMP WHERE creditCardNumber='" + id + "'");
     }
     public Payment getPaymentDetails(String CCN, int customerId) throws SQLException {
         try {
             ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE creditCardNumber = '" + CCN + "'");
-            return new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("customerId"));
+            return new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("isDefault"), results.getInt("customerId"), results.getTimestamp("createdOn"), results.getTimestamp("lastUpdated"));
         }
         catch (Exception ex){
             return null;
@@ -47,7 +47,7 @@ public class DBManager {
             ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE CUSTOMERID=" + customerId);
             ArrayList<Payment> paymentList = new ArrayList<Payment>();
             while (results.next()) {
-                paymentList.add(new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("customerId")));
+                paymentList.add(new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("isDefault"), results.getInt("customerId"), results.getTimestamp("createdOn"), results.getTimestamp("lastUpdated")));
             }
             return paymentList;
         }
@@ -55,6 +55,7 @@ public class DBManager {
             return null;
         }
     }
+    
     
     public boolean CheckCustomerExistsByEmail(String email) throws SQLException
     {
@@ -93,6 +94,22 @@ public class DBManager {
             (staff.getIsManager() ? 1 : 0) + ", " +
             "'" + staff.getPassword() + "'" + ", " + 
             staff.getManager() + ")";
+    }
+            
+    public Payment getDefaultPayment(int customerId) throws SQLException {
+        try{
+            ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.PAYMENT WHERE isDefault=1 and customerId=" + customerId);
+            while (results.next()){
+                if (results.getInt("isDefault")==1){
+                    return new Payment(results.getString("creditCardNumber"), results.getString("creditCardExpiry"), results.getString("creditCardCVC"), results.getInt("isDefault"), results.getInt("customerId"), results.getTimestamp("createdOn"), results.getTimestamp("lastUpdated"));
+                }
+            }
+            return null;
+        }
+        catch (Exception ex){
+            return null;
+        }
+        
     }
 
     //update a user details in the database   
@@ -291,6 +308,27 @@ public class DBManager {
         return null;
     }
     
+    public ArrayList<Transaction> getCustomerTransactions(int customerId) throws SQLException {
+        ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerId);
+        ArrayList<Transaction> list = new ArrayList();
+        while (rs.next()){
+            int transactionId = rs.getInt(1);
+            Double transactionValue = rs.getDouble(2);
+            Timestamp createdOn = rs.getTimestamp(4);
+            Timestamp lastModified = rs.getTimestamp(5);
+            int status = rs.getInt(6);
+            list.add(new Transaction(transactionId, transactionValue, customerId, status, createdOn, lastModified));
+        }
+        return list;
+        
+    }
+    
+    public Double getTransactionValue(int transactionId) throws SQLException{
+        ResultSet rs = st.executeQuery("SELECT TRANSACTIONVALUE FROM IOTBAY.TRANSACTIONS WHERE TRANSACTIONID=" + transactionId); 
+        rs.next();
+        return rs.getDouble(1);
+    }
+    
     // Updates the value and last modified date of a transaction
     public void updateTransactionValue(int transactionID, double transactionValue) throws SQLException { 
         st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET TRANSACTIONVALUE="+ transactionValue + ", LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
@@ -310,6 +348,26 @@ public class DBManager {
     public void deleteTransaction(int transactionID) throws SQLException {
         st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONS WHERE TRANSACTIONID=" + transactionID);
         st.executeUpdate("DELETE FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionID);
+    }
+    
+    public ArrayList<TransactionLineItem> getTransactionLineItems(int transactionId) throws SQLException {
+        ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONLINEITEM WHERE TRANSACTIONID=" + transactionId);
+        ArrayList<TransactionLineItem> items = new ArrayList();
+        while (rs.next()){
+            int id = rs.getInt(1);
+            int deviceId = rs.getInt(3);
+            int quantity = rs.getInt(4);
+            double cost = rs.getDouble(5);
+            items.add(new TransactionLineItem(id, transactionId, deviceId, quantity, cost));
+        }
+        return items;       
+    }
+    
+    public String getDeviceName(int deviceId) throws SQLException{
+        String query = "SELECT DEVICENAME FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId;
+        ResultSet rs = st.executeQuery(query);
+        rs.next();
+        return rs.getString(1);
     }
     
     public Device getDeviceByName (String name1) throws SQLException{

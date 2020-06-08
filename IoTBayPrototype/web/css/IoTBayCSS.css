@@ -97,13 +97,14 @@ p {
     width: 30px;
 }
 
-.order_list_table{
+.order_list_table, .previous_order_table{
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
 }
 
-.order_list_table, .order_list_table th, .order_list_table td {
+.order_list_table th, .order_list_table td,
+.previous_order_table th, .previous_order_table td{
     border: 1px solid black;
     padding: 10px;
 }
@@ -134,7 +135,7 @@ p {
     border: 1px solid black;
 }
 
-.order_table tr:last-child td{
+.order_table tr:last-child td, .previous_order_table tr:last-child td{
     border-left: 0;
     border-right: 0;
     border-bottom: 0;
@@ -149,11 +150,18 @@ p {
     border-right: 0;
 }
 
-.order_table tr:last-child td:nth-child(3) {
+.order_table tr:last-child td:nth-child(3),
+.previous_order_table tr:last-child td:nth-child(3){
     border-right: 1px solid black;
 }
 
-.order_table tr:last-child td:last-child{
+.order_table tr:last-child td:last-child,
+.previous_order_table tr:last-child td:last-child{
     border-right: 1px solid black;
     border-bottom: 1px solid black;
+}
+
+.empty_cell_bottom {
+    border-left: 0px;
+    border-bottom: 0px
 }
