@@ -53,7 +53,7 @@
                 
             </c:if>
             <h2>Payment method</h2>
-            <table>
+            <table class="order_list_table">
                 <tr>
                     <th>Credit Card Number</th>
                     <th>Credit Card Expiry</th>
