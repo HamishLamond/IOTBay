@@ -72,6 +72,5 @@
                 </tr>
             </table>
         </form>
-        <a href="PaymentServlet?action=viewList&origin=1">View Payment Details</a>
     </body>
 </html>
