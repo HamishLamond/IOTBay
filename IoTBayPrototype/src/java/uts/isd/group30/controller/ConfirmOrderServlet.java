@@ -88,7 +88,7 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.setAttribute("deviceNumbers", deviceNumbers);
             request.setAttribute("totalCost", totalCost);
             session.setAttribute("cartCost", totalCost);
-            if (customer.getName() != null) {
+            if (customer != null) {
                 Payment paymentMethod = manager.getDefaultPayment(customer.getId());
                 session.setAttribute("paymentMethod", paymentMethod);
             }
