@@ -67,9 +67,9 @@ public class CreateTransactionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Payment paymentMethod = (Payment) session.getAttribute("paymentMethod");
         DBManager manager = (DBManager) session.getAttribute("manager");
         Customer customer = (Customer) session.getAttribute("customer");
-        Payment paymentMethod = (Payment) session.getAttribute("paymentMethod");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         Double totalCost = (Double) session.getAttribute("cartCost");
         try {
@@ -82,7 +82,6 @@ public class CreateTransactionServlet extends HttpServlet {
                 manager.addTransactionLineItem(transactionId, deviceId, entry.getValue(), cost);
                 manager.updateDeviceStock(deviceId, entry.getValue());
             }
-            
             manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
             cart.clear();
             session.setAttribute("cart", cart);
@@ -90,7 +89,6 @@ public class CreateTransactionServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     /**

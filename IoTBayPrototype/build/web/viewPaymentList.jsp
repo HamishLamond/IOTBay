@@ -25,7 +25,8 @@
         </div>
         <h2>Payment Methods</h2>
         <%
-            try{
+            if(customer.getName()!=null){
+                try {
                 %>
         <form action="searchPaymentServlet" method="post">
             <table>
@@ -55,13 +56,13 @@
                 </tr>
                 <%
                         if (paymentList.size() > 0){
-                        for (int i = 0; i < paymentList.size(); i++){
-                            if(paymentList.get(i).getIsDefault()==1){
-                                DefaultString = "True";
-                            }
-                            else{
-                                DefaultString = "False";
-                            }
+                            for (int i = 0; i < paymentList.size(); i++){
+                                if(paymentList.get(i).getIsDefault()==1){
+                                    DefaultString = "True";
+                                }
+                                else{
+                                    DefaultString = "False";
+                                }
                     %>
                 <tr>
                     <td><%=paymentList.get(i).getCreditCardNumber()%></td>
@@ -74,20 +75,24 @@
                     <td><a href="PaymentServlet?action=delete&number=<%=i%>">Delete</a></td>
                 </tr>
                 <%
+                            }
                         }
-                        }
-                    }
-                    catch (Exception ex) {
                         %>
-            </table>
-            <h2>Order List</h2>
-            <p>Please log in to load your transaction list</p>
-            <%
-                    }
-                    %>
                 <tr>
                     <td colspan="8"><a href="addPayment.jsp">Add new payment</a></td>
                 </tr>
             </table>
+                <%
+                    }
+            catch (Exception ex) {
+                        ;
+                    }
+            }
+                    else{
+                        %>
+            <h4>Please log in to load your Payment methods</h4>
+            <%
+                }
+%>
     </body>
 </html>
