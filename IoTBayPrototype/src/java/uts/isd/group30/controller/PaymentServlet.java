@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.group30.model.Customer;
 import uts.isd.group30.model.Payment;
 import uts.isd.group30.model.dao.DBConnector;
 import uts.isd.group30.model.dao.DBManager;
@@ -66,15 +67,15 @@ public class PaymentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
             try {
-                DBConnector connector = new DBConnector();
-                Connection conn = connector.openConnection();
-                DBManager manager = new DBManager(conn);
-                //DBManager manager = (DBManager) session.getAttribute("manager");
+                //DBConnector connector = new DBConnector();
+                //Connection conn = connector.openConnection();
+                //DBManager manager = new DBManager(conn);
+                DBManager manager = (DBManager) session.getAttribute("manager");
                 //
                     if (action.equalsIgnoreCase("viewList")){
                         try {
-                            int origin = Integer.parseInt(request.getParameter("origin"));
-                            ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(origin);
+                            Customer customer = (Customer)session.getAttribute("customer");
+                            ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(customer.getId());
                             session.setAttribute("paymentList", paymentList);
                             request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
                         } 
@@ -83,10 +84,11 @@ public class PaymentServlet extends HttpServlet {
                         }
                     }
                     else if(action.equalsIgnoreCase("delete")){
-                        String number = request.getParameter("number");
-                        manager.deletePaymentDetails(number);
-                        int origin = Integer.parseInt(request.getParameter("origin"));
-                        ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(origin);
+                        int number = Integer.parseInt(request.getParameter("number"));
+                        ArrayList<Payment> paymentList = (ArrayList<Payment>)session.getAttribute("paymentList");
+                        manager.deletePaymentDetails(paymentList.get(number).getCreditCardNumber());
+                        paymentList.remove(paymentList.get(number));
+                        //int origin = Integer.parseInt(request.getParameter("origin"));
                         session.setAttribute("paymentList", paymentList);
                         request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
                     }

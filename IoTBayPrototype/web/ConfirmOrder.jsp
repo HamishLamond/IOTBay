@@ -4,6 +4,7 @@
     Author     : Hamish Lamond
 --%>
 
+<%@page import="uts.isd.group30.model.Payment"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,13 +15,13 @@
         <title>JSP Page</title>
     </head>
     <body><div class="header">
+            <% Payment paymentMethod = (Payment) session.getAttribute("paymentMethod");%>
             <h1>IoTBay</h1>
         </div>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="OrderListServlet?action=list">Order List</a>
-            <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
             <a href="main.jsp">Home</a>
         </div>
         <c:if test="${customer.getName() != null}">
@@ -49,11 +50,38 @@
                         <td>${totalCost}</td>
                     </tr>
                 </table>
-                <div class="middle_link_div">
-                    <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
-                    <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
-                </div>
+                
             </c:if>
+            <h2>Payment method</h2>
+            <table class="order_list_table">
+                <tr>
+                    <th>Credit Card Number</th>
+                    <th>Credit Card Expiry</th>
+                    <th>Credit Card CVC</th>
+                </tr>
+                <%if(paymentMethod!=null){%>
+                <tr>
+                    <th>${paymentMethod.getCreditCardNumber()}</th>
+                    <th>${paymentMethod.getCreditCardExpiry()}</th>
+                    <th>${paymentMethod.getCreditCardCVC()}</th>
+                </tr>
+                <%
+                    }
+                else
+                {
+                %>
+                <tr>
+                    <th colspan="3">Please set default payment</th>
+                </tr>
+                <%
+                    }
+                    %>
+            </table>
+            <div class="middle_link_div">
+                <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
+                <a class="middle_link_button" href="viewPaymentList">View Payment methods</a>
+                <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
+            </div>
         </c:if>
         <c:if test="${customer.getName() == null}">
             <h2>Current order</h2>

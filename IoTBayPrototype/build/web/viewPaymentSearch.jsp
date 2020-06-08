@@ -18,6 +18,7 @@
         <h1>IoTBay</h1>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
+            <a class="middle_link_button" href="viewPaymentList">View Payment methods</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="OrderListServlet?action=list">Order List</a>
             <a href="currentOrder.jsp">View Order [${cart.size()}]</a>

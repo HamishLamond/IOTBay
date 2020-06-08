@@ -30,7 +30,7 @@
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="OrderListServlet?action=list">Order List</a>
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
-            <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
         </div>
         <% if (customer.getName() != null){ %>
         <h2>Welcome to IoTBay, ${customer.name}!</h2>

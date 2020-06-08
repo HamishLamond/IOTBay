@@ -270,6 +270,9 @@ public class DBManager {
         results.next();
         return results.getInt("transactionId");
     }
+    public void addPaymentToTransaction(String creditCardNumber, int transactionID) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET creditCardNumber='"+ creditCardNumber + "', LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
+    }
     
     // Gets a list of transactions associated with the provided customerID
     public ArrayList<Integer> getCustomerTransactionIDs(int customerID) throws SQLException{
