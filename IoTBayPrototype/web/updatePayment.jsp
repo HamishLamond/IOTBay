@@ -35,9 +35,8 @@
             String CCCVCMsg = (String) session.getAttribute("CCCVCErr");
             String SuccessUpdate = (String) session.getAttribute("SuccessUpdate");
             String isUpdate = (String) session.getAttribute("isUpdate");
-            //Integer chckMsg = (Integer) session.getAttribute("chckEnable");
-            //System.out.print("chckMsg: " + chckMsg);
             Payment oldPayment = (Payment) session.getAttribute("oldPayment");
+            //Gets the oldPayment as a payment object which it can use to prefill the placeholders
         %>
         <h4>Update Payment</h4>
 

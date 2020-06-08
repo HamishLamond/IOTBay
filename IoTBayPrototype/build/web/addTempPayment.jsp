@@ -20,11 +20,14 @@
         </div>
         <%
             Customer customer = (Customer) session.getAttribute("customer");
+            //gets customer bean from the session
             String CCNErr = (String) session.getAttribute("CCNErr");
             String CCEErr = (String) session.getAttribute("CCEErr");
             String CCCVCErr = (String) session.getAttribute("CCCVCErr");
             String Success = (String) session.getAttribute("Success");
             String isUpdate = (String) session.getAttribute("isUpdate");
+            //Gets information from the servlet about any input errors
+            //This JSP is for the creation of payment beans for anonymous customers
         %>
         <div class="top_right_link_div">
             <% if (customer != null) { %>

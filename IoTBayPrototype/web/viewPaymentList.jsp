@@ -13,7 +13,9 @@
         <%
             Customer customer = (Customer) session.getAttribute("customer");
             ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
+            //gets the array of payments that the user has
             String DefaultString = "False";
+            //Sets the default answer for the isDefault field
         %>
         <div class="header">
             <h1>IoTBay</h1>
@@ -29,6 +31,7 @@
         <h2>Payment Methods</h2>
         <%
             if (customer != null) {
+                //Checks if customer is anonymous
                 try {
         %>
         <form action="searchPaymentServlet" method="post">
@@ -65,6 +68,7 @@
                         } else {
                             DefaultString = "False";
                         }
+                        //For loop to iterate through the entire paymentList and convert the default varaible from a int to a String
             %>
             <tr>
                 <td><%=paymentList.get(i).getCreditCardNumber()%></td>
@@ -73,15 +77,15 @@
                 <td><%=paymentList.get(i).getCreated()%></td>
                 <td><%=paymentList.get(i).getLastUpdated()%></td>
                 <td><%=DefaultString%></td>
-                <td><a href="PaymentServlet?action=update&index=<%=i%>">Update</a></td>
-                <td><a href="PaymentServlet?action=delete&number=<%=i%>">Delete</a></td>
+                <td><a href="PaymentServlet?action=update&index=<%=i%>">Update</a></td><!--Sends information about which Payment has been selected for updates-->
+                <td><a href="PaymentServlet?action=delete&number=<%=i%>">Delete</a></td> <!--This sends information about which Payment has been selected for deletion-->
             </tr>
             <%
                     }
                 }
             %>
             <tr>
-                <td colspan="8"><a href="addPayment.jsp">Add new payment</a></td>
+                <td colspan="8"><a href="addPayment.jsp">Add new payment</a></td><!--After the if statement so it is always present-->
             </tr>
         </table>
         <%
@@ -90,7 +94,7 @@
             }
         } else {
         %>
-        <h4>Please log in to load your Payment methods</h4>
+        <h4>Please log in to load your Payment methods</h4><!--For anonymous customers-->
         <%
             }
         %>
