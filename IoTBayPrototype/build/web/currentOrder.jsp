@@ -60,7 +60,7 @@
                     </tr>
                 </table>
                 <div class="middle_link_div">
-                <a class="middle_link_button" href="main.jsp">Home</a>
+                <a class="middle_link_button" href="index.jsp">Home</a>
                 <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
                 </div>
             </c:if>
@@ -96,13 +96,13 @@
                     </tr>
                 </table>
                 <div class="middle_link_div">
-                <a class="middle_link_button" href="main.jsp">Home</a>
+                <a class="middle_link_button" href="index.jsp">Home</a>
                 <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
                 </div>
             </c:if>
             <c:if test="${cart.size() == 0}">
                 <p>No items found in cart.</p>
-                <a class="middle_link_button" href="main.jsp">Main Page</a>
+                <a class="middle_link_button" href="index.jsp">Home</a>
             </c:if>
         </c:if>
     </body>

@@ -77,7 +77,7 @@
             </table>
             <div class="middle_link_div">
                 <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
-                <a class="middle_link_button" href="viewPaymentList?action=viewList">Set Payment methods</a>
+                <a class="middle_link_button" href="PaymentServlet?action=viewList">Set Payment methods</a>
                 <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
             </div>
                 <%
@@ -91,7 +91,7 @@
             </table>
             <div class="middle_link_div">
                 <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
-                <a class="middle_link_button" href="viewPaymentList?action=viewList">Change default payment methods</a>
+                <a class="middle_link_button" href="PaymentServlet?action=viewList">Change default payment methods</a>
             </div>
                 <%
                     }
@@ -124,7 +124,7 @@
                 </table>
                 <div class="middle_link_div">
                     <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
-                    <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
+                    <a class="middle_link_button" href="addTempPayment">Set payment method</a>
                 </div>
             </c:if>
         </c:if>
