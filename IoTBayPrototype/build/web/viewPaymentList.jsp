@@ -24,6 +24,9 @@
             <a href="main.jsp">Home</a>
         </div>
         <h2>Payment Methods</h2>
+        <%
+            try{
+                %>
         <form action="searchPaymentServlet" method="post">
             <table>
                 <tr>
@@ -51,7 +54,6 @@
                     <th>Delete</th>
                 </tr>
                 <%
-                    try{
                         if (paymentList.size() > 0){
                         for (int i = 0; i < paymentList.size(); i++){
                             if(paymentList.get(i).getIsDefault()==1){
@@ -69,14 +71,18 @@
                     <td><%=paymentList.get(i).getLastUpdated()%></td>
                     <td><%=DefaultString%></td>
                     <td><a href="PaymentServlet?action=update&index=<%=i%>">Update</a></td>
-                    <td><a href="PaymentServlet?action=delete&number=<%=paymentList.get(i).getCreditCardNumber()%>">Delete</a></td>
+                    <td><a href="PaymentServlet?action=delete&number=<%=i%>">Delete</a></td>
                 </tr>
                 <%
                         }
                         }
                     }
                     catch (Exception ex) {
-                        ;
+                        %>
+            </table>
+            <h2>Order List</h2>
+            <p>Please log in to load your transaction list</p>
+            <%
                     }
                     %>
                 <tr>

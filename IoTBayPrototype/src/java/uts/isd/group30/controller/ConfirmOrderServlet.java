@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.group30.model.Customer;
 import uts.isd.group30.model.Device;
+import uts.isd.group30.model.Payment;
 import uts.isd.group30.model.dao.DBManager;
 
 /**
@@ -67,6 +69,7 @@ public class ConfirmOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
+        Customer customer = (Customer) session.getAttribute("customer");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         Double totalCost = 0.0;
         try {
@@ -85,6 +88,8 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.setAttribute("deviceNumbers", deviceNumbers);
             request.setAttribute("totalCost", totalCost);
             session.setAttribute("cartCost", totalCost);
+            Payment paymentMethod = manager.getDefaultPayment(customer.getId());
+            session.setAttribute("paymentMethod", paymentMethod);
             request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -19,7 +19,7 @@
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
             <a href="main.jsp">Home</a>
-            <a href="PaymentServlet?action=viewList&origin=1">View Payment list</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
         </div>
         <%
             Customer customer = (Customer)session.getAttribute("customer");
@@ -34,7 +34,7 @@
             <%
                 if(Success!=null){
             %>
-            <h2><%=Success%></h2>
+            <h4><%=Success%></h4>
             <%
                 }
             %>
@@ -61,7 +61,7 @@
                 <center>
                     <input type="hidden" name="isUpdate" value="false">
                     <input type="hidden" name="oldPayment" value="null">
-                    <input type="hidden" name="origin" value="1">
+                    <input type="hidden" name="origin" value=${customer.getId()}>
                     <input class="button" type="submit" value="Add" required>
                 </center>
                     </td>

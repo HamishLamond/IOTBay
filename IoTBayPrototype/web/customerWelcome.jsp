@@ -15,6 +15,7 @@
         </div>
         <div class="top_right_link_div">
             <a href="myDetails.jsp">My Details</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="viewOrderList.jsp">Order List</a>
             <a href="logout.jsp">Logout</a>
