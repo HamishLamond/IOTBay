@@ -16,7 +16,8 @@
     </head>
     <body class="body_no_image">
         <div class="header">
-            <% Payment paymentMethod = (Payment) session.getAttribute("paymentMethod");%>
+            <% Payment paymentMethod = (Payment) session.getAttribute("paymentMethod");
+            %>
             <h1>IoTBay</h1>
         </div>
         <div class="top_right_link_div">
@@ -70,7 +71,7 @@
                 </tr>
                 <% if (paymentMethod != null){ %>
                 <tr>
-                    <th>${paymentMethod.getCreditCardNumber()}</th>
+                    <th><%=paymentMethod.getCreditCardNumber()%></th>
                     <th>${paymentMethod.getCreditCardExpiry()}</th>
                     <th>${paymentMethod.getCreditCardCVC()}</th>
                 </tr>
