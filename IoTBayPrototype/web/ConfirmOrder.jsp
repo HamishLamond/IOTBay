@@ -65,23 +65,28 @@
                     <th>${paymentMethod.getCreditCardExpiry()}</th>
                     <th>${paymentMethod.getCreditCardCVC()}</th>
                 </tr>
+            </table>
+            <div class="middle_link_div">
+                <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
+                <a class="middle_link_button" href="viewPaymentList?action=viewList">Set Payment methods</a>
+                <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
+            </div>
                 <%
                     }
                 else
                 {
                 %>
                 <tr>
-                    <th colspan="3">Please set default payment</th>
+                    <th colspan="3">Please set default payment before continuing</th>
                 </tr>
-                <%
-                    }
-                    %>
             </table>
             <div class="middle_link_div">
                 <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
-                <a class="middle_link_button" href="viewPaymentList">View Payment methods</a>
-                <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
+                <a class="middle_link_button" href="viewPaymentList?action=viewList">Change default payment methods</a>
             </div>
+                <%
+                    }
+                    %>
         </c:if>
         <c:if test="${customer.getName() == null}">
             <h2>Current order</h2>
