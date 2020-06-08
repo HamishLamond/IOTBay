@@ -10,6 +10,7 @@ package uts.isd.group30.model;
  * @author yash_
  */
 public class Staff {
+
     private int id;
     private String name;
     private String email;
@@ -27,9 +28,9 @@ public class Staff {
         this.isManager = isManager;
         this.manager = manager;
     }
-    
+
     public Staff(String name, String email, String password, int phone, Boolean isManager, Integer manager) {
-        
+
         this.name = name;
         this.email = email;
         this.password = password;
@@ -93,5 +94,5 @@ public class Staff {
     public void setManager(int manager) {
         this.manager = manager;
     }
-    
+
 }

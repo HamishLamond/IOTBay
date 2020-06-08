@@ -18,6 +18,6 @@
             </form>
         </div>
         <div><a href="myDetails.jsp">Take me back!</a></div>
-        
+
     </body>
 </html>

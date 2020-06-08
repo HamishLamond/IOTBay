@@ -20,13 +20,13 @@
         </div>
         <div class="top_right_link_div">
             <c:if test="${customer != null}">
-            <a href="logout.jsp">Logout</a>
-            <a href="myDetails.jsp">My Details</a>
-            <a href="OrderListServlet?action=list">Order List</a>
-            <a href="PaymentServlet?action=viewList">View Payment list</a>
+                <a href="logout.jsp">Logout</a>
+                <a href="myDetails.jsp">My Details</a>
+                <a href="OrderListServlet?action=list">Order List</a>
+                <a href="PaymentServlet?action=viewList">View Payment list</a>
             </c:if>
             <c:if test="${customer == null}">
-            <a href="loginRegister.jsp">Login/Register</a>
+                <a href="loginRegister.jsp">Login/Register</a>
             </c:if>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
@@ -46,12 +46,12 @@
                 </tr>
             </thead>
 
-                <tr>
-                    <td>${device.name}</td>
-                    <td>${device.description}</td>
-                    <td>${device.cost}</td>
-                    <td>${device.stock}</td>
-                </tr>
+            <tr>
+                <td>${device.name}</td>
+                <td>${device.description}</td>
+                <td>${device.cost}</td>
+                <td>${device.stock}</td>
+            </tr>
 
         </table>
         <form method="post" action="AddDeviceServlet">
@@ -60,9 +60,9 @@
                     <td>Quantity: </td>
                     <td><input type="number" name="value"></td>
                     <td><input class="button" type="submit" value="Add"></td>
-                    <td><%=(stockErr!=null ? stockErr : "")%></td>
+                    <td><%=(stockErr != null ? stockErr : "")%></td>
                 </tr>
-                
+
             </table>
             <P></p>
         </form>

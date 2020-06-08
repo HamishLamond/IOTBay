@@ -42,7 +42,7 @@ public class CancelOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CancelOrderServlet</title>");            
+            out.println("<title>Servlet CancelOrderServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CancelOrderServlet at " + request.getContextPath() + "</h1>");
@@ -71,7 +71,7 @@ public class CancelOrderServlet extends HttpServlet {
             manager.cancelTransaction(transactionId);
             request.getRequestDispatcher("OrderListServlet").forward(request, response);
         } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

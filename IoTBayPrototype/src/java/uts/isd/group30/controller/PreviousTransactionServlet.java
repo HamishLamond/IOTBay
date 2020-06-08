@@ -43,7 +43,7 @@ public class PreviousTransactionServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PreviousTransactionServlet</title>");            
+            out.println("<title>Servlet PreviousTransactionServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet PreviousTransactionServlet at " + request.getContextPath() + "</h1>");
@@ -71,7 +71,7 @@ public class PreviousTransactionServlet extends HttpServlet {
         try {
             ArrayList<TransactionLineItem> items = (ArrayList) manager.getTransactionLineItems(transactionId);
             HashMap<String, TransactionLineItem> devices = new HashMap<>();
-            for (TransactionLineItem item: items){
+            for (TransactionLineItem item : items) {
                 String deviceName = manager.getDeviceName(item.getDeviceId());
                 devices.put(deviceName, item);
             }
@@ -81,7 +81,7 @@ public class PreviousTransactionServlet extends HttpServlet {
             request.setAttribute("value", value);
             request.getRequestDispatcher("viewPreviousTransaction.jsp").forward(request, response);
         } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

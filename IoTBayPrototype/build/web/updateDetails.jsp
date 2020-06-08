@@ -58,38 +58,35 @@
                 <tr>
                     <td><label for="name">Full name</label></td>
                     <td><input class="form_input_box" type="text" id ="frame" name="name" placeholder="John Smith" required value="<%=name%>">
-                    <% 
-                        if (session.getAttribute("upNameErr") != null) 
-                        { 
-                            %>
-                                <div><span class="err-msg"><%=session.getAttribute("upNameErr")%></span></div>
+                        <%
+                            if (session.getAttribute("upNameErr") != null) {
+                        %>
+                        <div><span class="err-msg"><%=session.getAttribute("upNameErr")%></span></div>
 
-                            <% } 
-                %></td>
+                        <% }
+                        %></td>
                 </tr>
                 <tr>
                     <td><label for="email">Email</label></td>
                     <td><input class="form_input_box" type="email" id ="frame" name="email" disabled placeholder="JohnSmith@gmail.com" required value="<%=email%>">
-                    <% 
-                        if (session.getAttribute("upEmailErr") != null) 
-                        { 
-                            %>
-                                <div><span class="err-msg"><%=session.getAttribute("upEmailErr")%></span></div>
+                        <%
+                            if (session.getAttribute("upEmailErr") != null) {
+                        %>
+                        <div><span class="err-msg"><%=session.getAttribute("upEmailErr")%></span></div>
 
-                            <% } 
-                %></td>
+                        <% }
+                        %></td>
                 </tr>
                 <tr>
                     <td><label for="password">Password</label></td>
                     <td><input class="form_input_box" type="password" id ="frame" name="password" placeholder="Password123_" required value="<%=password%>">
-                    <% 
-                        if (session.getAttribute("upPassErr") != null) 
-                        { 
-                            %>
-                                <div><span class="err-msg"><%=session.getAttribute("upPassErr")%></span></div>
+                        <%
+                            if (session.getAttribute("upPassErr") != null) {
+                        %>
+                        <div><span class="err-msg"><%=session.getAttribute("upPassErr")%></span></div>
 
-                            <% } 
-                %></td>
+                        <% }
+                        %></td>
                 </tr>
 
                 <%
@@ -105,14 +102,13 @@
                 <tr>
                     <td><label for="phoneNumber">Phone Number</label></td>
                     <td><input class="form_input_box" type="tel" id ="frame" name="phoneNumber" placeholder="0#########" required value="<%=phoneNumber%>" >
-                    <% 
-                        if (session.getAttribute("upPhoneErr") != null) 
-                        { 
-                            %>
-                                <div><span class="err-msg"><%=session.getAttribute("upPhoneErr")%></span></div>
+                        <%
+                            if (session.getAttribute("upPhoneErr") != null) {
+                        %>
+                        <div><span class="err-msg"><%=session.getAttribute("upPhoneErr")%></span></div>
 
-                            <% } 
-                %></td>
+                        <% }
+                        %></td>
                 </tr>
                 <tr>
                     <td></td>

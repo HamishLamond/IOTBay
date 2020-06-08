@@ -21,13 +21,13 @@
         </div>
         <div class="top_right_link_div">
             <c:if test="${customer != null}">
-            <a href="logout.jsp">Logout</a>
-            <a href="myDetails.jsp">My Details</a>
-            <a href="OrderListServlet?action=list">Order List</a>
-            <a href="PaymentServlet?action=viewList">View Payment list</a>
+                <a href="logout.jsp">Logout</a>
+                <a href="myDetails.jsp">My Details</a>
+                <a href="OrderListServlet?action=list">Order List</a>
+                <a href="PaymentServlet?action=viewList">View Payment list</a>
             </c:if>
             <c:if test="${customer == null}">
-            <a href="loginRegister.jsp">Login/Register</a>
+                <a href="loginRegister.jsp">Login/Register</a>
             </c:if>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="index.jsp">Home</a>
@@ -60,8 +60,8 @@
                     </tr>
                 </table>
                 <div class="middle_link_div">
-                <a class="middle_link_button" href="index.jsp">Home</a>
-                <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
+                    <a class="middle_link_button" href="index.jsp">Home</a>
+                    <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
                 </div>
             </c:if>
             <c:if test="${cart.size() == 0}">
@@ -96,8 +96,8 @@
                     </tr>
                 </table>
                 <div class="middle_link_div">
-                <a class="middle_link_button" href="index.jsp">Home</a>
-                <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
+                    <a class="middle_link_button" href="index.jsp">Home</a>
+                    <a class="middle_link_button" href="ConfirmOrderServlet">Checkout</a>
                 </div>
             </c:if>
             <c:if test="${cart.size() == 0}">

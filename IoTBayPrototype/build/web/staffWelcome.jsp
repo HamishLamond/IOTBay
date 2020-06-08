@@ -24,9 +24,9 @@
             <a href="logout.jsp">Logout</a>
         </div>
         <%
-            
+
         %>
-        
+
         <h2>You have successfully logged into IoTBay!</h2>
     </body>
 </html>

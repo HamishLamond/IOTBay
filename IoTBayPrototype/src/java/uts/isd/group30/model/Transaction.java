@@ -4,14 +4,17 @@
  * and open the template in the editor.
  */
 package uts.isd.group30.model;
+
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Date;
+
 /**
  *
  * @author yash_
  */
 public class Transaction {
+
     private int id;
     private double value;
     private int customerId;
