@@ -1,6 +1,6 @@
 CREATE TABLE Payment
 (creditCardNumber VARCHAR(16) NOT NULL,
-customerId INT NOT NULL,
+customerId INT,
 creditCardExpiry VARCHAR(5),
 creditCardCVC VARCHAR(3),
 isDefault int,

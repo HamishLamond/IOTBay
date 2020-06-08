@@ -41,7 +41,7 @@
                             <option value="dateSearch">Date</option>
                         </select>
                     </th>
-                    <th><input type="text" name="searchBox"></th>
+                    <th><input type="text" name="searchBox" required></th>
                     <th><input type="submit" name="submitSearch"></th>
                 </tr>
             </table>

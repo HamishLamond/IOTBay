@@ -1,10 +1,10 @@
 CREATE TABLE Transactions
 (transactionId INT GENERATED ALWAYS AS IDENTITY NOT NULL,
 transactionValue DOUBLE NOT NULL,
-customerId INT NOT NULL,
+customerId INT,
 createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-status INT,
+status INT DEFAULT 0,
 creditCardNumber VARCHAR(16),
 PRIMARY KEY (transactionId),
 FOREIGN KEY (customerId) REFERENCES CUSTOMER(customerId),

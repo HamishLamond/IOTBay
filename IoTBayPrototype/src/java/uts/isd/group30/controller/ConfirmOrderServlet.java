@@ -70,6 +70,7 @@ public class ConfirmOrderServlet extends HttpServlet {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
         Customer customer = (Customer) session.getAttribute("customer");
+        Payment tempPaymentMethod = (Payment)session.getAttribute("tempPaymentMethod");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         Double totalCost = 0.0;
         try {
@@ -92,22 +93,20 @@ public class ConfirmOrderServlet extends HttpServlet {
                 try{
                     Payment paymentMethod = manager.getDefaultPayment(customer.getId());
                     session.setAttribute("paymentMethod", paymentMethod);
-                    request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
                 }
                 catch (Exception e){
                     System.out.print("customer null:" + e);
                     //Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-            Payment tempPaymentMethod = (Payment)session.getAttribute("tempPaymentMethod");
-            if((tempPaymentMethod!=null)){
+            else if((tempPaymentMethod!=null)){
                 session.setAttribute("paymentMethod", tempPaymentMethod);
-                request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
             }
             else{
+                System.out.print("Customer name is null");
                 session.setAttribute("paymentMethod", null);
-                request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
             }
+            request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

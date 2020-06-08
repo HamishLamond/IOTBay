@@ -45,7 +45,7 @@ public class CreateTransactionServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateTransactionServlet</title>");            
+            out.println("<title>Servlet CreateTransactionServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CreateTransactionServlet at " + request.getContextPath() + "</h1>");
@@ -72,24 +72,46 @@ public class CreateTransactionServlet extends HttpServlet {
         Customer customer = (Customer) session.getAttribute("customer");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         Double totalCost = (Double) session.getAttribute("cartCost");
-        try {
-            Integer transactionId = manager.addTransaction(totalCost, customer.getId());
-            for (Map.Entry<String, Integer> entry : cart.entrySet()){
-                String deviceName = entry.getKey();
-                Device device = manager.getDeviceByName(deviceName);
-                Double cost = device.getCost() * entry.getValue();
-                int deviceId = manager.getDeviceIDByName(deviceName);
-                manager.addTransactionLineItem(transactionId, deviceId, entry.getValue(), cost);
-                manager.updateDeviceStock(deviceId, entry.getValue());
+        if (customer != null) {
+            try {
+                Integer transactionId = manager.addTransaction(totalCost, customer.getId());
+                for (Map.Entry<String, Integer> entry : cart.entrySet()) {
+                    String deviceName = entry.getKey();
+                    Device device = manager.getDeviceByName(deviceName);
+                    Double cost = device.getCost() * entry.getValue();
+                    int deviceId = manager.getDeviceIDByName(deviceName);
+                    manager.addTransactionLineItem(transactionId, deviceId, entry.getValue(), cost);
+                    manager.updateDeviceStock(deviceId, entry.getValue());
+                }
+                if (paymentMethod.getCustomerId() != 0) {
+                    manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
+                }
+                cart.clear();
+                session.setAttribute("cart", cart);
+                request.getRequestDispatcher("main.jsp").forward(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if(paymentMethod.getCustomerId()!=0){
-                manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
+        } else {
+            try {
+                Integer transactionId = manager.addTransactionAnon(totalCost);
+                for (Map.Entry<String, Integer> entry : cart.entrySet()) {
+                    String deviceName = entry.getKey();
+                    Device device = manager.getDeviceByName(deviceName);
+                    Double cost = device.getCost() * entry.getValue();
+                    int deviceId = manager.getDeviceIDByName(deviceName);
+                    manager.addTransactionLineItem(transactionId, deviceId, entry.getValue(), cost);
+                    manager.updateDeviceStock(deviceId, entry.getValue());
+                }
+                if (paymentMethod.getCustomerId() != 0) {
+                    manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
+                }
+                cart.clear();
+                session.setAttribute("cart", cart);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            cart.clear();
-            session.setAttribute("cart", cart);
-            request.getRequestDispatcher("main.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
