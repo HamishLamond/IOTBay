@@ -14,11 +14,12 @@
             <h1>IoTBay Home Page</h1>
         </div>
         <div class="top_right_link_div">
+            <a href="logout.jsp">Logout</a>
             <a href="myDetails.jsp">My Details</a>
+            <a href="OrderListServlet?action=list">Order List</a>
             <a href="PaymentServlet?action=viewList">View Payment list</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
-            <a href="viewOrderList.jsp">Order List</a>
-            <a href="logout.jsp">Logout</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
         </div>
         <h2>You have successfully logged into IoTBay!</h2>
     </body>

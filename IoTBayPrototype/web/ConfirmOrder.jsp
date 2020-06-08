@@ -20,12 +20,20 @@
             <h1>IoTBay</h1>
         </div>
         <div class="top_right_link_div">
+            <c:if test="${customer != null}">
             <a href="logout.jsp">Logout</a>
-            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="myDetails.jsp">My Details</a>
             <a href="OrderListServlet?action=list">Order List</a>
-            <a href="main.jsp">Home</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
+            </c:if>
+            <c:if test="${customer == null}">
+            <a href="loginRegister.jsp">Login/Register</a>
+            </c:if>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
+            <a href="index.jsp">Home</a>
         </div>
-        <c:if test="${customer.getName() != null}">
+        <c:if test="${customer != null}">
             <h2>${customer.name}'s current order.</h2>
             <c:if test="${cart.size() > 0}">
                 <table class="previous_order_table">
@@ -60,7 +68,7 @@
                     <th>Credit Card Expiry</th>
                     <th>Credit Card CVC</th>
                 </tr>
-                <%if(paymentMethod!=null){%>
+                <% if (paymentMethod != null){ %>
                 <tr>
                     <th>${paymentMethod.getCreditCardNumber()}</th>
                     <th>${paymentMethod.getCreditCardExpiry()}</th>
@@ -89,16 +97,15 @@
                     }
                     %>
         </c:if>
-        <c:if test="${customer.getName() == null}">
+        <c:if test="${customer == null}">
             <h2>Current order</h2>
             <c:if test="${cart.size() > 0}">
-                <table class="order_table">
+                <table class="previous_order_table">
                     <tr>
                         <th>Device</th>
                         <th>Cost</th>
                         <th>Quantity</th>
                         <th>Total</th>
-                        <th></th>
                     </tr>
                     <c:forEach var="iterator" begin="0" end="${deviceArray.size() - 1}">
                         <tr>

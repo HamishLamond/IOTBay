@@ -40,7 +40,7 @@
         <servlet-name>DeleteAccountServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.DeleteAccountServlet</servlet-class>
     </servlet>
-	<servlet>
+    <servlet>
         <servlet-name>PreviousTransactionServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.PreviousTransactionServlet</servlet-class>
     </servlet>
@@ -80,11 +80,11 @@
         <servlet-name>CatalogueServlet</servlet-name>
         <url-pattern>/CatalogueServlet</url-pattern>
     </servlet-mapping>
-	<servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CustomerRegistrationServlet</servlet-name>
         <url-pattern>/CustomerRegistrationServlet</url-pattern>
     </servlet-mapping>
-	<servlet-mapping>
+    <servlet-mapping>
         <servlet-name>StaffRegistrationServlet</servlet-name>
         <url-pattern>/StaffRegistrationServlet</url-pattern>
     </servlet-mapping>
@@ -127,8 +127,8 @@
     <servlet-mapping>
         <servlet-name>DeleteAccountServlet</servlet-name>
         <url-pattern>/DeleteAccountServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>PreviousTransactionServlet</servlet-name>
         <url-pattern>/PreviousTransactionServlet</url-pattern>
     </servlet-mapping>

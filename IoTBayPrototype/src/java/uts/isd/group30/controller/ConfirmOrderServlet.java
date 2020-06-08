@@ -46,7 +46,7 @@ public class ConfirmOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConfirmOrderServlet</title>");            
+            out.println("<title>Servlet ConfirmOrderServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ConfirmOrderServlet at " + request.getContextPath() + "</h1>");
@@ -75,7 +75,7 @@ public class ConfirmOrderServlet extends HttpServlet {
         try {
             ArrayList<Device> deviceArray = new ArrayList();
             ArrayList<Integer> deviceNumbers = new ArrayList();
-            for (Map.Entry<String, Integer> entry : cart.entrySet()){
+            for (Map.Entry<String, Integer> entry : cart.entrySet()) {
                 String deviceName = entry.getKey();
                 int numberOfDevices = entry.getValue();
                 Device device = manager.getDeviceByName(deviceName);
@@ -88,8 +88,10 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.setAttribute("deviceNumbers", deviceNumbers);
             request.setAttribute("totalCost", totalCost);
             session.setAttribute("cartCost", totalCost);
-            Payment paymentMethod = manager.getDefaultPayment(customer.getId());
-            session.setAttribute("paymentMethod", paymentMethod);
+            if (customer != null) {
+                Payment paymentMethod = manager.getDefaultPayment(customer.getId());
+                session.setAttribute("paymentMethod", paymentMethod);
+            }
             request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);

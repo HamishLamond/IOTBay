@@ -18,8 +18,7 @@
     <body>
         <%
             
-            Customer customer = new Customer(1, "John Smith", "123 Street Street, Sydney NSW 2000", "johnsmith@gmail.com", 432565785, "password");
-            session.setAttribute("customer", customer);
+            Customer customer = (Customer) session.getAttribute("customer");
             HashMap<String, Integer> cart = (HashMap<String, Integer>)session.getAttribute("cart");
          %>
          <div class="header">
@@ -32,16 +31,11 @@
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
             <a href="PaymentServlet?action=viewList">View Payment list</a>
         </div>
-        <% if (customer.getName() != null){ %>
+        <% if (customer != null){ %>
         <h2>Welcome to IoTBay, ${customer.name}!</h2>
         <p>Currently logged in as ${customer.email}.</p>
-        <p>Our system will be ready for use 5/6/20!</p>
-        <p>Stay tuned!</p>
         <% } else { %>
-        <h2>Welcome back to IoTBay!</h2>
-        <p>Currently logged in as ${customer.email}.</p>
-        <p>Our system will be ready for use 5/6/20!</p>
-        <p>Stay tuned!</p>
+        <h2>Welcome to IoTBay!</h2>
         <% } %>
     </body>
 </html>

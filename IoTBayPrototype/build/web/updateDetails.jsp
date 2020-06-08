@@ -24,33 +24,33 @@
             String address = "";
             Integer phoneNumber = null;
             Boolean isStaff = session.getAttribute("userType") == "staff";
-            
-            if (!isStaff)
-            {
+
+            if (!isStaff) {
                 customer = (Customer) session.getAttribute("customer");
                 name = customer.getName();
                 email = customer.getEmail();
                 password = customer.getPassword();
                 phoneNumber = customer.getPhoneNumber();
                 address = customer.getAddress();
-            }
-            else if (isStaff)
-            {
+            } else if (isStaff) {
                 staff = (Staff) session.getAttribute("staff");
                 name = staff.getName();
                 email = staff.getEmail();
                 password = staff.getPassword();
                 phoneNumber = staff.getPhone();
-            }  
+            }
         %>
         <div class="header">
             <h1>Update Details</h1>
         </div>
         <div class="top_right_link_div">
-            <a href=""
             <a href="logout.jsp">Logout</a>
+            <a href="myDetails.jsp">My Details</a>
+            <a href="OrderListServlet?action=list">Order List</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
-            <a href="viewOrderList.jsp">Order List</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
+            <a href="index.jsp">Home</a>
         </div>
         <hr>
         <form action="UpdateDetailsServlet" method="post">
@@ -67,17 +67,16 @@
                     <td><label for="password">Password</label></td>
                     <td><input class="form_input_box" type="password" id ="frame" name="password" placeholder="Password123_" required value="<%=password%>"></td>
                 </tr>
-                
-                <% 
-                if (!isStaff) 
-                    { 
-                        %>
-                        <tr>
+
+                <%
+                    if (!isStaff) {
+                %>
+                <tr>
                     <td><label for="address">Address</label></td>
                     <td><input class="form_input_box" type="text" id ="frame" name="address" placeholder="123 George Street, Sydney" required value="<%=address%>"></td>
                 </tr>
 
-                    <% } 
+                <% }
                 %>
                 <tr>
                     <td><label for="phoneNumber">Phone Number</label></td>
@@ -88,7 +87,7 @@
                     <td><center>
                     <input class="button" type ="submit" value="Update" required>
                 </center>
-                    </td>
+                </td>
                 </tr>
             </table>
         </form>
