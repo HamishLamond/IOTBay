@@ -84,9 +84,17 @@
         <servlet-name>PaymentServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.PaymentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>searchPaymentServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.searchPaymentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddPaymentServlet</servlet-name>
         <url-pattern>/AddPaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchPaymentServlet</servlet-name>
+        <url-pattern>/searchPaymentServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
