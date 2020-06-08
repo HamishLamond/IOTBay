@@ -88,11 +88,26 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.setAttribute("deviceNumbers", deviceNumbers);
             request.setAttribute("totalCost", totalCost);
             session.setAttribute("cartCost", totalCost);
-            if (customer.getName() != null) {
-                Payment paymentMethod = manager.getDefaultPayment(customer.getId());
-                session.setAttribute("paymentMethod", paymentMethod);
+            if(customer!=null){
+                try{
+                    Payment paymentMethod = manager.getDefaultPayment(customer.getId());
+                    session.setAttribute("paymentMethod", paymentMethod);
+                    request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
+                }
+                catch (Exception e){
+                    System.out.print("customer null:" + e);
+                    //Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, e);
+                }
             }
-            request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
+            Payment tempPaymentMethod = (Payment)session.getAttribute("tempPaymentMethod");
+            if((tempPaymentMethod!=null)){
+                session.setAttribute("paymentMethod", tempPaymentMethod);
+                request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
+            }
+            else{
+                session.setAttribute("paymentMethod", null);
+                request.getRequestDispatcher("ConfirmOrder.jsp").forward(request, response);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

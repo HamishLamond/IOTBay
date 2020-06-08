@@ -12,55 +12,54 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/IoTBayCSS.css">
-        <title>Update Payment Details</title>
+        <title>Add Payment Details</title>
     </head>
     <body>
         <div class="header">
             <h1>IoTBay</h1>
         </div>
+        <%
+            Customer customer = (Customer)session.getAttribute("customer");
+            String CCNErr = (String) session.getAttribute("CCNErr");
+            String CCEErr = (String) session.getAttribute("CCEErr");
+            String CCCVCErr = (String) session.getAttribute("CCCVCErr");
+            String Success = (String) session.getAttribute("Success");
+            String isUpdate = (String) session.getAttribute("isUpdate");
+        %>
         <div class="top_right_link_div">
+            <% if (customer != null) { %>
             <a href="logout.jsp">Logout</a>
             <a href="myDetails.jsp">My Details</a>
             <a href="OrderListServlet?action=list">Order List</a>
             <a href="PaymentServlet?action=viewList">View Payment list</a>
+            <% } else { %>
+            <a href="loginRegister.jsp">Login/Register</a>
+            <% } %>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
             <a href="index.jsp">Home</a>
         </div>
-        <hr>
-        <%
-            Customer customer = (Customer)session.getAttribute("customer");
-            String CCNMsg = (String) session.getAttribute("CCNErr");
-            String CCEMsg = (String) session.getAttribute("CCEErr");
-            String CCCVCMsg = (String) session.getAttribute("CCCVCErr");
-            String SuccessUpdate = (String) session.getAttribute("SuccessUpdate");
-            String isUpdate = (String) session.getAttribute("isUpdate");
-            //Integer chckMsg = (Integer) session.getAttribute("chckEnable");
-            //System.out.print("chckMsg: " + chckMsg);
-            Payment oldPayment = (Payment) session.getAttribute("oldPayment");
-            %>
-            <h4>Update Payment</h4>
-        
+        <h2>Add Payment</h2>
         <form action="AddPaymentServlet" method="post">
             <%
-                if(SuccessUpdate!=null){
+                if(Success!=null){
             %>
-            <h2><%=SuccessUpdate%></h2>
+            <h4><%=Success%></h4>
             <%
                 }
             %>
             <table>
                 <tr>
                     <td><label for="CCN">Credit Card Number</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCN" placeholder="<%=(CCNMsg != null ? CCNMsg : oldPayment.getCreditCardNumber()) %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCN" placeholder="<%=(CCNErr != null ? CCNErr : "0421326156548569") %>" required></td>
                 </tr>
                 <tr>
                     <td><label for="CCE">Credit Card Expiry</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCE" placeholder="<%=(CCEMsg != null ? CCEMsg : oldPayment.getCreditCardExpiry()) %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCE" placeholder="<%=(CCEErr != null ? CCEErr : "12/21") %>" required></td>
                 </tr>
                 <tr>
                     <td><label for="CCCVC">Credit Card CVC</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCMsg != null ? CCCVCMsg : oldPayment.getCreditCardCVC()) %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCErr != null ? CCCVCErr : "111") %>" required></td>
                 </tr>
                 <tr>
                     <td><label for="isDefault">Make default</label></td>
@@ -68,12 +67,13 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><center>
-                    <input type="hidden" name="isUpdate" value="true">
-                    <input type="hidden" name="oldNumber" value="<%=oldPayment.getCreditCardNumber()%>">
-                    <input type="hidden" name="origin"  value="1">
+                    <td>
+                <center>
+                    <input type="hidden" name="isUpdate" value="false">
+                    <input type="hidden" name="oldPayment" value="null">
                     <input type="hidden" name="tempPayment" value="yes">
-                    <input class="button" type="submit" value="Update" required>
+                    <input type="hidden" name="origin" value="0">
+                    <input class="button" type="submit" value="Add" required>
                 </center>
                     </td>
                 </tr>

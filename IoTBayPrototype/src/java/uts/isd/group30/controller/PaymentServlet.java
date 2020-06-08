@@ -92,6 +92,7 @@ public class PaymentServlet extends HttpServlet {
                     else if(action.equalsIgnoreCase("delete")){
                         int number = Integer.parseInt(request.getParameter("number"));
                         ArrayList<Payment> paymentList = (ArrayList<Payment>)session.getAttribute("paymentList");
+                        System.out.print(paymentList.get(number).getCreditCardNumber());
                         manager.deletePaymentDetails(paymentList.get(number).getCreditCardNumber());
                         paymentList.remove(paymentList.get(number));
                         //int origin = Integer.parseInt(request.getParameter("origin"));
