@@ -270,6 +270,14 @@ public class DBManager {
         results.next();
         return results.getInt("transactionId");
     }
+    
+    public int addTransactionAnon(double value) throws SQLException {
+        st.executeUpdate("INSERT INTO IOTBAY.TRANSACTIONS (TRANSACTIONVALUE, STATUS) VALUES (" + value + ", 0)");
+        ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS ORDER BY CREATEDON DESC");
+        results.next();
+        return results.getInt("transactionId");
+    }
+    
     public void addPaymentToTransaction(String creditCardNumber, int transactionID) throws SQLException {
         st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET creditCardNumber='"+ creditCardNumber + "', LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
     }
