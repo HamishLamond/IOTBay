@@ -5,6 +5,8 @@
  */
 package uts.isd.group30.model;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author yash_
@@ -14,13 +16,33 @@ public class Payment {
     private String creditCardExpiry;
     private String creditCardCVC;
     private int customerId;
+    private Timestamp created;
+    private Timestamp lastUpdated;
     private int isDefault;
-    public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefault, int customerId) {
+    public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefault, int customerId, Timestamp created, Timestamp lastUpdated) {
         this.creditCardCVC = creditCardCVC;
         this.creditCardExpiry = creditCardExpiry;
         this.creditCardNumber = creditCardNumber;
         this.customerId = customerId;
         this.isDefault = isDefault;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+
+    public void setLastUpdated(Timestamp lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Timestamp getLastUpdated() {
+        return lastUpdated;
     }
 
     public void setIsDefault(int isDefault) {
