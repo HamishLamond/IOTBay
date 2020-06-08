@@ -15,19 +15,51 @@
             <table>
                 <tr>
                     <td><label for="name">Full name</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="name" placeholder="John Smith" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="name" placeholder="John Smith" required>
+                    <% 
+                        if (session.getAttribute("regNameErr") != null) 
+                        { 
+                            %>
+                                <div><span class="err-msg"><%=session.getAttribute("regNameErr")%></span></div>
+
+                            <% } 
+                %></td>
                 </tr>
                 <tr>
                     <td><label for="email">Email</label></td>
-                    <td><input class="form_input_box" type="email" id ="frame" name="email" placeholder="JohnSmith@gmail.com" required></td>
+                    <td><input class="form_input_box" type="email" id ="frame" name="email" placeholder="JohnSmith@gmail.com" required>
+                    <% 
+                        if (session.getAttribute("regEmailErr") != null) 
+                        { 
+                            %>
+                                <div><span class="err-msg"><%=session.getAttribute("regEmailErr")%></span></div>
+
+                            <% } 
+                %></td>
                 </tr>
                 <tr>
                     <td><label for="password">Password</label></td>
-                    <td><input class="form_input_box" type="password" id ="frame" name="password" placeholder="Password123_" required></td>
+                    <td><input class="form_input_box" type="password" id ="frame" name="password" placeholder="Password123_" required>
+                    <% 
+                        if (session.getAttribute("regPassErr") != null) 
+                        { 
+                            %>
+                                <div><span class="err-msg"><%=session.getAttribute("regPassErr")%></span></div>
+
+                            <% } 
+                %></td>
                 </tr>
                 <tr>
                     <td><label for="phoneNumber">Phone Number</label></td>
-                    <td><input class="form_input_box" type="tel" id ="frame" name="phoneNumber" placeholder="0#########" pattern="[0]{1}[0-9]{9}" required title="A valid 10 digit phone number starting with 0"></td>
+                    <td><input class="form_input_box" type="tel" id ="frame" name="phoneNumber" placeholder="0#########" required >
+                    <% 
+                        if (session.getAttribute("regPhoneErr") != null) 
+                        { 
+                            %>
+                                <div><span class="err-msg"><%=session.getAttribute("regPhoneErr")%></span></div>
+
+                            <% } 
+                %></td>
                 </tr>
                 <tr>
                     <td></td>

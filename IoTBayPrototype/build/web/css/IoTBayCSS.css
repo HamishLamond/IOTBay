@@ -166,3 +166,9 @@ p {
     border-bottom: 0px;
     padding-bottom: 10px;
 }
+
+.err-msg
+{
+    color: red;
+    font-size: 13px;
+}
