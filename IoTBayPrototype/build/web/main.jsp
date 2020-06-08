@@ -17,7 +17,9 @@
     </head>
     <body>
         <%
-            Customer customer = (Customer)session.getAttribute("customer");
+            
+            Customer customer = new Customer(1, "John Smith", "123 Street Street, Sydney NSW 2000", "johnsmith@gmail.com", 432565785, "password");
+            session.setAttribute("customer", customer);
             HashMap<String, Integer> cart = (HashMap<String, Integer>)session.getAttribute("cart");
          %>
          <div class="header">
@@ -27,7 +29,7 @@
             <a href="logout.jsp">Logout</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="OrderListServlet?action=list">Order List</a>
-            <a href="currentOrder.jsp">View Order [${cart.size()}]</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
             <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
         </div>
         <% if (customer.getName() != null){ %>
