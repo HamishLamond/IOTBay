@@ -4,6 +4,7 @@
     Author     : Hamish Lamond
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.HashMap"%>
 <%@page import="uts.isd.group30.model.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,10 +17,7 @@
     </head>
     <body>
         <%
-            Customer customer = new Customer(1, "John Smith", "123 Street Street, Sydney NSW 2000", "johnsmith@gmail.com", 432565785, "password");
-            session.setAttribute("customer", customer);
             //Customer customer = (Customer)session.getAttribute("customer");
-            HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         %>
         <div class="header">
             <h1>IoTBay</h1>
@@ -31,83 +29,74 @@
             <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
             <a href="main.jsp">Home</a>
         </div>
-        <% if (customer.getName() != null) { %>
-        <h2>${customer.name}'s current order.</h2>
-        <%
-            if (cart.size() > 0) { %>
-        <table class="order_table">
-            <tr>
-                <th>Device</th>
-                <th>Cost</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
-            <%
-                for (int i = 0; i < cart.size(); i++) {
-            %>
-            <tr>
-                <td>TLI Device ID</td>
-                <td>TRI Device Cost</td>
-                <td>TLI Quantity</td>
-                <td>TLI total cost</td>
-                <td>X</td>
-            </tr>
-            <%
-                } %>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Total Cost</td>
-            </tr>
-        </table>
-        <a class="middle_link_button">Cancel</a>
-        <a class="middle_link_button" href="main.jsp">Checkout</a>
-        <%
-        } else {
-        %>
-        <p>No items found in cart.</p>
-        <% } %>
-        <% } else { %>
-        <h2>Current order</h2>
-        <%
-            if (cart.size() > 0) { %>
-        <table class="order_table">
-            <tr>
-                <th>Device</th>
-                <th>Cost</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
-            <%
-                for (int i = 0; i < cart.size(); i++) {
-            %>
-            <tr>
-                <td>TLI Device ID</td>
-                <td>TRI Device Cost</td>
-                <td>TLI Quantity</td>
-                <td>TLI total cost</td>
-                <td>X</td>
-            </tr>
-            <%
-                } %>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Total Cost</td>
-            </tr>
-        </table>
-        <a class="middle_link_button">Cancel</a>
-        <a class="middle_link_button" href="main.jsp">Checkout</a>
-        <%
-        } else {
-        %>
-        <p>No items found in cart.</p>
-        <% } %>
-        <% }%>
+        <c:if test="${customer.getName() != null}">
+            <h2>${customer.name}'s current order.</h2>
+            <c:if test="${cart.size() > 0}">
+                <table class="order_table">
+                    <tr>
+                        <th>Device</th>
+                        <th>Cost</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                    <c:forEach var="iterator" begin="0" end="${deviceArray.size() - 1}">
+                        <tr>
+                            <td>${deviceArray[iterator].getName()}</td>
+                            <td>${deviceArray[iterator].getCost()}</td>
+                            <td>${deviceNumbers[iterator]}</td>
+                            <td>${deviceArray[iterator].getCost() * deviceNumbers[iterator]}</td>
+                            <td>X</td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>${totalCost}</td>
+                    </tr>
+                </table>
+                <a class="middle_link_button">Cancel</a>
+                <a class="middle_link_button" href="main.jsp">Checkout</a>
+            </c:if>
+            <c:if test="${cart.size() == 0}">
+                <p>No items found in cart.</p>
+            </c:if>
+        </c:if>
+        <c:if test="${customer.getName() == null}">
+            <h2>Current order</h2>
+            <c:if test="${cart.size() > 0}">
+                <table class="order_table">
+                    <tr>
+                        <th>Device</th>
+                        <th>Cost</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                    <c:forEach items="cartDevices" var="device">
+                        <tr>
+                            <td>${device.key.getName()}</td>
+                            <td>${device.key.getCost()}</td>
+                            <td>${device.value}</td>
+                            <td>${device.key.getCost() * device.value}</td>
+                            <td>X</td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total Cost</td>
+                    </tr>
+                </table>
+                <a class="middle_link_button">Cancel</a>
+                <a class="middle_link_button" href="main.jsp">Checkout</a>
+            </c:if>
+            <c:if test="${cart.size() == 0}">
+                <p>No items found in cart.</p>
+            </c:if>
+        </c:if>
         <a class="middle_link_button" href="main.jsp">Main Page</a>
     </body>
 </html>

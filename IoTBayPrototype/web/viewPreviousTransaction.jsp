@@ -27,7 +27,7 @@
             <a href="logout.jsp">Logout</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="OrderListServlet?action=list">Order List</a>
-            <a href="currentOrder.jsp">View Order [${cart.size()}]</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
             <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
             <a href="main.jsp">Home</a>
         </div>
@@ -36,18 +36,21 @@
             <thead>
                 <tr>
                     <th>Device Name</th>
-                    <th>No.</th>
                     <th>Cost</th>
+                    <th>No.</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <c:forEach items="${devices}" var="device">
                 <tr>
                     <td>${device.key}</td>
-                    <td>x${device.value.quantity}</td>
                     <td>${device.value.cost}</td>
+                    <td>x${device.value.quantity}</td>
+                    <td>${device.value.cost * device.value.quantity}</td>
                 </tr>
             </c:forEach>
                 <tr>
+                    <td class="empty_cell_bottom"></td>
                     <td class="empty_cell_bottom"></td>
                     <td class="empty_cell_bottom"></td>
                     <td>${value}</td>
