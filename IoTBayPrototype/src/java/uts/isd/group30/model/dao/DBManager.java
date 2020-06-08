@@ -28,7 +28,7 @@ public class DBManager {
     }
 
     public void deletePaymentDetails(String id) throws SQLException {
-        st.executeUpdate("DELETE FROM IOTBAY.PAYMENT WHERE creditCardNumber='" + id + "'");
+        st.execute("DELETE FROM IOTBAY.PAYMENT WHERE CREDITCARDNUMBER = '" + id + "'");
     }
 
     public void updatePaymentDetails(String id, String newId, String newExpiry, String newCVC, int isDefaultValue) throws SQLException {
