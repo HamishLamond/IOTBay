@@ -60,7 +60,7 @@
                     <td>${device.description}</td>
                     <td>${device.cost}</td>
                     <td>${device.stock}</td>
-                    <td><a href="main.jsp">Edit</a></td>
+                    <td><a href="index.jsp">Edit</a></td>
                     <td><a href="AddDeviceServlet?name=${device.name}">Add</a></td>
                 </tr>
             </c:forEach>                       

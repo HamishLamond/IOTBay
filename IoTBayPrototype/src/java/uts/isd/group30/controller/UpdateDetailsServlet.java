@@ -36,7 +36,7 @@ public class UpdateDetailsServlet extends HttpServlet {
         
         Boolean invalidValues = false;
         session = request.getSession();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("registerCustomer.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("updateDetails.jsp");
         Boolean isStaff = session.getAttribute("userType") == "staff";
         Validators validator = new Validators();
                
@@ -46,7 +46,7 @@ public class UpdateDetailsServlet extends HttpServlet {
         String phone = request.getParameter("phoneNumber");
         if (!validator.validatePhoneNumber(phone))
         {
-            session.setAttribute("regPhoneErr", "You have entered an invalid phone number!");
+            session.setAttribute("upPhoneErr", "You have entered an invalid phone number!");
             invalidValues = true;
         }
         
@@ -54,7 +54,7 @@ public class UpdateDetailsServlet extends HttpServlet {
         String name = request.getParameter("name");
         if (!validator.validateName(name))
         {
-            session.setAttribute("regNameErr", "You have entered an invalid name!");
+            session.setAttribute("upNameErr", "You have entered an invalid name!");
             invalidValues = true;
         }
         
@@ -62,7 +62,7 @@ public class UpdateDetailsServlet extends HttpServlet {
         String password = request.getParameter("password");
         if (!validator.validatePassword(password))
         {
-            session.setAttribute("regPassErr", "Your password needs to be an alphanumeric of at least four characters!");
+            session.setAttribute("upPassErr", "Your password needs to be an alphanumeric of at least four characters!");
             invalidValues = true;
         }
         
@@ -134,11 +134,10 @@ public class UpdateDetailsServlet extends HttpServlet {
     }
     
     private void flushInputErrors() {
-        session.setAttribute("regEmailErr", null);
-        session.setAttribute("regPhoneErr", null);
-        session.setAttribute("regNameErr", null);
-        session.setAttribute("regPassErr", null);
-        session.setAttribute("acctExistsErr", null);
+        session.setAttribute("upEmailErr", null);
+        session.setAttribute("upPhoneErr", null);
+        session.setAttribute("upNameErr", null);
+        session.setAttribute("upPassErr", null);
     }
 
 }

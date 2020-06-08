@@ -25,11 +25,16 @@
             <h1>IoTBay</h1>
          </div>
         <div class="top_right_link_div">
-            <a href="logout.jsp">Logout</a>
+            <%if(customer.getName()!=null){
+                %>
+                <a href="logout.jsp">Logout</a>
+                <%
+                    }
+            %>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="OrderListServlet?action=list">Order List</a>
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
-            <a href="PaymentServlet?action=viewList">View Payment list</a>
+            <a href="PaymentServlet?action=viewList">View Payment method</a>
         </div>
         <% if (customer != null){ %>
         <h2>Welcome to IoTBay, ${customer.name}!</h2>

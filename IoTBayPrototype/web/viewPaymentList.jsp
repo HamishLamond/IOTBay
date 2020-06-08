@@ -39,7 +39,7 @@
                         <select name="searchOption">
                             <option value="creditCardNumberSearch">CreditCardNumber</option>
                             <option value="dateSearch">Date</option>
-                        </select> 
+                        </select>
                     </th>
                     <th><input type="text" name="searchBox"></th>
                     <th><input type="submit" name="submitSearch"></th>
