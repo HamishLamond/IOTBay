@@ -165,8 +165,6 @@ public class DBManager {
     
     public void addAccessLog(AccessLog accessLog) throws SQLException
     {
-        String t = accessLog.getTimeStamp().toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS Z");
         String query = "INSERT INTO IOTBAY.ACCESSLOG ("
                 + "customerId, "
                 + "eventType, "

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : deleteAccount
-    Created on : 08/06/2020, 5:31:50 PM
-    Author     : Zunther
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
