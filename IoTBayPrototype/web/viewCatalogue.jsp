@@ -4,6 +4,7 @@
     Author     : hoang
 --%>
 
+<%@page import="uts.isd.group30.model.Customer"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.List"%>
@@ -20,20 +21,29 @@
         <div class="header">
             <h1>IoTBay</h1>
         </div>
+        <%
+            String userType = (String) request.getSession().getAttribute("userType");
+            Customer customer = (Customer) request.getSession().getAttribute("customer");
+        %>
         <div class="top_right_link_div">
-            <c:if test="${customer != null}">
+            <% if (userType == "staff" || userType=="customer"){ %>
                 <a href="logout.jsp">Logout</a>
                 <a href="myDetails.jsp">My Details</a>
                 <a href="OrderListServlet?action=list">Order List</a>
                 <a href="PaymentServlet?action=viewList">View Payment list</a>
-            </c:if>
-            <c:if test="${customer == null}">
+            <% } else { %>
                 <a href="loginRegister.jsp">Login/Register</a>
-            </c:if>
+            <%}%>
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
             <a href="index.jsp">Home</a>
         </div>
-        <h2>Device List</h2>
+        <h2>Device List
+            <span> 
+                <%if (userType == "staff"){ %> 
+                <button type="button" onclick="location.href = 'StaffAddDeviceServlet'">Add Device</button>
+                <%} %>
+            </span>
+        </h2>
         <form method="post" action="CatalogueServlet">
             <table>
                 <tr><td><input type="text" name="name"></td>
@@ -48,7 +58,7 @@
                     <th>Description</th>
                     <th>Price</th>
                     <th>In Stock</th>
-                    <th></th>
+
                     <th><button type="button" onclick="location.href = 'CatalogueServlet?action=byname'">Sort by name</button>
                         <button type="button" onclick="location.href = 'CatalogueServlet?action=byprice'">Sort by price</button>
                     </th>
@@ -60,8 +70,11 @@
                     <td>${device.description}</td>
                     <td>${device.cost}</td>
                     <td>${device.stock}</td>
-                    <td><a href="index.jsp">Edit</a></td>
-                    <td><a href="AddDeviceServlet?name=${device.name}">Add</a></td>
+                    <%if (userType == "staff"){ %>
+                    <td><a href="EditDeviceServlet?name=${device.name}">Edit</a></td>
+                    <%} else { %>
+                    <td><a href="AddDeviceServlet?name=${device.name}">Add to Cart</a></td>
+                    <%} %>
                 </tr>
             </c:forEach>                       
         </table>
