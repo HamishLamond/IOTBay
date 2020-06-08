@@ -9,14 +9,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>JSP Page</title>
     </head>
     <body>
         <h1>Delete your Account</h1>
-        <form action="DeleteAccountServlet" method="post">
-            <div>This process cannot be reversed! Are you sure?</div>
-            <input class="button" type ="submit" value="Yes" required>
-        </form>
-        <a href="myDetails.jsp">Take me back!</a>
+        <div>
+            <form action="DeleteAccountServlet" method="post">
+                <div>This process cannot be reversed! Are you sure?</div>
+                <input class="button" type ="submit" value="Yes" required>
+            </form>
+        </div>
+        <div><a href="myDetails.jsp">Take me back!</a></div>
+        
     </body>
 </html>
