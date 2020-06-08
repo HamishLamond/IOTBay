@@ -15,11 +15,8 @@
         <title>Add Payment Details</title>
     </head>
     <body>
-        <h1>IoTBay</h1>
-        <div class="top_right_link_div">
-            <a href="logout.jsp">Logout</a>
-            <a href="main.jsp">Home</a>
-            <a href="PaymentServlet?action=viewList&origin=1">View Payment list</a>
+        <div class="header">
+            <h1>IoTBay</h1>
         </div>
         <%
             Customer customer = (Customer)session.getAttribute("customer");
@@ -29,12 +26,25 @@
             String Success = (String) session.getAttribute("Success");
             String isUpdate = (String) session.getAttribute("isUpdate");
         %>
+        <div class="top_right_link_div">
+            <% if (customer != null) { %>
+            <a href="logout.jsp">Logout</a>
+            <a href="myDetails.jsp">My Details</a>
+            <a href="OrderListServlet?action=list">Order List</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
+            <% } else { %>
+            <a href="loginRegister.jsp">Login/Register</a>
+            <% } %>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
+            <a href="index.jsp">Home</a>
+        </div>
         <h2>Add Payment</h2>
         <form action="AddPaymentServlet" method="post">
             <%
                 if(Success!=null){
             %>
-            <h2><%=Success%></h2>
+            <h4><%=Success%></h4>
             <%
                 }
             %>
@@ -61,7 +71,8 @@
                 <center>
                     <input type="hidden" name="isUpdate" value="false">
                     <input type="hidden" name="oldPayment" value="null">
-                    <input type="hidden" name="origin" value="1">
+                    <input type="hidden" name="tempPayment" value="no">
+                    <input type="hidden" name="origin" value=${customer.getId()}>
                     <input class="button" type="submit" value="Add" required>
                 </center>
                     </td>

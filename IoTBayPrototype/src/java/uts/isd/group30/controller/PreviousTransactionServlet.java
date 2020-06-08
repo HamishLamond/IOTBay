@@ -76,6 +76,7 @@ public class PreviousTransactionServlet extends HttpServlet {
                 devices.put(deviceName, item);
             }
             request.setAttribute("devices", devices);
+            request.setAttribute("transactionId", transactionId);
             Double value = manager.getTransactionValue(transactionId);
             request.setAttribute("value", value);
             request.getRequestDispatcher("viewPreviousTransaction.jsp").forward(request, response);

@@ -1,17 +1,17 @@
 package uts.isd.group30.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AccessLog {
     private int logId;
     private Integer customerId;
     private Integer staffId;
     private String eventType;
-    private Date timeStamp;
+    private LocalDateTime timeStamp;
     
     AccessLog() {}
     
-    public AccessLog(int logId, Integer customerId, Integer staffId, String eventType, Date timeStamp) {
+    public AccessLog(int logId, Integer customerId, Integer staffId, String eventType, LocalDateTime timeStamp) {
         this.logId = logId;
         this.customerId = customerId;
         this.staffId = staffId;
@@ -19,7 +19,7 @@ public class AccessLog {
         this.timeStamp = timeStamp;
     }
     
-    public AccessLog(Integer customerId, Integer staffId, String eventType, Date timeStamp) {
+    public AccessLog(Integer customerId, Integer staffId, String eventType, LocalDateTime timeStamp) {
         this.customerId = customerId;
         this.staffId = staffId;
         this.eventType = eventType;
@@ -36,22 +36,22 @@ public class AccessLog {
         this.logId = logId;
     }
     
-    public int getCustomerId()
+    public Integer getCustomerId()
     {
         return customerId;
     }
     
-    public void setCustomerId(int customerId)
+    public void setCustomerId(Integer customerId)
     {
         this.customerId = customerId;
     }
     
-    public int getStaffId()
+    public Integer getStaffId()
     {
         return staffId;
     }
     
-    public void setStaffId(int staffId)
+    public void setStaffId(Integer staffId)
     {
         this.staffId = staffId;
     }
@@ -66,12 +66,12 @@ public class AccessLog {
         this.eventType = eventType;
     }
     
-    public Date getTimeStamp()
+    public LocalDateTime getTimeStamp()
     {
         return timeStamp;
     }
     
-    public void setTimeStamp(Date timeStamp)
+    public void setTimeStamp(LocalDateTime timeStamp)
     {
         this.timeStamp = timeStamp;
     }

@@ -25,33 +25,39 @@
         </div>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
+            <a href="myDetails.jsp">My Details</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
-            <a href="OrderListServlet?action=list">Order List</a>
-            <a href="currentOrder.jsp">View Order [${cart.size()}]</a>
-            <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
-            <a href="main.jsp">Home</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
+            <a href="index.jsp">Home</a>
         </div>
         <h2>Transaction ${request.getParameter(id)}</h2>
         <table class="previous_order_table">
             <thead>
                 <tr>
                     <th>Device Name</th>
-                    <th>No.</th>
                     <th>Cost</th>
+                    <th>No.</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <c:forEach items="${devices}" var="device">
                 <tr>
                     <td>${device.key}</td>
-                    <td>x${device.value.quantity}</td>
                     <td>${device.value.cost}</td>
+                    <td>x${device.value.quantity}</td>
+                    <td>${device.value.cost * device.value.quantity}</td>
                 </tr>
             </c:forEach>
-                <tr>
-                    <td class="empty_cell_bottom"></td>
-                    <td class="empty_cell_bottom"></td>
-                    <td>${value}</td>
-                </tr>
+            <tr>
+                <td class="empty_cell_bottom"></td>
+                <td class="empty_cell_bottom"></td>
+                <td class="empty_cell_bottom"></td>
+                <td>${value}</td>
+            </tr>
         </table>
+        <div class="middle_link_div">
+            <a class="middle_link_button" href="CancelOrderServlet?id=${transactionId}">Cancel Order</a>
+        </div>
     </body>
 </html>

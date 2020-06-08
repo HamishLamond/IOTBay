@@ -14,6 +14,7 @@
    private String creditCardNumberPattern = "([0-9]{16})";
    private String creditCardExpiryPattern = "([0-9]{2})(/)([0-9]{2})";
    private String creditCardCVCPattern = "([0-9]{3})";
+   private String phonePattern = "([0-9]{10})";
               
    public Validators(){    }       
 
@@ -50,7 +51,11 @@
    public boolean validatePassword(String password){
 
       return validate(passwordPattern,password); 
+   }
+   
+   public boolean validatePhoneNumber(String phoneNumber){
 
+      return validate(phonePattern,phoneNumber); 
    }
    
    public boolean validateCreditCardNumber(String creditCardNumber){

@@ -67,16 +67,31 @@ public class OrderListServlet extends HttpServlet {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
         Customer customer = (Customer) session.getAttribute("customer");
-        if (customer != null) {
-            try {
-                ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
-                request.setAttribute("transactions", transactions);
+        String filter = request.getParameter("filter");
+        if (filter == null) {
+            if (customer != null) {
+                try {
+                    ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactions(customer.getId());
+                    request.setAttribute("transactions", transactions);
+                    request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
                 request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
+            if (customer != null) {
+                try {
+                    ArrayList<Transaction> transactions = (ArrayList) manager.getCustomerTransactionsByDate(customer.getId());
+                    request.setAttribute("transactions", transactions);
+                    request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                request.getRequestDispatcher("viewOrderList.jsp").forward(request, response);
+            }
         }
     }
 

@@ -28,6 +28,13 @@ public class Payment {
         this.created = created;
         this.lastUpdated = lastUpdated;
     }
+    public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefault, int customerId) {
+        this.creditCardCVC = creditCardCVC;
+        this.creditCardExpiry = creditCardExpiry;
+        this.creditCardNumber = creditCardNumber;
+        this.customerId = customerId;
+        this.isDefault = isDefault;
+    }
 
     public Timestamp getCreated() {
         return created;

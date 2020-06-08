@@ -7,10 +7,21 @@ package uts.isd.group30.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import uts.isd.group30.model.Device;
+import uts.isd.group30.model.dao.DBManager;
 
 /**
  *
@@ -56,7 +67,29 @@ public class CurrentOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        DBManager manager = (DBManager) session.getAttribute("manager");
+        HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+        Double totalCost = 0.0;
+        try {
+            ArrayList<Device> deviceArray = new ArrayList();
+            ArrayList<Integer> deviceNumbers = new ArrayList();
+            for (Map.Entry<String, Integer> entry : cart.entrySet()){
+                String deviceName = entry.getKey();
+                int numberOfDevices = entry.getValue();
+                Device device = manager.getDeviceByName(deviceName);
+                deviceArray.add(device);
+                deviceNumbers.add(numberOfDevices);
+                totalCost += device.getCost() * numberOfDevices;
+            }
+            request.setAttribute("cart", cart);
+            request.setAttribute("deviceArray", deviceArray);
+            request.setAttribute("deviceNumbers", deviceNumbers);
+            request.setAttribute("totalCost", totalCost);
+            request.getRequestDispatcher("currentOrder.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

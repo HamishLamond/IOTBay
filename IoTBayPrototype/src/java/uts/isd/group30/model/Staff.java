@@ -16,10 +16,20 @@ public class Staff {
     private String password;
     private int phone;
     private Boolean isManager;
-    private int manager;
+    private Integer manager;
 
-    public Staff(int id, String name, String email, String password, int phone, Boolean isManager, int manager) {
+    public Staff(int id, String name, String email, String password, int phone, Boolean isManager, Integer manager) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.isManager = isManager;
+        this.manager = manager;
+    }
+    
+    public Staff(String name, String email, String password, int phone, Boolean isManager, Integer manager) {
+        
         this.name = name;
         this.email = email;
         this.password = password;
@@ -52,7 +62,7 @@ public class Staff {
         return isManager;
     }
 
-    public int getManager() {
+    public Integer getManager() {
         return manager;
     }
 

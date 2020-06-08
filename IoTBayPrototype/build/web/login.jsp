@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : 01/05/2020, 8:39:08 PM
-    Author     : USER
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,11 +8,23 @@
     </head>
     <body>
         <div class="header">
-            <h1>IoTBay</h1>
+            <h1>IoTBay Login</h1>
         </div>
+        <%
+            String loginError = (String)session.getAttribute("InvalidLogin");
+        %>
         <h2>Login</h2>
-        <form action="welcome.jsp" method="post">
+        <form action="LoginServlet" method="post">
+            <% 
+                if (loginError != null) 
+                { 
+                    %>
+                    <td><span style="color:red"><%=loginError%></span></td>
+
+                    <% } 
+                %>
             <table>
+                    
                 <tr>
                     <td><label for="email">Email</label></td>
                     <td><input class="form_input_box" type="email" id ="frame" name="email" placeholder="JohnSmith@gmail.com" required></td>
@@ -26,6 +32,11 @@
                 <tr>
                     <td><label for="password">Password</label></td>
                     <td><input class="form_input_box" type="password" id ="frame" name="password" placeholder="Password123_" required></td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="user" value="customer" checked="true"/>Customer</td>
+                    <td><input type="radio" name="user" value="staff"/>Staff</td>
+                    
                 </tr>
                 <tr>
                     <td></td>

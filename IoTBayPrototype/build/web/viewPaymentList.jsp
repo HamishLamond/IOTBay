@@ -15,12 +15,22 @@
             ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
             String DefaultString = "False";
          %>
-        <h1>IoTBay</h1>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
-            <a href="main.jsp">Home</a>
+            <a href="myDetails.jsp">My Details</a>
+            <a href="OrderListServlet?action=list">Order List</a>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
+            <a href="index.jsp">Home</a>
         </div>
         <h2>Payment Methods</h2>
+        <%
+            if(customer != null){
+                try {
+                %>
         <form action="searchPaymentServlet" method="post">
             <table>
                 <tr>
@@ -29,7 +39,7 @@
                         <select name="searchOption">
                             <option value="creditCardNumberSearch">CreditCardNumber</option>
                             <option value="dateSearch">Date</option>
-                        </select> 
+                        </select>
                     </th>
                     <th><input type="text" name="searchBox"></th>
                     <th><input type="submit" name="submitSearch"></th>
@@ -48,15 +58,14 @@
                     <th>Delete</th>
                 </tr>
                 <%
-                    try{
                         if (paymentList.size() > 0){
-                        for (int i = 0; i < paymentList.size(); i++){
-                            if(paymentList.get(i).getIsDefault()==1){
-                                DefaultString = "True";
-                            }
-                            else{
-                                DefaultString = "False";
-                            }
+                            for (int i = 0; i < paymentList.size(); i++){
+                                if(paymentList.get(i).getIsDefault()==1){
+                                    DefaultString = "True";
+                                }
+                                else{
+                                    DefaultString = "False";
+                                }
                     %>
                 <tr>
                     <td><%=paymentList.get(i).getCreditCardNumber()%></td>
@@ -66,19 +75,27 @@
                     <td><%=paymentList.get(i).getLastUpdated()%></td>
                     <td><%=DefaultString%></td>
                     <td><a href="PaymentServlet?action=update&index=<%=i%>">Update</a></td>
-                    <td><a href="PaymentServlet?action=delete&number=<%=paymentList.get(i).getCreditCardNumber()%>">Delete</a></td>
+                    <td><a href="PaymentServlet?action=delete&number=<%=i%>">Delete</a></td>
                 </tr>
                 <%
+                            }
                         }
-                        }
-                    }
-                    catch (Exception ex) {
-                        ;
-                    }
-                    %>
+                        %>
                 <tr>
                     <td colspan="8"><a href="addPayment.jsp">Add new payment</a></td>
                 </tr>
             </table>
+                <%
+                    }
+            catch (Exception ex) {
+                        ;
+                    }
+            }
+                    else{
+                        %>
+            <h4>Please log in to load your Payment methods</h4>
+            <%
+                }
+%>
     </body>
 </html>
