@@ -11,6 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>UpdateDetails</title>
     </head>
     <body>
@@ -60,7 +61,7 @@
                 </tr>
                 <tr>
                     <td><label for="email">Email</label></td>
-                    <td><input class="form_input_box" type="email" id ="frame" name="email" placeholder="JohnSmith@gmail.com" required value="<%=email%>"></td>
+                    <td><input class="form_input_box" type="email" id ="frame" name="email" disabled placeholder="JohnSmith@gmail.com" required value="<%=email%>"></td>
                 </tr>
                 <tr>
                     <td><label for="password">Password</label></td>

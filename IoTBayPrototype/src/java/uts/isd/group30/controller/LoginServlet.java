@@ -120,7 +120,7 @@ public class LoginServlet extends HttpServlet {
                 //Insertion failed!
             }
             
-            session.setAttribute("User", staff);
+            session.setAttribute("staff", staff);
             session.setAttribute("userType", "staff");
             session.setAttribute("InvalidLogin", null);
             request.getRequestDispatcher("staffWelcome.jsp").forward(request, response);
@@ -137,7 +137,7 @@ public class LoginServlet extends HttpServlet {
                 //Insertion failed!
             }
             
-            session.setAttribute("User", customer);
+            session.setAttribute("customer", customer);
             session.setAttribute("userType", "customer");
             session.setAttribute("InvalidLogin", null);
             request.getRequestDispatcher("customerWelcome.jsp").forward(request, response);

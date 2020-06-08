@@ -32,7 +32,7 @@
             }
             //Do logout access log addition here.
             DBManager manager = (DBManager)session.getAttribute("dbmanager");
-            manager.addAccessLog(new AccessLog(userId, null, "logout", LocalDateTime.now()));
+            manager.addAccessLog(new AccessLog(userId, null, session.getAttribute("userType") == "customer" ? "customerLogout" : "staffLogout", LocalDateTime.now()));
             session.invalidate(); %>
     </body>
 </html>

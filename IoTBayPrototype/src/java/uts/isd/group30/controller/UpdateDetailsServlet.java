@@ -30,8 +30,8 @@ public class UpdateDetailsServlet extends HttpServlet {
 
     
     HttpSession session;
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         Boolean invalidValues = false;
@@ -39,15 +39,8 @@ public class UpdateDetailsServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("registerCustomer.jsp");
         Boolean isStaff = session.getAttribute("userType") == "staff";
         Validators validator = new Validators();
-        
-        String email = request.getParameter("email");        
+               
         flushInputErrors();
-        //Validate email
-        if (!validator.validateEmail(email))
-        {
-             session.setAttribute("regEmailErr", "You have entered an invalid email!");
-             invalidValues = true;
-        }
         
         //Validate phone
         String phone = request.getParameter("phoneNumber");
@@ -98,24 +91,15 @@ public class UpdateDetailsServlet extends HttpServlet {
             }
             if (isStaff)
             {
+                String email = ((Staff)session.getAttribute("staff")).getEmail();
                 Staff staff = new Staff(name, email, password, parseInt(phone), false, null);
                 try
                 {
-                    //Check to make sure email is free
-                    if(manager.CheckStaffExistsByEmail(email))
-                    {
-                        session.setAttribute("acctExistsErr", "There is already an account using this email!");
-                        dispatcher.include(request, response);
-                        return;
-                    }
-                    else
-                    {
-                        manager.UpsertStaff(staff);
-                        staff = manager.getStaffByLoginDetails(email, password);
-                        manager.addAccessLog(new AccessLog(staff.getId(), null, "staffUpdated", LocalDateTime.now()));
-                        session.setAttribute("staff", staff);
-                        request.getRequestDispatcher("myDetails.jsp").forward(request, response);
-                    }
+                    manager.UpdateStaff(staff);
+                    staff = manager.getStaffByLoginDetails(email, password);
+                    manager.addAccessLog(new AccessLog(staff.getId(), null, "staffUpdated", LocalDateTime.now()));
+                    session.setAttribute("staff", staff);
+                    request.getRequestDispatcher("myDetails.jsp").forward(request, response);
                 }
                 catch (SQLException e)
                 {
@@ -126,26 +110,16 @@ public class UpdateDetailsServlet extends HttpServlet {
             }
             else
             {
+                String email = ((Customer)session.getAttribute("customer")).getEmail();
                 String address = request.getParameter("address");
                 Customer customer = new Customer(name, address, email, parseInt(phone), password);
                 try
                 {
-                    //Check to make sure email is free
-                    if(manager.CheckCustomerExistsByEmail(email))
-                    {
-                        session.setAttribute("acctExistsErr", "There is already an account using this email!");
-                        dispatcher.include(request, response);
-                        return;
-                    }
-                    else
-                    {
-                        manager.UpsertCustomer(customer);
-                        customer = manager.getCustomerByLoginDetails(email, password);
-                        manager.addAccessLog(new AccessLog(customer.getId(), null, "customerCreated", LocalDateTime.now()));
-                        session.setAttribute("customer", customer);
-                        session.setAttribute("userType", "customer");
-                        request.getRequestDispatcher("customerWelcome.jsp");
-                    }
+                    manager.UpdateCustomer(customer);
+                    customer = manager.getCustomerByLoginDetails(email, password);
+                    manager.addAccessLog(new AccessLog(customer.getId(), null, "customerUpdated", LocalDateTime.now()));
+                    session.setAttribute("customer", customer);
+                    request.getRequestDispatcher("myDetails.jsp").forward(request, response);
                 }
                 catch (SQLException e)
                 {

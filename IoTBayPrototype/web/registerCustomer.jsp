@@ -11,7 +11,7 @@
             <h1>Account Creation (Customer)</h1>
         </div>
         <h2></h2>
-        <form action="RegistrationServlet" method="post">
+        <form action="CustomerRegistrationServlet" method="post">
             <table>
                 <tr>
                     <td><label for="name">Full name</label></td>

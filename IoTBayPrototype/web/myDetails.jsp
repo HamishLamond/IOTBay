@@ -6,6 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>Details Page</title>
     </head>
     <body>
@@ -24,7 +25,7 @@
             
             if (!isStaff)
             {
-                customer = (Customer) session.getAttribute("customer");
+                customer = (Customer)session.getAttribute("customer");
                 name = customer.getName();
                 email = customer.getEmail();
                 password = customer.getPassword();
@@ -41,7 +42,6 @@
             }  
         %>
         <div class="top_right_link_div">
-            <a href=""
             <a href="logout.jsp">Logout</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
             <a href="viewOrderList.jsp">Order List</a>
@@ -82,7 +82,7 @@
                 </td>
             </tr>
             <% 
-                if (isStaff) 
+                if (!isStaff) 
                 { 
                     %>
                     <tr>

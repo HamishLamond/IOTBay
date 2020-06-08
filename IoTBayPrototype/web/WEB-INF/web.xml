@@ -36,10 +36,10 @@
         <servlet-name>UpdateDetailsServlet</servlet-name>
         <servlet-class>uts.isd.group30.controller.UpdateDetailsServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>RegistrationServlet</servlet-name>
-        <url-pattern>/RegistrationServlet</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteAccountServlet</servlet-name>
+        <servlet-class>uts.isd.group30.controller.DeleteAccountServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDetailsServlet</servlet-name>
         <url-pattern>/UserDetailsServlet</url-pattern>
@@ -83,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>UpdateDetailsServlet</servlet-name>
         <url-pattern>/UpdateDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAccountServlet</servlet-name>
+        <url-pattern>/DeleteAccountServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

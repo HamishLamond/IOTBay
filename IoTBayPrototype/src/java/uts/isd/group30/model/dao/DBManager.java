@@ -78,6 +78,22 @@ public class DBManager {
         return false;
     }
     
+    public void UpsertStaff(Staff staff) throws SQLException {        
+   String query = "INSERT INTO IOTBAY.STAFF ("
+           + "staffName, "
+           + "staffEmail,"
+           + "staffPhone,"
+           + "rank,"
+           + "staffPassword,"
+           + "staffManager) VALUES (" + 
+
+           "'" + staff.getName() + "'" + ", " + 
+            "'" + staff.getEmail() + "'" + ", " + 
+            staff.getPhone() + ", " +
+            (staff.getIsManager() ? 1 : 0) + ", " +
+            "'" + staff.getPassword() + "'" + ", " + 
+            staff.getManager() + ")";
+    }
 
     //update a user details in the database   
     public void UpsertCustomer(Customer customer) throws SQLException {        
@@ -95,25 +111,28 @@ public class DBManager {
                 "'" + customer.getPassword() + "'" + ")";
        String x = "";
         st.executeUpdate(query);   
-    }      
+    }   
 
-    public void UpsertStaff(Staff staff) throws SQLException {        
-       String query = "INSERT INTO IOTBAY.STAFF ("
-               + "staffName, "
-               + "staffEmail,"
-               + "staffPhone,"
-               + "rank,"
-               + "staffPassword,"
-               + "staffManager) VALUES (" + 
-               
-               "'" + staff.getName() + "'" + ", " + 
-                "'" + staff.getEmail() + "'" + ", " + 
-                staff.getPhone() + ", " +
-                (staff.getIsManager() ? 1 : 0) + ", " +
-                "'" + staff.getPassword() + "'" + ", " + 
-                staff.getManager() + ")";
+    public void UpdateStaff(Staff staff) throws SQLException {        
+       String query = "UPDATE IOTBAY.STAFF SET "
+               + "staffName = " + "'" + staff.getName() + "', " 
+               + "staffPhone = " + staff.getPhone() + ", " 
+               + "rank = " + (staff.getIsManager() ? 1 : 0) + ", "
+               + "staffPassword = " + "'" + staff.getPassword() + "' "
+               + "staffManager = " + staff.getManager() + "  " 
+               + "WHERE STAFFEMAIL = '" + staff.getEmail() + "'";
         st.executeUpdate(query);   
-    }       
+    }   
+
+    public void UpdateCustomer(Customer customer) throws SQLException {        
+       String query = "UPDATE IOTBAY.CUSTOMER SET "
+               + "customerName = " + "'" + customer.getName() + "', " 
+               + "customerPhone = " + customer.getPhoneNumber() + ", " 
+               + "customerAddress = '" + customer.getAddress() + "', "
+               + "customerPassword = " + "'" + customer.getPassword() + "' "
+               + "WHERE CUSTOMEREMAIL = '" + customer.getEmail() + "'";
+        st.executeUpdate(query);   
+    }     
 
     //delete a user from the database   
     public void deleteCustomerByEmail(String email) throws SQLException{       
