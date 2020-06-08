@@ -19,4 +19,15 @@ INSERT INTO IOTBAY.CUSTOMER
     ('Homer Simpson', '742 Evergreen Terrace, Springfield TAS 7452', 'homer@springfield.com',0456951235, 'donuts123'),
     ('John Spartan', '83 Halsey Road, Reach SA 5604', 'john117@unsc.com',0459862531, 'finishthefight'),
     ('Sarah Kerrigan', '4 Ghost Road, Char VIC 3243', 'kerrigan@swarm.com',0425632564, 'fortheswarm'),
-    ('Jim Raynor', '1 Hyperion Lane, Mar Sara QLD 4301', 'jamesraynor@gmail.com',0476578294, 'Password')
+    ('Jim Raynor', '1 Hyperion Lane, Mar Sara QLD 4301', 'jamesraynor@gmail.com',0476578294, 'Password'),
+    ('Kai Miloyd', 'Glennerstrasse 8237 8845 Gerlikon, Switzerland', 'KaiMiloyd@realkeywords.ch', 0432153654, 'Draxespego'),
+    ('Modolf Sigvaldisson', 'Via Gabbietta 1041 538 Valle, Switzerland', 'ModolfSigval@flightcalls.it', 0495642315, 'BookThere'),
+    ('Lucilla Manfrin', '3223 Marloo Street TRANMERE SA 9715', 'LucillaMan@medicplant.com.au',0412362156 , 'BeVamp'),
+    ('Urtun Echezarreta', '6169 Marx Hill Road SCOTCHMAN NSW 2845', 'Urtun@yahoo.com.au', 0465123215, 'unforuntaley'),
+    ('Tonia K. Connolly', '4382 Muscat Street GOODLANDS WA 4357', 'Tonia.Con@hotmail.com', 0431253421, 'jigglypuff'),
+    ('George J. Hallett', '3239 Warren Avenue BUDGEWOI PENINSULA NSW 5363', 'HalletGeorge@gmail.com', 0431642756, 'lockdownvibes'),
+    ('Maxwell B. Campbell', '5987 Peterho Boulevard LOWER HERMITAGE SA 3718', 'Maxwell@gmail.com', 0439676734, 'dragon871'),
+    ('David J. Upshaw', '1397 Burnley Street SEAFORD RISE SA 7847', 'WhatsUpshaw@hotmail.com', 0497863124, 'dogsinthesky'),
+    ('Brett P. Brennan', '8578 Foreshore Road KOONGAMIA WA 2662', 'BrettBrenn@gmail.com', 0436796134, 'BoringBren'),
+    ('Rosemarie J. Ellis', '1357 Warren Avenue BLACKSMITHS NSW 1622', 'Rosemary@hotmail.com', 0437698524, 'EllisWillis'),
+    ('Roger C. Hurt', '4772 Oriana Street MOONEE NSW 8246', 'itHurts@yahoo.com', 0498532334, 'HurtsYou')
