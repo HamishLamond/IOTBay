@@ -371,6 +371,15 @@ public class DBManager {
         return items;       
     }
     
+    public void updateDeviceStock(int deviceId, int boughtAmount) throws SQLException{
+        ResultSet rs = st.executeQuery("SELECT STOCK FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId);
+        int currentStock;
+        rs.next();
+        currentStock = rs.getInt(1);
+        int newStock = currentStock - boughtAmount;
+        st.executeUpdate("UPDATE IOTBAY.DEVICE SET STOCK=" + newStock + " WHERE DEVICEID=" + deviceId);
+    }
+    
     public String getDeviceName(int deviceId) throws SQLException{
         String query = "SELECT DEVICENAME FROM IOTBAY.DEVICE WHERE DEVICEID=" + deviceId;
         ResultSet rs = st.executeQuery(query);
