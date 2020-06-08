@@ -24,7 +24,7 @@ import uts.isd.group30.model.dao.DBManager;
  *
  * @author Zunther
  */
-public class RegistrationServlet extends HttpServlet {
+public class CustomerRegistrationServlet extends HttpServlet {
     HttpSession session;
    
     @Override
@@ -61,23 +61,23 @@ public class RegistrationServlet extends HttpServlet {
             invalidValues = true;
         }
         
-        //Validate address
+        //Validate password
         String password = request.getParameter("password");
         if (!validator.validatePassword(password))
         {
-            session.setAttribute("regPassErr", "Your password needs to an alphanumeric of at least four characters!");
+            session.setAttribute("regPassErr", "Your password needs to be an alphanumeric of at least four characters!");
             invalidValues = true;
         }
         
         if (invalidValues)
         {
+            //If anything's wrong, try again.
             dispatcher.include(request, response);
             return;
         }
         else
         {
             String address = request.getParameter("address");
-            String userType = request.getParameter("UserType");
 
             DBManager manager = (DBManager) session.getAttribute("dbmanager");
             if (manager == null)
@@ -90,6 +90,7 @@ public class RegistrationServlet extends HttpServlet {
                 catch(Exception e)
                 {
                     //Unspecified error occurred
+                    dispatcher.include(request, response);
                     return;
                 }
             }
@@ -109,12 +110,15 @@ public class RegistrationServlet extends HttpServlet {
                     customer = manager.getCustomerByLoginDetails(email, password);
                     manager.addAccessLog(new AccessLog(customer.getId(), null, "customerCreated", LocalDateTime.now()));
                     session.setAttribute("customer", customer);
+                    session.setAttribute("userType", "customer");
                     request.getRequestDispatcher("customerWelcome.jsp");
                 }
             }
             catch (SQLException e)
             {
-                
+               //Database error 
+                dispatcher.include(request, response);
+                return;
             }
         }
         
@@ -124,6 +128,7 @@ public class RegistrationServlet extends HttpServlet {
         session.setAttribute("regEmailErr", null);
         session.setAttribute("regPhoneErr", null);
         session.setAttribute("regNameErr", null);
+        session.setAttribute("regPassErr", null);
     }
 
 }

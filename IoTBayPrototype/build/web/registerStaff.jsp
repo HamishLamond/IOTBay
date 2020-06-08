@@ -4,27 +4,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/IoTBayCSS.css">
-        <title>Login</title>
+        <title>Register</title>
     </head>
     <body>
         <div class="header">
-            <h1>IoTBay Login</h1>
+            <h1>Account Creation (Staff)</h1>
         </div>
-        <%
-            String loginError = (String)session.getAttribute("InvalidLogin");
-        %>
-        <h2>Login</h2>
-        <form action="LoginServlet" method="post">
-            <% 
-                if (loginError != null) 
-                { 
-                    %>
-                    <td><span style="color:red"><%=loginError%></span></td>
-
-                    <% } 
-                %>
+        <h2></h2>
+        <form action="StaffRegistrationServlet" method="post">
             <table>
-                    
+                <tr>
+                    <td><label for="name">Full name</label></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="name" placeholder="John Smith" required></td>
+                </tr>
                 <tr>
                     <td><label for="email">Email</label></td>
                     <td><input class="form_input_box" type="email" id ="frame" name="email" placeholder="JohnSmith@gmail.com" required></td>
@@ -34,15 +26,14 @@
                     <td><input class="form_input_box" type="password" id ="frame" name="password" placeholder="Password123_" required></td>
                 </tr>
                 <tr>
-                    <td><input type="radio" name="user" value="customer" checked="true"/>Customer</td>
-                    <td><input type="radio" name="user" value="staff"/>Staff</td>
-                    
+                    <td><label for="phoneNumber">Phone Number</label></td>
+                    <td><input class="form_input_box" type="tel" id ="frame" name="phoneNumber" placeholder="0#########" pattern="[0]{1}[0-9]{9}" required title="A valid 10 digit phone number starting with 0"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td><center>
-                    <input type="hidden" name="origin"  value="login">
-                    <input class="button" type ="submit" value="Login" required>
+                    <input type="hidden" name="origin"  value="register">
+                    <input class="button" type ="submit" value="Register" required>
                 </center>
                     </td>
                 </tr>

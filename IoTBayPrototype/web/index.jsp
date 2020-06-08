@@ -17,7 +17,8 @@ and open the template in the editor.
         </div>
         <div class="middle_link_div">
             <a class="middle_link_button" href="login.jsp">Login</a>
-            <a class="middle_link_button" href="registerCustomer.jsp">Register</a>
+            <a class="middle_link_button" href="registerCustomer.jsp">Register as Customer</a>
+            <a class="middle_link_button" href="registerStaff.jsp">Register as Staff</a>
         </div>
         <jsp:include page="/ConnServlet" flush="true" />
     </body>

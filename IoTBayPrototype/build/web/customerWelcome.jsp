@@ -1,9 +1,3 @@
-<%-- 
-    Document   : welcome
-    Created on : 01/05/2020, 8:39:30 PM
-    Author     : USER
---%>
-
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="uts.isd.group30.model.Customer"%>
@@ -17,44 +11,19 @@
     </head>
     <body>
         <div class="header">
-            <h1>IoTBay</h1>
+            <h1>IoTBay Home Page</h1>
+        </div>
+        <div class="top_right_link_div">
+            <a href="myDetails.jsp">My Details</a>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="viewOrderList.jsp">Order List</a>
+            <a href="logout.jsp">Logout</a>
         </div>
         <%
-            String origin = request.getParameter("origin");
-            if (origin.equals("register")){
-                String name = request.getParameter("name");
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
-                String address = request.getParameter("address");
+            
         %>
-        <h2>You have successfully registered for IoTBay!</h2>
         
-        <a class="middle_link_button" href="main.jsp">Click to Enter IoTBay</a>
-        
-        
-        <%
-            Customer customer = new Customer(name, address, email, phoneNumber, password);
-            session.setAttribute("customer", customer);
-            } else{
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-        %>
         <h2>You have successfully logged into IoTBay!</h2>
-        <p> Your email is: <%=email %></p>
-        <p> Your password is: <%=password %></p>
-        <a class="middle_link_button" href="main.jsp">Click to Enter IoTBay</a>
         
-        
-        <%
-                Customer customer = new Customer();
-                customer.setId(1); //this is done for testing purposes currently. Should be replaced by the user login fucntion soon.
-                customer.setEmail(email);
-                customer.setPassword(password);
-                session.setAttribute("customer", customer);
-                }
-            HashMap<String, Integer> cart = new HashMap<String, Integer>();
-            session.setAttribute("cart", cart);
-             %>
     </body>
 </html>

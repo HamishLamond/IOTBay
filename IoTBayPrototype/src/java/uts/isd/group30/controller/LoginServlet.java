@@ -121,7 +121,7 @@ public class LoginServlet extends HttpServlet {
             }
             
             session.setAttribute("User", staff);
-            session.setAttribute("IsStaff", true);
+            session.setAttribute("userType", "staff");
             session.setAttribute("InvalidLogin", null);
             request.getRequestDispatcher("staffWelcome.jsp").forward(request, response);
             //Direct to staff landing page.
@@ -138,7 +138,7 @@ public class LoginServlet extends HttpServlet {
             }
             
             session.setAttribute("User", customer);
-            session.setAttribute("IsStaff", false);
+            session.setAttribute("userType", "customer");
             session.setAttribute("InvalidLogin", null);
             request.getRequestDispatcher("customerWelcome.jsp").forward(request, response);
             //Direct to customer landing page.

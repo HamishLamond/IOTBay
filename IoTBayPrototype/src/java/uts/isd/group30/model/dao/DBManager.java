@@ -67,6 +67,17 @@ public class DBManager {
         return false;
     }
     
+    public boolean CheckStaffExistsByEmail(String email) throws SQLException
+    {
+        ResultSet results = st.executeQuery("SELECT COUNT(*) FROM IOTBAY.STAFF AS TOTAL WHERE STAFFEMAIL = '" + email + "'");
+        
+        if (results.getInt(1) > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
 
     //update a user details in the database   
     public void UpsertCustomer(Customer customer) throws SQLException {        

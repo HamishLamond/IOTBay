@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="header">
-            <h1>IoTBay</h1>
+            <h1>IoTBay Login</h1>
         </div>
         <%
             String loginError = (String)session.getAttribute("InvalidLogin");

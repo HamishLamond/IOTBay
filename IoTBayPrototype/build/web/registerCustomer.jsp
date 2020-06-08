@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="header">
-            <h1>Account Creation</h1>
+            <h1>Account Creation (Customer)</h1>
         </div>
         <h2></h2>
         <form action="RegistrationServlet" method="post">
