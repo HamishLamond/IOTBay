@@ -124,7 +124,7 @@
                 </table>
                 <div class="middle_link_div">
                     <a class="middle_link_button" href="CurrentOrderServlet">Back</a>
-                    <a class="middle_link_button" href="CreateTransactionServlet">Confirm</a>
+                    <a class="middle_link_button" href="addTempPayment">Set payment method</a>
                 </div>
             </c:if>
         </c:if>
