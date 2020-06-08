@@ -1,9 +1,3 @@
-<%-- 
-    Document   : register
-    Created on : 01/05/2020, 8:39:18 PM
-    Author     : USER
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,10 +8,10 @@
     </head>
     <body>
         <div class="header">
-            <h1>IoTBay</h1>
+            <h1>Account Creation (Staff)</h1>
         </div>
         <h2></h2>
-        <form action="welcome.jsp" method="post">
+        <form action="StaffRegistrationServlet" method="post">
             <table>
                 <tr>
                     <td><label for="name">Full name</label></td>
@@ -30,10 +24,6 @@
                 <tr>
                     <td><label for="password">Password</label></td>
                     <td><input class="form_input_box" type="password" id ="frame" name="password" placeholder="Password123_" required></td>
-                </tr>
-                <tr>
-                    <td><label for="address">Address</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="address" placeholder="123 George Street, Sydney" required></td>
                 </tr>
                 <tr>
                     <td><label for="phoneNumber">Phone Number</label></td>
