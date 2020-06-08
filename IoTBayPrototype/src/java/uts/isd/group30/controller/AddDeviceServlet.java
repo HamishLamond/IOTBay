@@ -42,7 +42,7 @@ public class AddDeviceServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddDevice</title>");            
+            out.println("<title>Servlet AddDevice</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddDevice at " + request.getContextPath() + "</h1>");
@@ -66,12 +66,12 @@ public class AddDeviceServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String name = request.getParameter("name");
         DBManager manager = (DBManager) session.getAttribute("manager");
-        try {    
+        try {
             Device device = manager.getDeviceByName(name);
-            if (device!= null){
-            session.setAttribute("device", device);
-            request.getRequestDispatcher("addDevice.jsp").include(request, response);}
-            else{
+            if (device != null) {
+                session.setAttribute("device", device);
+                request.getRequestDispatcher("addDevice.jsp").include(request, response);
+            } else {
                 request.getRequestDispatcher("main.jsp").include(request, response);
             }
         } catch (SQLException ex) {
@@ -95,18 +95,17 @@ public class AddDeviceServlet extends HttpServlet {
         int stock = device.getStock();
         String name = device.getName();
         int value = Integer.parseInt(request.getParameter("value"));
-        if (value <= stock){
-        HashMap <String, Integer> cart = (HashMap <String, Integer>) session.getAttribute("cart");
-        cart.put(name,value);
-        session.setAttribute("cart", cart);
-        session.setAttribute("stockErr","");
-        response.sendRedirect("CatalogueServlet?action=list");
+        if (value <= stock) {
+            HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+            cart.put(name, value);
+            session.setAttribute("cart", cart);
+            session.setAttribute("stockErr", "");
+            response.sendRedirect("CatalogueServlet?action=list");
         } else {
-            session.setAttribute("stockErr","Devices adding to cart exceeded devices in stock");
+            session.setAttribute("stockErr", "Devices adding to cart exceeded devices in stock");
             request.getRequestDispatcher("addDevice.jsp").forward(request, response);
         }
-        
-        
+
     }
 
     /**

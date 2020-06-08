@@ -12,6 +12,7 @@ import java.sql.Timestamp;
  * @author yash_
  */
 public class Payment {
+
     private String creditCardNumber;
     private String creditCardExpiry;
     private String creditCardCVC;
@@ -19,6 +20,7 @@ public class Payment {
     private Timestamp created;
     private Timestamp lastUpdated;
     private int isDefault;
+
     public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefault, int customerId, Timestamp created, Timestamp lastUpdated) {
         this.creditCardCVC = creditCardCVC;
         this.creditCardExpiry = creditCardExpiry;
@@ -28,6 +30,7 @@ public class Payment {
         this.created = created;
         this.lastUpdated = lastUpdated;
     }
+
     public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC, int isDefault, int customerId) {
         this.creditCardCVC = creditCardCVC;
         this.creditCardExpiry = creditCardExpiry;
@@ -68,7 +71,6 @@ public class Payment {
         return customerId;
     }
 
-    
     public String getCreditCardNumber() {
         return creditCardNumber;
     }

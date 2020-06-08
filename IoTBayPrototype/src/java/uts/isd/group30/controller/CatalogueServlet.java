@@ -42,7 +42,7 @@ public class CatalogueServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CatalogueServlet</title>");            
+            out.println("<title>Servlet CatalogueServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CatalogueServlet at " + request.getContextPath() + "</h1>");
@@ -50,6 +50,7 @@ public class CatalogueServlet extends HttpServlet {
             out.println("</html>");
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -65,7 +66,7 @@ public class CatalogueServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
         DBManager manager = (DBManager) session.getAttribute("manager");
-        if (action.equalsIgnoreCase("byname")){
+        if (action.equalsIgnoreCase("byname")) {
             try {
                 ArrayList<Device> devices = (ArrayList) manager.fetchDevice('n');
                 request.setAttribute("devices", devices);
@@ -74,7 +75,7 @@ public class CatalogueServlet extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (action.equalsIgnoreCase("byprice")){
+        } else if (action.equalsIgnoreCase("byprice")) {
             try {
                 ArrayList<Device> devices = (ArrayList) manager.fetchDevice('p');
                 request.setAttribute("devices", devices);
@@ -82,14 +83,15 @@ public class CatalogueServlet extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (action.equalsIgnoreCase("list")){
-        try {
-            ArrayList<Device> devices = (ArrayList) manager.fetchDevice('l');
-            request.setAttribute("devices", devices);
-            request.getRequestDispatcher("viewCatalogue.jsp").include(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }} else{
+        } else if (action.equalsIgnoreCase("list")) {
+            try {
+                ArrayList<Device> devices = (ArrayList) manager.fetchDevice('l');
+                request.setAttribute("devices", devices);
+                request.getRequestDispatcher("viewCatalogue.jsp").include(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             request.getRequestDispatcher("main.jsp").forward(request, response);
         }
     }
@@ -109,8 +111,8 @@ public class CatalogueServlet extends HttpServlet {
         String name = request.getParameter("name");
         DBManager manager = (DBManager) session.getAttribute("manager");
         try {
-            ArrayList<Device> devices = (ArrayList) manager.findDevice(name);       
-            session.setAttribute("devices",devices);
+            ArrayList<Device> devices = (ArrayList) manager.findDevice(name);
+            session.setAttribute("devices", devices);
             request.getRequestDispatcher("viewCatalogue.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -43,7 +43,7 @@ public class PaymentServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PaymentServlet</title>");            
+            out.println("<title>Servlet PaymentServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet PaymentServlet at " + request.getContextPath() + "</h1>");
@@ -66,68 +66,63 @@ public class PaymentServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-            try {
-                //DBConnector connector = new DBConnector();
-                //Connection conn = connector.openConnection();
-                //DBManager manager = new DBManager(conn);
-                DBManager manager = (DBManager) session.getAttribute("manager");
-                //
-                    if (action.equalsIgnoreCase("viewList")){
-                        try {
-                            try{
-                                Customer customer = (Customer)session.getAttribute("customer");
-                                ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(customer.getId());
-                                session.setAttribute("paymentList", paymentList);
-                                request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
-                            }
-                            catch (Exception ex){
-                                session.setAttribute("paymentList", null);
-                                request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
-                            }       
-                        }
-                        catch (Exception ex) {
-                            //System.out.print(ex);
-                        }
-                    }
-                    else if(action.equalsIgnoreCase("delete")){
-                        int number = Integer.parseInt(request.getParameter("number"));
-                        ArrayList<Payment> paymentList = (ArrayList<Payment>)session.getAttribute("paymentList");
-                        System.out.print(paymentList.get(number).getCreditCardNumber());
-                        manager.deletePaymentDetails(paymentList.get(number).getCreditCardNumber());
-                        paymentList.remove(paymentList.get(number));
-                        //int origin = Integer.parseInt(request.getParameter("origin"));
+        try {
+            //DBConnector connector = new DBConnector();
+            //Connection conn = connector.openConnection();
+            //DBManager manager = new DBManager(conn);
+            DBManager manager = (DBManager) session.getAttribute("manager");
+            //
+            if (action.equalsIgnoreCase("viewList")) {
+                try {
+                    try {
+                        Customer customer = (Customer) session.getAttribute("customer");
+                        ArrayList<Payment> paymentList = (ArrayList<Payment>) manager.getPaymentList(customer.getId());
                         session.setAttribute("paymentList", paymentList);
                         request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
+                    } catch (Exception ex) {
+                        session.setAttribute("paymentList", null);
+                        request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
                     }
-                    else if(action.equalsIgnoreCase("update")){
-                        System.out.print("Executed update if statemetn");
-                        //String creditCardNumber = request.getParameter("CCN");
-                        //String creditCardExpiry = request.getParameter("CCE");
-                        //String creditCardCVC = request.getParameter("CCCVC");
-                        //int isDefault = Integer.parseInt(request.getParameter("Default"));
-                        //if (isDefault==1){
-                        //    session.setAttribute("chckMsg", 1);
-                        //}
-                        //else{
-                        //    session.setAttribute("ckckMsg", 0);
-                        //}
-                        int index = Integer.parseInt(request.getParameter("index"));
-                        ArrayList<Payment> paymentList = (ArrayList<Payment>)session.getAttribute("paymentList");
-                        //int customerId = Integer.parseInt(request.getParameter("CId"));
-                        //Payment oldPayment = new Payment(creditCardNumber, creditCardExpiry, creditCardCVC, isDefault, customerId);
-                        session.setAttribute("oldPayment", paymentList.get(index));
-                        session.setAttribute("CCNMsg", null);
-                        session.setAttribute("CCEMsg", null);
-                        session.setAttribute("CCCVCMsg", null);
-                        session.setAttribute("SuccessUpdate", null);
-                        request.getRequestDispatcher("updatePayment.jsp").forward(request, response);
-                    }
-                //
+                } catch (Exception ex) {
+                    //System.out.print(ex);
+                }
+            } else if (action.equalsIgnoreCase("delete")) {
+                int number = Integer.parseInt(request.getParameter("number"));
+                ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
+                System.out.print(paymentList.get(number).getCreditCardNumber());
+                manager.deletePaymentDetails(paymentList.get(number).getCreditCardNumber());
+                paymentList.remove(paymentList.get(number));
+                //int origin = Integer.parseInt(request.getParameter("origin"));
+                session.setAttribute("paymentList", paymentList);
+                request.getRequestDispatcher("viewPaymentList.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("update")) {
+                System.out.print("Executed update if statemetn");
+                //String creditCardNumber = request.getParameter("CCN");
+                //String creditCardExpiry = request.getParameter("CCE");
+                //String creditCardCVC = request.getParameter("CCCVC");
+                //int isDefault = Integer.parseInt(request.getParameter("Default"));
+                //if (isDefault==1){
+                //    session.setAttribute("chckMsg", 1);
+                //}
+                //else{
+                //    session.setAttribute("ckckMsg", 0);
+                //}
+                int index = Integer.parseInt(request.getParameter("index"));
+                ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
+                //int customerId = Integer.parseInt(request.getParameter("CId"));
+                //Payment oldPayment = new Payment(creditCardNumber, creditCardExpiry, creditCardCVC, isDefault, customerId);
+                session.setAttribute("oldPayment", paymentList.get(index));
+                session.setAttribute("CCNMsg", null);
+                session.setAttribute("CCEMsg", null);
+                session.setAttribute("CCCVCMsg", null);
+                session.setAttribute("SuccessUpdate", null);
+                request.getRequestDispatcher("updatePayment.jsp").forward(request, response);
             }
-            catch (Exception ex){
-                System.out.print("Payment Servlet Database access error: " + ex);
-            }
+            //
+        } catch (Exception ex) {
+            System.out.print("Payment Servlet Database access error: " + ex);
         }
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.

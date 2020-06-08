@@ -1,8 +1,7 @@
 package uts.isd.group30.model;
 
-
 public class Customer {
-    
+
     private int id;
     private String name;
     private String address;
@@ -77,7 +76,5 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
+
 }

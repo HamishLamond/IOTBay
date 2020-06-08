@@ -70,7 +70,7 @@ public class ConfirmOrderServlet extends HttpServlet {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
         Customer customer = (Customer) session.getAttribute("customer");
-        Payment tempPaymentMethod = (Payment)session.getAttribute("tempPaymentMethod");
+        Payment tempPaymentMethod = (Payment) session.getAttribute("tempPaymentMethod");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         Double totalCost = 0.0;
         try {
@@ -89,20 +89,17 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.setAttribute("deviceNumbers", deviceNumbers);
             request.setAttribute("totalCost", totalCost);
             session.setAttribute("cartCost", totalCost);
-            if(customer!=null){
-                try{
+            if (customer != null) {
+                try {
                     Payment paymentMethod = manager.getDefaultPayment(customer.getId());
                     session.setAttribute("paymentMethod", paymentMethod);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     System.out.print("customer null:" + e);
                     //Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, e);
                 }
-            }
-            else if((tempPaymentMethod!=null)){
+            } else if ((tempPaymentMethod != null)) {
                 session.setAttribute("paymentMethod", tempPaymentMethod);
-            }
-            else{
+            } else {
                 System.out.print("Customer name is null");
                 session.setAttribute("paymentMethod", null);
             }

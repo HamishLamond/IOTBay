@@ -29,7 +29,7 @@
         </div>
         <hr>
         <%
-            Customer customer = (Customer)session.getAttribute("customer");
+            Customer customer = (Customer) session.getAttribute("customer");
             String CCNMsg = (String) session.getAttribute("CCNErr");
             String CCEMsg = (String) session.getAttribute("CCEErr");
             String CCCVCMsg = (String) session.getAttribute("CCCVCErr");
@@ -38,12 +38,12 @@
             //Integer chckMsg = (Integer) session.getAttribute("chckEnable");
             //System.out.print("chckMsg: " + chckMsg);
             Payment oldPayment = (Payment) session.getAttribute("oldPayment");
-            %>
-            <h4>Update Payment</h4>
-        
+        %>
+        <h4>Update Payment</h4>
+
         <form action="AddPaymentServlet" method="post">
             <%
-                if(SuccessUpdate!=null){
+                if (SuccessUpdate != null) {
             %>
             <h2><%=SuccessUpdate%></h2>
             <%
@@ -52,15 +52,15 @@
             <table>
                 <tr>
                     <td><label for="CCN">Credit Card Number</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCN" placeholder="<%=(CCNMsg != null ? CCNMsg : oldPayment.getCreditCardNumber()) %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCN" placeholder="<%=(CCNMsg != null ? CCNMsg : oldPayment.getCreditCardNumber())%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="CCE">Credit Card Expiry</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCE" placeholder="<%=(CCEMsg != null ? CCEMsg : oldPayment.getCreditCardExpiry()) %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCE" placeholder="<%=(CCEMsg != null ? CCEMsg : oldPayment.getCreditCardExpiry())%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="CCCVC">Credit Card CVC</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCMsg != null ? CCCVCMsg : oldPayment.getCreditCardCVC()) %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCMsg != null ? CCCVCMsg : oldPayment.getCreditCardCVC())%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="isDefault">Make default</label></td>
@@ -75,7 +75,7 @@
                     <input type="hidden" name="tempPayment" value="yes">
                     <input class="button" type="submit" value="Update" required>
                 </center>
-                    </td>
+                </td>
                 </tr>
             </table>
         </form>

@@ -14,7 +14,7 @@
             Customer customer = (Customer) session.getAttribute("customer");
             ArrayList<Payment> paymentSearch = (ArrayList<Payment>) session.getAttribute("paymentSearch");
             String DefaultString = "False";
-         %>
+        %>
         <div class="header">
             <h1>IoTBay</h1>
         </div>
@@ -43,57 +43,54 @@
                 </tr>
             </table>
         </form>
-            <table class="order_list_table">
-                <tr>
-                    <th>Credit Card Number</th>
-                    <th>Credit Card Expiry</th>
-                    <th>Credit Card CVC</th>
-                    <th>First added</th>
-                    <th>Last modified</th>
-                    <th>Default</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-                <%
-                    try{
-                        if (paymentSearch.size() > 0){
-                        for (int i = 0; i < paymentSearch.size(); i++){
-                            if(paymentSearch.get(i).getIsDefault()==1){
+        <table class="order_list_table">
+            <tr>
+                <th>Credit Card Number</th>
+                <th>Credit Card Expiry</th>
+                <th>Credit Card CVC</th>
+                <th>First added</th>
+                <th>Last modified</th>
+                <th>Default</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+            <%
+                try {
+                    if (paymentSearch.size() > 0) {
+                        for (int i = 0; i < paymentSearch.size(); i++) {
+                            if (paymentSearch.get(i).getIsDefault() == 1) {
                                 DefaultString = "True";
-                            }
-                            else{
+                            } else {
                                 DefaultString = "False";
                             }
-                    %>
-                <tr>
-                    <td><%=paymentSearch.get(i).getCreditCardNumber()%></td>
-                    <td><%=paymentSearch.get(i).getCreditCardExpiry()%></td>
-                    <td><%=paymentSearch.get(i).getCreditCardCVC()%></td>
-                    <td><%=paymentSearch.get(i).getCreated()%></td>
-                    <td><%=paymentSearch.get(i).getLastUpdated()%></td>
-                    <td><%=DefaultString%></td>
-                    <td><a href="PaymentServlet?action=update&index=<%=i%>">Update</a></td>
-                    <td><a href="PaymentServlet?action=delete&number=<%=paymentSearch.get(i).getCreditCardNumber()%>">Delete</a></td>
-                </tr>
-                <%
-                        }
-                        }
-                    else{
-                    %>
-                    <tr>
-                            <td colSpan="8">No matching search results</td>
-                        </tr>
-                        <%
-                        }
-                    }
-                    catch (Exception ex) {
-                        %>
-                        <tr>
-                            <td colSpan="8">No matching search results</td>
-                        </tr>
-                        <%
-                    }
-                    %>
-            </table>
+            %>
+            <tr>
+                <td><%=paymentSearch.get(i).getCreditCardNumber()%></td>
+                <td><%=paymentSearch.get(i).getCreditCardExpiry()%></td>
+                <td><%=paymentSearch.get(i).getCreditCardCVC()%></td>
+                <td><%=paymentSearch.get(i).getCreated()%></td>
+                <td><%=paymentSearch.get(i).getLastUpdated()%></td>
+                <td><%=DefaultString%></td>
+                <td><a href="PaymentServlet?action=update&index=<%=i%>">Update</a></td>
+                <td><a href="PaymentServlet?action=delete&number=<%=paymentSearch.get(i).getCreditCardNumber()%>">Delete</a></td>
+            </tr>
+            <%
+                }
+            } else {
+            %>
+            <tr>
+                <td colSpan="8">No matching search results</td>
+            </tr>
+            <%
+                }
+            } catch (Exception ex) {
+            %>
+            <tr>
+                <td colSpan="8">No matching search results</td>
+            </tr>
+            <%
+                }
+            %>
+        </table>
     </body>
 </html>

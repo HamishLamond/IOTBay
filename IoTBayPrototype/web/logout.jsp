@@ -18,21 +18,18 @@
         </div>
         <p>You have successfully logged out of your account.</p>
         <a class ="middle_link_button" href="index.jsp">IoTBay Landing Page</a>
-        <% 
+        <%
             Integer userId;
-            if (session.getAttribute("userType") == "customer")
-            {
-                Customer customer = (Customer)session.getAttribute("customer");
+            if (session.getAttribute("userType") == "customer") {
+                Customer customer = (Customer) session.getAttribute("customer");
                 userId = customer.getId();
-            }
-            else
-            {
-                Staff staff = (Staff)session.getAttribute("staff");
+            } else {
+                Staff staff = (Staff) session.getAttribute("staff");
                 userId = staff.getId();
             }
             //Do logout access log addition here.
-            DBManager manager = (DBManager)session.getAttribute("dbmanager");
+            DBManager manager = (DBManager) session.getAttribute("dbmanager");
             manager.addAccessLog(new AccessLog(userId, null, session.getAttribute("userType") == "customer" ? "customerLogout" : "staffLogout", LocalDateTime.now()));
-            session.invalidate(); %>
+            session.invalidate();%>
     </body>
 </html>

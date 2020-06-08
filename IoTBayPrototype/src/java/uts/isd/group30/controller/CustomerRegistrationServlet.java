@@ -25,8 +25,9 @@ import uts.isd.group30.model.dao.DBManager;
  * @author Zunther
  */
 public class CustomerRegistrationServlet extends HttpServlet {
+
     HttpSession session;
-   
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,74 +36,62 @@ public class CustomerRegistrationServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("registerCustomer.jsp");
 
         Validators validator = new Validators();
-        
-        String email = request.getParameter("email");        
+
+        String email = request.getParameter("email");
         flushInputErrors();
         //Validate email
-        if (!validator.validateEmail(email))
-        {
-             session.setAttribute("regEmailErr", "You have entered an invalid email!");
-             invalidValues = true;
+        if (!validator.validateEmail(email)) {
+            session.setAttribute("regEmailErr", "You have entered an invalid email!");
+            invalidValues = true;
         }
-        
+
         //Validate phone
         String phone = request.getParameter("phoneNumber");
-        if (!validator.validatePhoneNumber(phone))
-        {
+        if (!validator.validatePhoneNumber(phone)) {
             session.setAttribute("regPhoneErr", "You have entered an invalid phone number!");
             invalidValues = true;
         }
-        
+
         //Validate name
         String name = request.getParameter("name");
-        if (!validator.validateName(name))
-        {
+        if (!validator.validateName(name)) {
             session.setAttribute("regNameErr", "You have entered an invalid name!");
             invalidValues = true;
         }
-        
+
         //Validate password
         String password = request.getParameter("password");
-        if (!validator.validatePassword(password))
-        {
+        if (!validator.validatePassword(password)) {
             session.setAttribute("regPassErr", "Your password needs to be an alphanumeric of at least four characters!");
             invalidValues = true;
         }
-        
-        if (invalidValues)
-        {
+
+        if (invalidValues) {
             //If anything's wrong, try again.
             dispatcher.include(request, response);
             return;
-        }
-        else
-        {
+        } else {
             String address = request.getParameter("address");
 
             DBManager manager = (DBManager) session.getAttribute("dbmanager");
-            if (manager == null)
-            {
-                try
-                {
+            if (manager == null) {
+                try {
                     manager = new DBManager((new DBConnector()).openConnection());
                     session.setAttribute("dbmanager", manager);
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     //Unspecified error occurred
                     dispatcher.include(request, response);
                     return;
                 }
             }
             Customer customer = new Customer(name, address, email, parseInt(phone), password);
-            try
-            {
+            try {
                 //Check to make sure email is free
                 //if(manager.CheckCustomerExistsByEmail(email))
                 //{
-                    //session.setAttribute("acctExistsErr", "There is already an account using this email!");
-                    //dispatcher.include(request, response);
-                    //return;
+                //session.setAttribute("acctExistsErr", "There is already an account using this email!");
+                //dispatcher.include(request, response);
+                //return;
                 //}
                 //else
                 {
@@ -113,16 +102,14 @@ public class CustomerRegistrationServlet extends HttpServlet {
                     session.setAttribute("userType", "customer");
                     request.getRequestDispatcher("customerWelcome.jsp").forward(request, response);
                 }
-            }
-            catch (SQLException e)
-            {
-               //Database error 
+            } catch (SQLException e) {
+                //Database error 
                 dispatcher.include(request, response);
                 return;
             }
         }
-        
-}
+
+    }
 
     private void flushInputErrors() {
         session.setAttribute("regEmailErr", null);

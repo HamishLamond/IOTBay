@@ -39,7 +39,7 @@ public class searchPaymentServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet searchPaymentServlet</title>");            
+            out.println("<title>Servlet searchPaymentServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet searchPaymentServlet at " + request.getContextPath() + "</h1>");
@@ -79,24 +79,22 @@ public class searchPaymentServlet extends HttpServlet {
         String searchOption = request.getParameter("searchOption");
         ArrayList<Payment> paymentSearch = new ArrayList<Payment>();
         ArrayList<Payment> paymentList = (ArrayList<Payment>) session.getAttribute("paymentList");
-        if(searchOption.equals("creditCardNumberSearch")){
-            for(int i=0; i<paymentList.size(); i++){
-                if(paymentList.get(i).getCreditCardNumber().equals(searchRequest)){
-                     paymentSearch.add(paymentList.get(i));
+        if (searchOption.equals("creditCardNumberSearch")) {
+            for (int i = 0; i < paymentList.size(); i++) {
+                if (paymentList.get(i).getCreditCardNumber().equals(searchRequest)) {
+                    paymentSearch.add(paymentList.get(i));
                 }
             }
             session.setAttribute("paymentSearch", paymentSearch);
             request.getRequestDispatcher("viewPaymentSearch.jsp").include(request, response);
-        }
-        else if(searchOption.equals("dateSearch")){
+        } else if (searchOption.equals("dateSearch")) {
             String[] searchRequestSplit = searchRequest.split("-");
-            for(int i=0; i<paymentList.size(); i++){
+            for (int i = 0; i < paymentList.size(); i++) {
                 Timestamp created = paymentList.get(i).getCreated();
                 Timestamp updated = paymentList.get(i).getLastUpdated();
-                if((created.getMonth()==Integer.parseInt(searchRequestSplit[1])) | (created.getDate()==Integer.parseInt(searchRequestSplit[0])) | (created.getYear()==Integer.parseInt(searchRequestSplit[2]))){
+                if ((created.getMonth() == Integer.parseInt(searchRequestSplit[1])) | (created.getDate() == Integer.parseInt(searchRequestSplit[0])) | (created.getYear() == Integer.parseInt(searchRequestSplit[2]))) {
                     paymentSearch.add(paymentList.get(i));
-                }
-                else if((updated.getMonth()==Integer.parseInt(searchRequestSplit[1])) | (updated.getDate()==Integer.parseInt(searchRequestSplit[0])) | (updated.getYear()==Integer.parseInt(searchRequestSplit[2]))){
+                } else if ((updated.getMonth() == Integer.parseInt(searchRequestSplit[1])) | (updated.getDate() == Integer.parseInt(searchRequestSplit[0])) | (updated.getYear() == Integer.parseInt(searchRequestSplit[2]))) {
                     paymentSearch.add(paymentList.get(i));
                 }
             }

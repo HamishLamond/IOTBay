@@ -19,7 +19,7 @@
             <h1>IoTBay</h1>
         </div>
         <%
-            Customer customer = (Customer)session.getAttribute("customer");
+            Customer customer = (Customer) session.getAttribute("customer");
             String CCNErr = (String) session.getAttribute("CCNErr");
             String CCEErr = (String) session.getAttribute("CCEErr");
             String CCCVCErr = (String) session.getAttribute("CCCVCErr");
@@ -42,7 +42,7 @@
         <h2>Add Payment</h2>
         <form action="AddPaymentServlet" method="post">
             <%
-                if(Success!=null){
+                if (Success != null) {
             %>
             <h4><%=Success%></h4>
             <%
@@ -51,15 +51,15 @@
             <table>
                 <tr>
                     <td><label for="CCN">Credit Card Number</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCN" placeholder="<%=(CCNErr != null ? CCNErr : "0421326156548569") %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCN" placeholder="<%=(CCNErr != null ? CCNErr : "0421326156548569")%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="CCE">Credit Card Expiry</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCE" placeholder="<%=(CCEErr != null ? CCEErr : "12/21") %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCE" placeholder="<%=(CCEErr != null ? CCEErr : "12/21")%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="CCCVC">Credit Card CVC</label></td>
-                    <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCErr != null ? CCCVCErr : "111") %>" required></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" placeholder="<%=(CCCVCErr != null ? CCCVCErr : "111")%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="isDefault">Make default</label></td>
@@ -75,7 +75,7 @@
                     <input type="hidden" name="origin" value=${customer.getId()}>
                     <input class="button" type="submit" value="Add" required>
                 </center>
-                    </td>
+                </td>
                 </tr>
             </table>
         </form>
