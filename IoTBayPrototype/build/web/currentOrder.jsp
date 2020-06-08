@@ -15,19 +15,22 @@
         <link rel="stylesheet" href="css/IoTBayCSS.css">
         <title>Current Order</title>
     </head>
-    <body>
-        <%
-            //Customer customer = (Customer)session.getAttribute("customer");
-%>
+    <body class="body_no_image">
         <div class="header">
             <h1>IoTBay</h1>
         </div>
         <div class="top_right_link_div">
+            <c:if test="${customer != null}">
             <a href="logout.jsp">Logout</a>
-            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="myDetails.jsp">My Details</a>
             <a href="OrderListServlet?action=list">Order List</a>
-            <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
-            <a href="main.jsp">Home</a>
+            <a href="PaymentServlet?action=viewList">View Payment list</a>
+            </c:if>
+            <c:if test="${customer == null}">
+            <a href="loginRegister.jsp">Login/Register</a>
+            </c:if>
+            <a href="CatalogueServlet?action=list">Catalogue</a>
+            <a href="index.jsp">Home</a>
         </div>
         <c:if test="${customer.getName() != null}">
             <h2>${customer.name}'s current order.</h2>
