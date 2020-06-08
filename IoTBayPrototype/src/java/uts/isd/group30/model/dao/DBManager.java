@@ -94,6 +94,7 @@ public class DBManager {
             (staff.getIsManager() ? 1 : 0) + ", " +
             "'" + staff.getPassword() + "'" + ", " + 
             staff.getManager() + ")";
+        st.execute(query);
     }
             
     public Payment getDefaultPayment(int customerId) throws SQLException {
@@ -126,7 +127,6 @@ public class DBManager {
                 "'" + customer.getEmail() + "'" + "," + 
                 customer.getPhoneNumber() + "," +
                 "'" + customer.getPassword() + "'" + ")";
-       String x = "";
         st.executeUpdate(query);   
     }   
 
@@ -135,7 +135,7 @@ public class DBManager {
                + "staffName = " + "'" + staff.getName() + "', " 
                + "staffPhone = " + staff.getPhone() + ", " 
                + "rank = " + (staff.getIsManager() ? 1 : 0) + ", "
-               + "staffPassword = " + "'" + staff.getPassword() + "' "
+               + "staffPassword = " + "'" + staff.getPassword() + "', "
                + "staffManager = " + staff.getManager() + "  " 
                + "WHERE STAFFEMAIL = '" + staff.getEmail() + "'";
         st.executeUpdate(query);   
@@ -154,19 +154,17 @@ public class DBManager {
     //delete a user from the database   
     public void deleteCustomerByEmail(String email) throws SQLException{       
        //code for delete-operation   
-       st.executeUpdate("DELETE FROM IOTBAY.CUSTOMER WHERE EMAIL = '" + email +"'");
+       st.execute("DELETE FROM IOTBAY.CUSTOMER WHERE CUSTOMEREMAIL = '" + email +"'");
     }  
     
     //delete a user from the database   
     public void deleteStaffByEmail(String email) throws SQLException{       
        //code for delete-operation   
-       st.executeUpdate("DELETE FROM IOTBAY.STAFF WHERE EMAIL = '" + email +"'");
+       st.execute("DELETE FROM IOTBAY.STAFF WHERE STAFFEMAIL = '" + email +"'");
     }  
     
     public void addAccessLog(AccessLog accessLog) throws SQLException
     {
-        String t = accessLog.getTimeStamp().toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS Z");
         String query = "INSERT INTO IOTBAY.ACCESSLOG ("
                 + "customerId, "
                 + "eventType, "
@@ -238,7 +236,7 @@ public class DBManager {
     }
     
     public Staff getStaffByLoginDetails (String email, String password) throws SQLException {
-        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.STAFF WHERE CUSTOMEREMAIL = '" + email + "'");
+        ResultSet results = st.executeQuery("SELECT * FROM IOTBAY.STAFF WHERE STAFFEMAIL = '" + email + "'");
         
         
         while(results.next()) {
@@ -271,6 +269,9 @@ public class DBManager {
         ResultSet results = st.executeQuery("SELECT TRANSACTIONID FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerId + " ORDER BY TRANSACTIONID DESC");
         results.next();
         return results.getInt("transactionId");
+    }
+    public void addPaymentToTransaction(String creditCardNumber, int transactionID) throws SQLException {
+        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET creditCardNumber='"+ creditCardNumber + "', LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
     }
     
     // Gets a list of transactions associated with the provided customerID

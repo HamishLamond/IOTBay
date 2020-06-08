@@ -42,9 +42,21 @@
             }  
         %>
         <div class="top_right_link_div">
+            <% 
+                if (isStaff) 
+                { 
+                    %>
+                    <a href="staffWelcome.jsp">Home</a>
+                    <% } 
+                else
+                {
+                    %>
+                    <a href="customerWelcome.jsp">Home</a>
+                    <%
+                }
+                %>
             <a href="logout.jsp">Logout</a>
-            <a href="CatalogueServlet?action=list">Catalogue</a>
-            <a href="viewOrderList.jsp">Order List</a>
+            
         </div>
         <hr>
         <h2>These are your current details:</h2>

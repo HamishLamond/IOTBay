@@ -70,8 +70,8 @@ public class DeleteAccountServlet extends HttpServlet {
             try
             {
                 Staff staff = (Staff)session.getAttribute("staff");
-                manager.addAccessLog(new AccessLog(null, staff.getId(), "customerDeletion", LocalDateTime.now()));
-                manager.deleteCustomerByEmail(staff.getEmail());
+                manager.addAccessLog(new AccessLog(null, staff.getId(), "staffDeletion", LocalDateTime.now()));
+                manager.deleteStaffByEmail(staff.getEmail());
                 session.invalidate();
                 request.getRequestDispatcher("index.jsp").forward(null, null);
             }

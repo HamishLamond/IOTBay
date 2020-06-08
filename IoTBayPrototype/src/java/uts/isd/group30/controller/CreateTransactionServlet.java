@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uts.isd.group30.model.Customer;
 import uts.isd.group30.model.Device;
+import uts.isd.group30.model.Payment;
 import uts.isd.group30.model.dao.DBManager;
 
 /**
@@ -68,6 +69,7 @@ public class CreateTransactionServlet extends HttpServlet {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
         Customer customer = (Customer) session.getAttribute("customer");
+        Payment paymentMethod = (Payment) session.getAttribute("paymentMethod");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         Double totalCost = (Double) session.getAttribute("cartCost");
         try {
@@ -80,6 +82,8 @@ public class CreateTransactionServlet extends HttpServlet {
                 manager.addTransactionLineItem(transactionId, deviceId, entry.getValue(), cost);
                 manager.updateDeviceStock(deviceId, entry.getValue());
             }
+            
+            manager.addPaymentToTransaction(paymentMethod.getCreditCardNumber(), transactionId);
             cart.clear();
             session.setAttribute("cart", cart);
             request.getRequestDispatcher("main.jsp").forward(request, response);

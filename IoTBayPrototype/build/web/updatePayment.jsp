@@ -19,7 +19,7 @@
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
             <a href="main.jsp">Home</a>
-            <a href="PaymentServlet?action=viewList&origin=1">View Payment list</a>
+            <a href="PaymentServlet?action=viewList">View Payment methods</a>
         </div>
         <hr>
         <%
@@ -33,7 +33,7 @@
             //System.out.print("chckMsg: " + chckMsg);
             Payment oldPayment = (Payment) session.getAttribute("oldPayment");
             %>
-            <h2>Update Payment</h2>
+            <h4>Update Payment</h4>
         
         <form action="AddPaymentServlet" method="post">
             <%

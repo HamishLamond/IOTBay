@@ -38,10 +38,10 @@ import uts.isd.group30.model.Payment;
              //4- capture the posted password
              //5- retrieve the manager instance from session
              try {
-                DBConnector connector = new DBConnector();
-                Connection conn = connector.openConnection();
-                DBManager db = new DBManager(conn);
-            //DBManager manager = (DBManager) session.getAttribute("manager");
+                //DBConnector connector = new DBConnector();
+                //Connection conn = connector.openConnection();
+                //DBManager db = new DBManager(conn); This was done for testing purposes while the connection servlet was being setup
+                DBManager db = (DBManager) session.getAttribute("manager");
                 if(isUpdate.equals("true")){
                     String oldNumber = request.getParameter("oldNumber");
                  if (!validator.validateCreditCardNumber(CCN)) {
