@@ -80,8 +80,8 @@ public class TestDB {
             Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void testFindDevice(){
+
+    private void testFindDevice() {
         System.out.print("Search for name: ");
         String search = in.nextLine();
         try {
@@ -94,22 +94,23 @@ public class TestDB {
             Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void testGetDevice(){
+
+    private void testGetDevice() {
         System.out.print("Find device by name: ");
         String find = in.nextLine();
         try {
             Device device = db.getDeviceByName(find);
-            if (device != null){
+            if (device != null) {
                 System.out.printf("%-20s %-30s %-20s %-10s \n", device.getName(), device.getDescription(), device.getStock(), device.getCost());
-            }else{
+            } else {
                 System.out.println("fail");
             }
         } catch (SQLException ex) {
             Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void showAll(){
+
+    private void showAll() {
         try {
             ArrayList<Device> devices = db.fetchDevice('l');
             System.out.println("DEVICE TABLE: ");

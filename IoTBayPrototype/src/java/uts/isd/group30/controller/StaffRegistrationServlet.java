@@ -25,8 +25,9 @@ import uts.isd.group30.model.dao.DBManager;
  * @author Zunther
  */
 public class StaffRegistrationServlet extends HttpServlet {
+
     HttpSession session;
-   
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,71 +36,59 @@ public class StaffRegistrationServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("registerStaff.jsp");
 
         Validators validator = new Validators();
-        
-        String email = request.getParameter("email");        
+
+        String email = request.getParameter("email");
         flushInputErrors();
         //Validate email
-        if (!validator.validateEmail(email))
-        {
-             session.setAttribute("regEmailErr", "You have entered an invalid email!");
-             invalidValues = true;
+        if (!validator.validateEmail(email)) {
+            session.setAttribute("regEmailErr", "You have entered an invalid email!");
+            invalidValues = true;
         }
-        
+
         //Validate phone
         String phone = request.getParameter("phoneNumber");
-        if (!validator.validatePhoneNumber(phone))
-        {
+        if (!validator.validatePhoneNumber(phone)) {
             session.setAttribute("regPhoneErr", "You have entered an invalid phone number!");
             invalidValues = true;
         }
-        
+
         //Validate name
         String name = request.getParameter("name");
-        if (!validator.validateName(name))
-        {
+        if (!validator.validateName(name)) {
             session.setAttribute("regNameErr", "You have entered an invalid name!");
             invalidValues = true;
         }
-        
+
         //Validate password
         String password = request.getParameter("password");
-        if (!validator.validatePassword(password))
-        {
+        if (!validator.validatePassword(password)) {
             session.setAttribute("regPassErr", "Your password needs to be an alphanumeric of at least four characters!");
             invalidValues = true;
         }
-        
-        if (invalidValues)
-        {
+
+        if (invalidValues) {
             dispatcher.include(request, response);
             return;
-        }
-        else
-        {
+        } else {
 
             DBManager manager = (DBManager) session.getAttribute("dbmanager");
-            if (manager == null)
-            {
-                try
-                {
+            if (manager == null) {
+                try {
                     manager = new DBManager((new DBConnector()).openConnection());
                     session.setAttribute("dbmanager", manager);
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     //Unspecified error occurred
                     return;
                 }
             }
             Staff staff = new Staff(name, email, password, parseInt(phone), false, null);
-            try
-            {
+            try {
                 //Check to make sure email is free
                 //if(manager.CheckStaffExistsByEmail(email))
                 //{
-                    //session.setAttribute("acctExistsErr", "There is already an account using this email!");
-                    //dispatcher.include(request, response);
-                    //return;
+                //session.setAttribute("acctExistsErr", "There is already an account using this email!");
+                //dispatcher.include(request, response);
+                //return;
                 //}
                 //else
                 {
@@ -110,13 +99,11 @@ public class StaffRegistrationServlet extends HttpServlet {
                     session.setAttribute("userType", "staff");
                     request.getRequestDispatcher("staffWelcome.jsp").forward(request, response);
                 }
-            }
-            catch (SQLException e)
-            {
-                
+            } catch (SQLException e) {
+
             }
         }
-}
+    }
 
     private void flushInputErrors() {
         session.setAttribute("regEmailErr", null);

@@ -10,6 +10,7 @@ package uts.isd.group30.model;
  * @author Zunther
  */
 public class User {
+
     private String id;
     private String email;
     private String password;
@@ -35,7 +36,6 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-
 
     public String getEmail() {
         return email;

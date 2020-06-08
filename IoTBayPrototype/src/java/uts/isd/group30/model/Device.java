@@ -10,6 +10,7 @@ package uts.isd.group30.model;
  * @author yash_
  */
 public class Device {
+
     private int id;
     private String name;
     private String description;
@@ -72,5 +73,5 @@ public class Device {
     public void setStockWarnThreshold(int stockWarnThreshold) {
         this.stockWarnThreshold = stockWarnThreshold;
     }
-    
+
 }

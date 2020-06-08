@@ -46,7 +46,7 @@ public class CurrentOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CurrentOrderServlet</title>");            
+            out.println("<title>Servlet CurrentOrderServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CurrentOrderServlet at " + request.getContextPath() + "</h1>");
@@ -74,7 +74,7 @@ public class CurrentOrderServlet extends HttpServlet {
         try {
             ArrayList<Device> deviceArray = new ArrayList();
             ArrayList<Integer> deviceNumbers = new ArrayList();
-            for (Map.Entry<String, Integer> entry : cart.entrySet()){
+            for (Map.Entry<String, Integer> entry : cart.entrySet()) {
                 String deviceName = entry.getKey();
                 int numberOfDevices = entry.getValue();
                 Device device = manager.getDeviceByName(deviceName);

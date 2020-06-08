@@ -10,6 +10,7 @@ package uts.isd.group30.model;
  * @author Hamish Lamond
  */
 public class TransactionLineItem {
+
     private int id;
     private int transactionId;
     private int deviceId;
@@ -63,7 +64,5 @@ public class TransactionLineItem {
     public void setCost(Double cost) {
         this.cost = cost;
     }
-    
-    
-    
+
 }

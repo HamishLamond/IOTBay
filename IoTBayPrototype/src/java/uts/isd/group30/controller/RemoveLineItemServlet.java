@@ -39,7 +39,7 @@ public class RemoveLineItemServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RemoveLineItemServlet</title>");            
+            out.println("<title>Servlet RemoveLineItemServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet RemoveLineItemServlet at " + request.getContextPath() + "</h1>");
@@ -64,7 +64,7 @@ public class RemoveLineItemServlet extends HttpServlet {
         DBManager manager = (DBManager) session.getAttribute("manager");
         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
         String remove = request.getParameter("remove");
-        remove = remove.substring(1, remove.length()-1);
+        remove = remove.substring(1, remove.length() - 1);
         cart.remove(remove);
         session.setAttribute("cart", cart);
         request.getRequestDispatcher("CurrentOrderServlet").forward(request, response);
