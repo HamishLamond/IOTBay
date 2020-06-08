@@ -26,7 +26,7 @@
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
             <a href="CatalogueServlet?action=list">Catalogue</a>
-            <a href="viewOrderList.jsp">Order List</a>
+            <a href="OrderListServlet?action=list">Order List</a>
             <a href="currentOrder.jsp">View Order [${cart.size()}]</a>
             <a href="PaymentServlet?action=viewList&origin=2">View Payment list</a>
         </div>
