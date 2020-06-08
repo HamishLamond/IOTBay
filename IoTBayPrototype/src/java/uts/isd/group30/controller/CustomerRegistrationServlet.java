@@ -98,20 +98,20 @@ public class CustomerRegistrationServlet extends HttpServlet {
             try
             {
                 //Check to make sure email is free
-                if(manager.CheckCustomerExistsByEmail(email))
-                {
-                    session.setAttribute("acctExistsErr", "There is already an account using this email!");
-                    dispatcher.include(request, response);
-                    return;
-                }
-                else
+                //if(manager.CheckCustomerExistsByEmail(email))
+                //{
+                    //session.setAttribute("acctExistsErr", "There is already an account using this email!");
+                    //dispatcher.include(request, response);
+                    //return;
+                //}
+                //else
                 {
                     manager.UpsertCustomer(customer);
                     customer = manager.getCustomerByLoginDetails(email, password);
                     manager.addAccessLog(new AccessLog(customer.getId(), null, "customerCreated", LocalDateTime.now()));
                     session.setAttribute("customer", customer);
                     session.setAttribute("userType", "customer");
-                    request.getRequestDispatcher("customerWelcome.jsp");
+                    request.getRequestDispatcher("customerWelcome.jsp").forward(request, response);
                 }
             }
             catch (SQLException e)
