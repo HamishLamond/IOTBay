@@ -15,7 +15,9 @@
         <title>Update Payment Details</title>
     </head>
     <body>
-        <h1>IoTBay</h1>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <div class="top_right_link_div">
             <a href="logout.jsp">Logout</a>
             <a href="myDetails.jsp">My Details</a>

@@ -32,7 +32,7 @@ public class StaffRegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
         Boolean invalidValues = false;
         session = request.getSession();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("registerCustomer.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("registerStaff.jsp");
 
         Validators validator = new Validators();
         

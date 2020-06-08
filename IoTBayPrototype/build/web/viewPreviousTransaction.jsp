@@ -49,12 +49,15 @@
                     <td>${device.value.cost * device.value.quantity}</td>
                 </tr>
             </c:forEach>
-                <tr>
-                    <td class="empty_cell_bottom"></td>
-                    <td class="empty_cell_bottom"></td>
-                    <td class="empty_cell_bottom"></td>
-                    <td>${value}</td>
-                </tr>
+            <tr>
+                <td class="empty_cell_bottom"></td>
+                <td class="empty_cell_bottom"></td>
+                <td class="empty_cell_bottom"></td>
+                <td>${value}</td>
+            </tr>
         </table>
+        <div class="middle_link_div">
+            <a class="middle_link_button" href="CancelOrderServlet?id=${transactionId}">Cancel Order</a>
+        </div>
     </body>
 </html>

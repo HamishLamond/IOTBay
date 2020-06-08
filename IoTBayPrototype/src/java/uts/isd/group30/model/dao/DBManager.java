@@ -324,7 +324,20 @@ public class DBManager {
             list.add(new Transaction(transactionId, transactionValue, customerId, status, createdOn, lastModified));
         }
         return list;
-        
+    }
+    
+    public ArrayList<Transaction> getCustomerTransactionsByDate(int customerId) throws SQLException {
+        ResultSet rs = st.executeQuery("SELECT * FROM IOTBAY.TRANSACTIONS WHERE CUSTOMERID=" + customerId + " ORDER BY LASTMODIFIED");
+        ArrayList<Transaction> list = new ArrayList();
+        while (rs.next()){
+            int transactionId = rs.getInt(1);
+            Double transactionValue = rs.getDouble(2);
+            Timestamp createdOn = rs.getTimestamp(4);
+            Timestamp lastModified = rs.getTimestamp(5);
+            int status = rs.getInt(6);
+            list.add(new Transaction(transactionId, transactionValue, customerId, status, createdOn, lastModified));
+        }
+        return list;
     }
     
     public Double getTransactionValue(int transactionId) throws SQLException{
@@ -340,12 +353,12 @@ public class DBManager {
     
     // Updates thes tatus of the provided transaction to 'completed' (1)
     public void completeTransaction(int transactionID) throws SQLException {
-        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET STATUS=1 WHERE TRANSACTIONID=" + transactionID);
+        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET STATUS=1, LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
     }
     
     // Updates the status of the provided transaction to 'cancelled' (2)
     public void cancelTransaction(int transactionID) throws SQLException {
-        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET STATUS=2 WHERE TRANSACTIONID=" + transactionID);
+        st.executeUpdate("UPDATE IOTBAY.TRANSACTIONS SET STATUS=2, LASTMODIFIED=CURRENT_TIMESTAMP WHERE TRANSACTIONID=" + transactionID);
     }
     
     // Removes a transaction from the database and any associated transactionlineitems

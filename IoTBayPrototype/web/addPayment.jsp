@@ -15,7 +15,9 @@
         <title>Add Payment Details</title>
     </head>
     <body>
-        <h1>IoTBay</h1>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
         <%
             Customer customer = (Customer)session.getAttribute("customer");
             String CCNErr = (String) session.getAttribute("CCNErr");

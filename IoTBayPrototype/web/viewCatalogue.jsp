@@ -18,21 +18,22 @@
     </head>
     <body class="body_no_image">
         <div class="header">
-            <h1>Device List</h1>
+            <h1>IoTBay</h1>
         </div>
         <div class="top_right_link_div">
             <c:if test="${customer != null}">
-            <a href="logout.jsp">Logout</a>
-            <a href="myDetails.jsp">My Details</a>
-            <a href="OrderListServlet?action=list">Order List</a>
-            <a href="PaymentServlet?action=viewList">View Payment list</a>
+                <a href="logout.jsp">Logout</a>
+                <a href="myDetails.jsp">My Details</a>
+                <a href="OrderListServlet?action=list">Order List</a>
+                <a href="PaymentServlet?action=viewList">View Payment list</a>
             </c:if>
             <c:if test="${customer == null}">
-            <a href="loginRegister.jsp">Login/Register</a>
+                <a href="loginRegister.jsp">Login/Register</a>
             </c:if>
             <a href="CurrentOrderServlet">View Order [${cart.size()}]</a>
             <a href="index.jsp">Home</a>
         </div>
+        <h2>Device List</h2>
         <form method="post" action="CatalogueServlet">
             <table>
                 <tr><td><input type="text" name="name"></td>
@@ -48,8 +49,8 @@
                     <th>Price</th>
                     <th>In Stock</th>
                     <th></th>
-                    <th><button type="button" onclick="location.href='CatalogueServlet?action=byname'">Sort by name</button>
-                        <button type="button" onclick="location.href='CatalogueServlet?action=byprice'">Sort by price</button>
+                    <th><button type="button" onclick="location.href = 'CatalogueServlet?action=byname'">Sort by name</button>
+                        <button type="button" onclick="location.href = 'CatalogueServlet?action=byprice'">Sort by price</button>
                     </th>
                 </tr>
             </thead>

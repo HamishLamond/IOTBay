@@ -7,7 +7,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Delete your Account</h1>
+        <div class="header">
+            <h1>IoTBay</h1>
+        </div>
+        <h2>Delete your Account</h2>
         <div>
             <form action="DeleteAccountServlet" method="post">
                 <div>This process cannot be reversed! Are you sure?</div>

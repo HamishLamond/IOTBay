@@ -8,23 +8,22 @@ package uts.isd.group30.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uts.isd.group30.model.TransactionLineItem;
 import uts.isd.group30.model.dao.DBManager;
 
 /**
  *
  * @author Hamish Lamond
  */
-public class PreviousTransactionServlet extends HttpServlet {
+@WebServlet(name = "CancelOrderServlet", urlPatterns = {"/CancelOrderServlet"})
+public class CancelOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +42,10 @@ public class PreviousTransactionServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PreviousTransactionServlet</title>");            
+            out.println("<title>Servlet CancelOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PreviousTransactionServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CancelOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,17 +68,8 @@ public class PreviousTransactionServlet extends HttpServlet {
         String idString = request.getParameter("id");
         int transactionId = Integer.parseInt(idString);
         try {
-            ArrayList<TransactionLineItem> items = (ArrayList) manager.getTransactionLineItems(transactionId);
-            HashMap<String, TransactionLineItem> devices = new HashMap<>();
-            for (TransactionLineItem item: items){
-                String deviceName = manager.getDeviceName(item.getDeviceId());
-                devices.put(deviceName, item);
-            }
-            request.setAttribute("devices", devices);
-            request.setAttribute("transactionId", transactionId);
-            Double value = manager.getTransactionValue(transactionId);
-            request.setAttribute("value", value);
-            request.getRequestDispatcher("viewPreviousTransaction.jsp").forward(request, response);
+            manager.cancelTransaction(transactionId);
+            request.getRequestDispatcher("OrderListServlet").forward(request, response);
         } catch (SQLException ex) {
                 Logger.getLogger(CatalogueServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
