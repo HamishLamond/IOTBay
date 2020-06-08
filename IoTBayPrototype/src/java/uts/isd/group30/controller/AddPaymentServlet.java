@@ -65,10 +65,10 @@ import uts.isd.group30.model.Payment;
                                  db.updatePaymentDetails(defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardNumber(), defaultPaymentId.getCreditCardExpiry(), defaultPaymentId.getCreditCardCVC(), 0);
                              }
                              catch (Exception e){
-                                 System.out.print("Unable to remove default payment:" + e);
+                                 System.out.print("no default payment:" + e);
                              }
                          }
-                         db.updatePaymentDetails(oldNumber,CCN, CCE, CCCVC, isDefault);
+                         db.updatePaymentDetails(oldNumber, CCN, CCE, CCCVC, isDefault);
                          session.setAttribute("SuccessUpdate", "Successfully updated payment details");
                          session.setAttribute("CCNMsg", CCN);
                          session.setAttribute("CCEMsg", CCE);
